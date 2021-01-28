@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="smirnovd" />
+
+<meta name="date" content="2021-01-27" />
+
+<title>Patient organ system involvment</title>
+
+<script src="libR/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libR/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libR/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libR/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libR/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libR/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libR/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libR/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="libR/navigation-1.1/tabsets.js"></script>
+<script src="libR/navigation-1.1/codefolding.js"></script>
+<script src="libR/navigation-1.1/sourceembed.js"></script>
+<link href="libR/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="libR/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<link rel="stylesheet" href="lib/add_content_table.css" type="text/css" />
+<link rel="stylesheet" href="lib/leo_style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Patient organ system involvment</h1>
+<h4 class="author">smirnovd</h4>
+<h4 class="date">2021-01-27</h4>
+
+</div>
+
+
+<pre class="r"><code>source(snakemake@input$config)
+
+
+
+
+# READ ANNOTATION
+#sa &lt;- fread(&#39;/s/project/mitoMultiOmics/multiOMICs_integration/raw_data/proteomics_annotation.tsv&#39;)
+sa &lt;- fread(snakemake@input$sa)
+sa &lt;- sa[USE_FOR_PROTEOMICS_PAPER == T]
+
+# Load patient&#39;s HPO 
+pat_hpo &lt;- fread(snakemake@input$patient_hpo)
+#pat_hpo &lt;- fread(&#39;/s/project/mitoMultiOmics/multiOMICs_integration/raw_data/Patient_HPO_phenotypes.tsv&#39;)
+
+pat_hpo &lt;- pat_hpo[, c(&quot;SAMPLE_ID&quot;, &quot;umbrella_HPO_term&quot;)]
+pat_hpo &lt;-pat_hpo[!duplicated(pat_hpo ),]
+
+sa &lt;- sa[SAMPLE_ID %in% unique(pat_hpo$SAMPLE_ID)]
+sa &lt;- sa[!duplicated(sa )]
+
+# create anatomy maps
+library(gganatogram)                     
+              
+ 
+male &lt;- as.data.table(hgMale_key) 
+male$value &lt;- NULL
+male$sex &lt;- rep(&#39;male&#39;, nrow(male))
+
+female &lt;- as.data.table(hgFemale_key)
+female$value &lt;- NULL
+female$sex &lt;- rep(&#39;female&#39;, nrow(female))
+human &lt;- rbind(male, female)        
+human[type ==  &quot;nervous_system&quot;, type:= &quot;Abnormality of the nervous system&quot; ]
+human[type ==  &quot;digestion&quot;, type:= &quot;Abnormality of the digestive system&quot; ]
+human[type ==  &quot;respiratory&quot;, type:= &quot;Abnormality of the respiratory system&quot;  ]
+human[type ==  &quot;circulation&quot;, type:= &quot;Abnormality of the cardiovascular system&quot;]
+human[type ==  &quot;reproductive&quot;, type:= &quot;Abnormality of the genitourinary system&quot; ]
+human[organ ==  &quot;urinary_bladder&quot;, type:= &quot;Abnormality of the genitourinary system&quot; ]
+human[organ ==  &quot;skeletal_muscle&quot;, type:= &quot;Abnormality of the musculature&quot;]
+human[organ ==  &quot;bone&quot; , type := &quot;Abnormality of the skeletal system&quot;  ]   
+human[organ %in%  c(&quot;thyroid_gland&quot;, &quot;pituitary_gland&quot;, &quot;adrenal_gland&quot;)   , type:= &quot;Abnormality of the endocrine system&quot;    ]  
+human[organ ==  &quot;bone_marrow&quot;  , type:= &quot;Abnormality of blood and blood-forming tissues&quot; ]  
+human[organ ==  &quot;lymph_node&quot;   , type:= &quot;Abnormality of the immune system&quot;] 
+human &lt;- human[type !=  &quot;other&quot;]
+human &lt;- human[organ !=  &quot;tongue&quot;]
+human &lt;- human[organ !=  &quot;throat&quot;]
+human &lt;- human[organ !=  &quot;trachea&quot;]
+human &lt;- human[organ !=  &quot;esophagus&quot;]
+human &lt;- human[organ !=  &quot;vas_deferens&quot;]
+human &lt;- human[organ !=  &quot;nerve&quot;] # too many 
+human &lt;- human[organ !=  &quot;spinal_cord&quot;] # too many 
+
+
+human[type == &quot;Abnormality of the nervous system&quot;, colour := &quot;lightblue&quot; ]
+human[type == &quot;Abnormality of the respiratory system&quot; , colour := &quot;steelblue&quot; ]
+human[type == &quot;Abnormality of the cardiovascular system&quot;, colour := &quot;darkred&quot;]
+human[type == &quot;Abnormality of the musculature&quot;, colour := &quot;red&quot;]
+human[type == &quot;Abnormality of the genitourinary system&quot;, colour := &quot;yellow&quot; ]
+human[type == &quot;Abnormality of the skeletal system&quot; , colour := &quot;grey60&quot; ]   
+human[type == &quot;Abnormality of the endocrine system&quot; , colour := &quot;green&quot;   ] 
+human[type == &quot;Abnormality of the digestive system&quot; , colour := &quot;orange&quot;]
+human[type == &quot;Abnormality of blood and blood-forming tissues&quot; , colour := &quot;darkorange&quot;]  
+human[type == &quot;Abnormality of the immune system&quot;, colour := &quot;darkgreen&quot;] 
+
+
+
+patients &lt;- merge(sa[ , c(&quot;SAMPLE_ID&quot;, &quot;gender&quot;) ], pat_hpo, by= &quot;SAMPLE_ID&quot; )
+setnames(patients, c(&quot;gender&quot;, &quot;umbrella_HPO_term&quot;), c(&quot;sex&quot;, &quot;type&quot;))
+
+patients &lt;- merge(patients, human, by= c( &quot;sex&quot;, &quot;type&quot;), allow.cartesian=TRUE)
+
+
+# Save results
+# write_tsv(patients, &#39;/s/project/mitoMultiOmics/multiOMICs_integration/processed_data/HPO/Patients_affected_organs.tsv&#39;)
+write_tsv(patients,  snakemake@output$patient_organs)
+
+
+
+
+p_male &lt;- gganatogram(data=  patients[sex == &quot;male&quot;], fillOutline=&#39;white&#39;, organism=&#39;human&#39;, sex= &quot;male&quot;, fill=&quot;colour&quot;) + theme_void()
+p_female &lt;- gganatogram(data=  patients[sex == &quot;female&quot;], fillOutline=&#39;white&#39;, organism=&#39;human&#39;, sex= &quot;female&quot;, fill=&quot;colour&quot;)+ theme_void()
+humans &lt;- p_male + p_female </code></pre>
+<pre class="r"><code>humans</code></pre>
+<p><img src="Scripts_MultiOmics_HPO_phenotype_Organ_involvment_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
+<pre class="r"><code>pdf(snakemake@output$fig, # &quot;/s/project/mitoMultiOmics/multiOMICs_integration/Figures/humans.pdf&quot;,  
+    width = 10, height = 7,  useDingbats=FALSE )
+print(humans) 
+dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+
+<div id="rmd-source-code">IyctLS0KIycgdGl0bGU6IFBhdGllbnQgb3JnYW4gc3lzdGVtIGludm9sdm1lbnQKIycgYXV0aG9yOiBzbWlybm92ZAojJyB3YjoKIycgIGlucHV0OgojJyAgLSBjb25maWc6ICdzcmMvY29uZmlnLlInCiMnICAtIHNhOiAnYHNtIGNvbmZpZ1siQU5OT1RBVElPTiJdYCcKIycgIC0gcGF0aWVudF9ocG86ICdgc20gY29uZmlnWyJSQVdfSFBPIl1gJwojJyAgb3V0cHV0OgojJyAgLSBwYXRpZW50X29yZ2FuczogJ2BzbSBjb25maWdbIlBST0NfREFUQSJdICsgIi9IUE8vUGF0aWVudHNfYWZmZWN0ZWRfb3JnYW5zLnRzdiJgJwojJyAgLSBmaWc6ICdgc20gY29uZmlnWyJGSUdVUkVfRElSIl0gKyAiL1N1cHBsZW1lbnRhcnlfZmlndXJlcy9odW1hbnMucGRmImAnCiMnIG91dHB1dDogCiMnICAgaHRtbF9kb2N1bWVudDoKIycgICAgY29kZV9mb2xkaW5nOiBoaWRlCiMnICAgIGNvZGVfZG93bmxvYWQ6IFRSVUUKIyctLS0KCgpzb3VyY2Uoc25ha2VtYWtlQGlucHV0JGNvbmZpZykKCgoKCiMgUkVBRCBBTk5PVEFUSU9OCiNzYSA8LSBmcmVhZCgnL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL3Jhd19kYXRhL3Byb3Rlb21pY3NfYW5ub3RhdGlvbi50c3YnKQpzYSA8LSBmcmVhZChzbmFrZW1ha2VAaW5wdXQkc2EpCnNhIDwtIHNhW1VTRV9GT1JfUFJPVEVPTUlDU19QQVBFUiA9PSBUXQoKIyBMb2FkIHBhdGllbnQncyBIUE8gCnBhdF9ocG8gPC0gZnJlYWQoc25ha2VtYWtlQGlucHV0JHBhdGllbnRfaHBvKQojcGF0X2hwbyA8LSBmcmVhZCgnL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL3Jhd19kYXRhL1BhdGllbnRfSFBPX3BoZW5vdHlwZXMudHN2JykKCnBhdF9ocG8gPC0gcGF0X2hwb1ssIGMoIlNBTVBMRV9JRCIsICJ1bWJyZWxsYV9IUE9fdGVybSIpXQpwYXRfaHBvIDwtcGF0X2hwb1shZHVwbGljYXRlZChwYXRfaHBvICksXQoKc2EgPC0gc2FbU0FNUExFX0lEICVpbiUgdW5pcXVlKHBhdF9ocG8kU0FNUExFX0lEKV0Kc2EgPC0gc2FbIWR1cGxpY2F0ZWQoc2EgKV0KCiMgY3JlYXRlIGFuYXRvbXkgbWFwcwpsaWJyYXJ5KGdnYW5hdG9ncmFtKSAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgIAogCm1hbGUgPC0gYXMuZGF0YS50YWJsZShoZ01hbGVfa2V5KSAKbWFsZSR2YWx1ZSA8LSBOVUxMCm1hbGUkc2V4IDwtIHJlcCgnbWFsZScsIG5yb3cobWFsZSkpCgpmZW1hbGUgPC0gYXMuZGF0YS50YWJsZShoZ0ZlbWFsZV9rZXkpCmZlbWFsZSR2YWx1ZSA8LSBOVUxMCmZlbWFsZSRzZXggPC0gcmVwKCdmZW1hbGUnLCBucm93KGZlbWFsZSkpCmh1bWFuIDwtIHJiaW5kKG1hbGUsIGZlbWFsZSkgICAgICAgIApodW1hblt0eXBlID09ICAibmVydm91c19zeXN0ZW0iLCB0eXBlOj0gIkFibm9ybWFsaXR5IG9mIHRoZSBuZXJ2b3VzIHN5c3RlbSIgXQpodW1hblt0eXBlID09ICAiZGlnZXN0aW9uIiwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiB0aGUgZGlnZXN0aXZlIHN5c3RlbSIgXQpodW1hblt0eXBlID09ICAicmVzcGlyYXRvcnkiLCB0eXBlOj0gIkFibm9ybWFsaXR5IG9mIHRoZSByZXNwaXJhdG9yeSBzeXN0ZW0iICBdCmh1bWFuW3R5cGUgPT0gICJjaXJjdWxhdGlvbiIsIHR5cGU6PSAiQWJub3JtYWxpdHkgb2YgdGhlIGNhcmRpb3Zhc2N1bGFyIHN5c3RlbSJdCmh1bWFuW3R5cGUgPT0gICJyZXByb2R1Y3RpdmUiLCB0eXBlOj0gIkFibm9ybWFsaXR5IG9mIHRoZSBnZW5pdG91cmluYXJ5IHN5c3RlbSIgXQpodW1hbltvcmdhbiA9PSAgInVyaW5hcnlfYmxhZGRlciIsIHR5cGU6PSAiQWJub3JtYWxpdHkgb2YgdGhlIGdlbml0b3VyaW5hcnkgc3lzdGVtIiBdCmh1bWFuW29yZ2FuID09ICAic2tlbGV0YWxfbXVzY2xlIiwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiB0aGUgbXVzY3VsYXR1cmUiXQpodW1hbltvcmdhbiA9PSAgImJvbmUiICwgdHlwZSA6PSAiQWJub3JtYWxpdHkgb2YgdGhlIHNrZWxldGFsIHN5c3RlbSIgIF0gICAKaHVtYW5bb3JnYW4gJWluJSAgYygidGh5cm9pZF9nbGFuZCIsICJwaXR1aXRhcnlfZ2xhbmQiLCAiYWRyZW5hbF9nbGFuZCIpICAgLCB0eXBlOj0gIkFibm9ybWFsaXR5IG9mIHRoZSBlbmRvY3JpbmUgc3lzdGVtIiAgICBdICAKaHVtYW5bb3JnYW4gPT0gICJib25lX21hcnJvdyIgICwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiBibG9vZCBhbmQgYmxvb2QtZm9ybWluZyB0aXNzdWVzIiBdICAKaHVtYW5bb3JnYW4gPT0gICJseW1waF9ub2RlIiAgICwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiB0aGUgaW1tdW5lIHN5c3RlbSJdIApodW1hbiA8LSBodW1hblt0eXBlICE9ICAib3RoZXIiXQpodW1hbiA8LSBodW1hbltvcmdhbiAhPSAgInRvbmd1ZSJdCmh1bWFuIDwtIGh1bWFuW29yZ2FuICE9ICAidGhyb2F0Il0KaHVtYW4gPC0gaHVtYW5bb3JnYW4gIT0gICJ0cmFjaGVhIl0KaHVtYW4gPC0gaHVtYW5bb3JnYW4gIT0gICJlc29waGFndXMiXQpodW1hbiA8LSBodW1hbltvcmdhbiAhPSAgInZhc19kZWZlcmVucyJdCmh1bWFuIDwtIGh1bWFuW29yZ2FuICE9ICAibmVydmUiXSAjIHRvbyBtYW55IApodW1hbiA8LSBodW1hbltvcmdhbiAhPSAgInNwaW5hbF9jb3JkIl0gIyB0b28gbWFueSAKCgpodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgbmVydm91cyBzeXN0ZW0iLCBjb2xvdXIgOj0gImxpZ2h0Ymx1ZSIgXQpodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgcmVzcGlyYXRvcnkgc3lzdGVtIiAsIGNvbG91ciA6PSAic3RlZWxibHVlIiBdCmh1bWFuW3R5cGUgPT0gIkFibm9ybWFsaXR5IG9mIHRoZSBjYXJkaW92YXNjdWxhciBzeXN0ZW0iLCBjb2xvdXIgOj0gImRhcmtyZWQiXQpodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgbXVzY3VsYXR1cmUiLCBjb2xvdXIgOj0gInJlZCJdCmh1bWFuW3R5cGUgPT0gIkFibm9ybWFsaXR5IG9mIHRoZSBnZW5pdG91cmluYXJ5IHN5c3RlbSIsIGNvbG91ciA6PSAieWVsbG93IiBdCmh1bWFuW3R5cGUgPT0gIkFibm9ybWFsaXR5IG9mIHRoZSBza2VsZXRhbCBzeXN0ZW0iICwgY29sb3VyIDo9ICJncmV5NjAiIF0gICAKaHVtYW5bdHlwZSA9PSAiQWJub3JtYWxpdHkgb2YgdGhlIGVuZG9jcmluZSBzeXN0ZW0iICwgY29sb3VyIDo9ICJncmVlbiIgICBdIApodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgZGlnZXN0aXZlIHN5c3RlbSIgLCBjb2xvdXIgOj0gIm9yYW5nZSJdCmh1bWFuW3R5cGUgPT0gIkFibm9ybWFsaXR5IG9mIGJsb29kIGFuZCBibG9vZC1mb3JtaW5nIHRpc3N1ZXMiICwgY29sb3VyIDo9ICJkYXJrb3JhbmdlIl0gIApodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgaW1tdW5lIHN5c3RlbSIsIGNvbG91ciA6PSAiZGFya2dyZWVuIl0gCgoKCnBhdGllbnRzIDwtIG1lcmdlKHNhWyAsIGMoIlNBTVBMRV9JRCIsICJnZW5kZXIiKSBdLCBwYXRfaHBvLCBieT0gIlNBTVBMRV9JRCIgKQpzZXRuYW1lcyhwYXRpZW50cywgYygiZ2VuZGVyIiwgInVtYnJlbGxhX0hQT190ZXJtIiksIGMoInNleCIsICJ0eXBlIikpCgpwYXRpZW50cyA8LSBtZXJnZShwYXRpZW50cywgaHVtYW4sIGJ5PSBjKCAic2V4IiwgInR5cGUiKSwgYWxsb3cuY2FydGVzaWFuPVRSVUUpCgoKIyBTYXZlIHJlc3VsdHMKIyB3cml0ZV90c3YocGF0aWVudHMsICcvcy9wcm9qZWN0L21pdG9NdWx0aU9taWNzL211bHRpT01JQ3NfaW50ZWdyYXRpb24vcHJvY2Vzc2VkX2RhdGEvSFBPL1BhdGllbnRzX2FmZmVjdGVkX29yZ2Fucy50c3YnKQp3cml0ZV90c3YocGF0aWVudHMsICBzbmFrZW1ha2VAb3V0cHV0JHBhdGllbnRfb3JnYW5zKQoKCgoKcF9tYWxlIDwtIGdnYW5hdG9ncmFtKGRhdGE9ICBwYXRpZW50c1tzZXggPT0gIm1hbGUiXSwgZmlsbE91dGxpbmU9J3doaXRlJywgb3JnYW5pc209J2h1bWFuJywgc2V4PSAibWFsZSIsIGZpbGw9ImNvbG91ciIpICsgdGhlbWVfdm9pZCgpCnBfZmVtYWxlIDwtIGdnYW5hdG9ncmFtKGRhdGE9ICBwYXRpZW50c1tzZXggPT0gImZlbWFsZSJdLCBmaWxsT3V0bGluZT0nd2hpdGUnLCBvcmdhbmlzbT0naHVtYW4nLCBzZXg9ICJmZW1hbGUiLCBmaWxsPSJjb2xvdXIiKSsgdGhlbWVfdm9pZCgpCmh1bWFucyA8LSBwX21hbGUgKyBwX2ZlbWFsZSAKCiMrIGZpZy53aWR0aD0xMCwgZmlnLmhlaWdodD03Cmh1bWFucwoKCnBkZihzbmFrZW1ha2VAb3V0cHV0JGZpZywgIyAiL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL0ZpZ3VyZXMvaHVtYW5zLnBkZiIsICAKICAgIHdpZHRoID0gMTAsIGhlaWdodCA9IDcsICB1c2VEaW5nYmF0cz1GQUxTRSApCnByaW50KGh1bWFucykgCmRldi5vZmYoKQo=</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("Organ_involvment.R");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

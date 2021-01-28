@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="smirnovd" />
+
+<meta name="date" content="2021-01-27" />
+
+<title>Proportion of outliers with rare variants</title>
+
+<script src="libR/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libR/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libR/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libR/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libR/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libR/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libR/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libR/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="libR/navigation-1.1/tabsets.js"></script>
+<script src="libR/navigation-1.1/codefolding.js"></script>
+<script src="libR/navigation-1.1/sourceembed.js"></script>
+<link href="libR/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="libR/highlightjs-9.12.0/highlight.js"></script>
+<script src="libR/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libR/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libR/datatables-binding-0.15/datatables.js"></script>
+<link href="libR/dt-core-1.10.20/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="libR/dt-core-1.10.20/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="libR/dt-core-1.10.20/js/jquery.dataTables.min.js"></script>
+<link href="libR/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libR/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<link rel="stylesheet" href="lib/add_content_table.css" type="text/css" />
+<link rel="stylesheet" href="lib/leo_style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Proportion of outliers with rare variants</h1>
+<h4 class="author">smirnovd</h4>
+<h4 class="date">2021-01-27</h4>
+
+</div>
+
+
+<pre class="r"><code># Load plotting config and functions
+source(&quot;src/config.R&quot;)
+source(&quot;src/functions/Integration/integrate_annotate_omics.R&quot;)
+source(&quot;src/functions/variant_enrichment.R&quot;)
+
+
+# Read integrated omics file 
+# rp &lt;- readRDS(&quot;/s/project/mitoMultiOmics/multiOMICs_integration/processed_data/integration/patient_omics_full.RDS&quot;) %&gt;% as.data.table()
+rp &lt;- readRDS(snakemake@input$patient_omics) %&gt;% as.data.table()
+
+# Subset cases with WES and RNA-seq data avaliable 
+rp &lt;- rp[WES_avaliable == T &amp; RNA_seq_avaliable == T]
+paste(&quot;Number of samples with WES export and RNA-seq avaliable:&quot;, uniqueN(rp$SAMPLE_ID))</code></pre>
+<pre><code>## [1] &quot;Number of samples with WES export and RNA-seq avaliable: 140&quot;</code></pre>
+<pre class="r"><code>#Keep only genes, with both RNA and protein measured 
+rp &lt;- rp[ gene_detected == &quot;RNA and protein detected&quot;]
+
+# Filter for the genes, detected as outliers at least once
+outliers &lt;- unique(rp[outlier_class != &quot;non_outlier&quot;]$geneID)
+rp &lt;- rp[geneID %in% outliers]
+
+# Add up- down- outlier class
+rp &lt;- add_up_down_class(rp, 
+                        Padj_threshold =  PADJ_THRESHOLD,
+                        Zscore_threshold = ZSCORE_THRESHOLD, 
+                        l2FC_threshold = LOG2FC_THRESHOLD)
+
+# Subset necessary columns
+rp &lt;- rp[ , c(&quot;SAMPLE_ID&quot;, &quot;geneID&quot;, &quot;outlier_class&quot;, &quot;up_down_outlier&quot;) ]
+rp &lt;- rp[!duplicated(rp), ]</code></pre>
+<div id="outlier-class" class="section level1">
+<h1>Outlier class</h1>
+<pre class="r"><code>os1 &lt;- rp[, .N, by = outlier_class]
+os2 &lt;- rp[, .N, by = up_down_outlier]
+colnames(os2)[1] &lt;-&quot;outlier_class&quot; 
+os &lt;- rbind(os1, os2)
+rm(os1, os2)</code></pre>
+<div id="number-of-outliers-per-class" class="section level3">
+<h3>Number of outliers per class</h3>
+<pre class="r"><code>DT::datatable(os, caption = &quot;Outlier counts&quot;,   escape = F)</code></pre>
+<div id="htmlwidget-e9b4152c4d3aadd82314" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e9b4152c4d3aadd82314">{"x":{"filter":"none","caption":"<caption>Outlier counts<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13"],["non_outlier","RNA-only","protein-only","RNA-and-protein","non_outlier","RNA_underexpression","Protein_underexpression","RNA_Protein_underexpression","RNA_overexpression","RNA_Protein_overexpression","Protein_overexpression","RNA_under_Protein_over","RNA_over_Protein_under"],[216022,245,1441,162,216022,166,922,144,79,16,519,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>outlier_class<\/th>\n      <th>N<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>#####################
+
+
+
+# As soon as it is not allowed to share genetic data,
+# only the result of the analysis could be shared.
+# to reproduce the analysis please prepare the variant table (vt)
+# with 3 columns: sample_Id, gene_Id and variant type: stop, coding, splice ...
+
+
+
+# # Read variant annotation 
+# vt &lt;- fread(&quot;/s/project/mitoMultiOmics/multiOMICs_integration/rare_variants.tsv&quot;)
+# vt &lt;- vt[ geneID %in% unique(rp$geneID), c(&quot;SAMPLE_ID&quot;, &quot;geneID&quot;, &quot;var_type&quot;)]
+# 
+# rp &lt;- merge(vt, rp, by = c(&quot;SAMPLE_ID&quot;, &quot;geneID&quot;), all.y = T )
+# rp[is.na(var_type), var_type := &quot;no rare variant&quot;]
+# 
+# ####################
+# # READ enrichment
+# enr &lt;- fread(&quot;/s/project/mitoMultiOmics/multiOMICs_integration/enrichment_rare_vt.tsv&quot;)
+# enr &lt;- enr[, c(&quot;Cat&quot;, &quot;outlier_class&quot;, &quot;importance&quot;)]
+# setnames(enr, c(&quot;Cat&quot;, &quot;outlier_class&quot;, &quot;importance&quot;), c(&quot;var_type&quot;, &quot;up_down_outlier&quot;, &quot;importance&quot;))
+# 
+# pr &lt;- merge(rp, enr, by = c(&quot;var_type&quot;, &quot;up_down_outlier&quot;), all.x=T)
+# pr &lt;- pr[order(importance), ]
+# pr &lt;- pr[!duplicated(pr[, c(&quot;up_down_outlier&quot;,  &quot;SAMPLE_ID&quot;, &quot;geneID&quot;)]), ]
+# pr$importance &lt;-NULL
+# pr &lt;- pr[!duplicated(pr), ]
+# 
+# ####################
+# 
+# 
+# # Calculate proportions of outliers
+# pr &lt;- pr[, .N, by = .(up_down_outlier, var_type)]
+# pr[, total := sum(N), by = .(up_down_outlier)]
+# pr[, prop := N/sum(N), by = up_down_outlier]
+# write_tsv(pr, &quot;/s/project/mitoMultiOmics/multiOMICs_integration/raw_data/proportions_rare.tsv&quot;)
+
+
+pr &lt;- fread(snakemake@input$enrichments_proportions)
+# pr &lt;- fread(&quot;/s/project/mitoMultiOmics/multiOMICs_integration/raw_data/variant_type_enr_prop.tsv&quot;)</code></pre>
+</div>
+<div id="underexpression-outliers" class="section level3">
+<h3>Underexpression outliers</h3>
+<pre class="r"><code>pr[, var_type := factor(var_type, levels = c(&quot;no rare variant&quot;, &quot;non_coding&quot;, &quot;synonymous&quot;, &quot;coding&quot;, &quot;frameshift&quot;, &quot;splice&quot;, &quot;stop&quot;))]
+pr[, outlier_class_label := paste0(up_down_outlier ,&#39;\n&#39;, &quot;(n = &quot;, total, &quot;)&quot;) ]</code></pre>
+<pre class="r"><code>ggplot(pr[up_down_outlier %in% c(&quot;RNA_underexpression&quot;, &quot;Protein_underexpression&quot;, &quot;RNA_Protein_underexpression&quot;, &quot;non_outlier&quot;)], aes(outlier_class_label, prop)) +
+  geom_bar(stat= &#39;identity&#39;, aes(fill = var_type)) +
+  scale_fill_manual(values = variant_colors ) +
+  coord_flip(ylim = c(0,1)) +
+  scale_y_continuous(breaks=seq(0,1, 0.1), labels=scales::percent) +
+  labs( y = &quot;Proportion of outliers with rare variants&quot;)+
+  theme_classic()+
+  theme(legend.position=&quot;top&quot;,  axis.title.y = element_blank() ,legend.direction = &quot;horizontal&quot;,
+        legend.title = element_blank(),
+        axis.text.y = element_text(face=&quot;bold&quot;, size=12)) +
+  guides(fill = guide_legend(nrow = 1))</code></pre>
+<p><img src="Scripts_MultiOmics_Variant_analysis_outlier_proportions_variant_type_files/figure-html/unnamed-chunk-5-1.png" width="1248" /></p>
+</div>
+</div>
+
+<div id="rmd-source-code">IyctLS0KIycgdGl0bGU6IFByb3BvcnRpb24gb2Ygb3V0bGllcnMgd2l0aCByYXJlIHZhcmlhbnRzCiMnIGF1dGhvcjogc21pcm5vdmQKIycgd2I6CiMnICBpbnB1dDoKIycgIC0gcGF0aWVudF9vbWljczogJ2BzbSBjb25maWdbIlBST0NfREFUQSJdICsgIi9pbnRlZ3JhdGlvbi9wYXRpZW50X29taWNzX2Z1bGwuUkRTImAnCiMnICAtIGVucmljaG1lbnRzX3Byb3BvcnRpb25zOiAnYHNtIGNvbmZpZ1siUkFXX0RBVEEiXSArICIvdmFyaWFudF90eXBlX2Vucl9wcm9wLnRzdiJgJwojJyAgb3V0cHV0OgojJyBvdXRwdXQ6IAojJyAgIGh0bWxfZG9jdW1lbnQ6CiMnICAgIGNvZGVfZm9sZGluZzogaGlkZQojJyAgICBjb2RlX2Rvd25sb2FkOiBUUlVFCiMnLS0tCgojIExvYWQgcGxvdHRpbmcgY29uZmlnIGFuZCBmdW5jdGlvbnMKc291cmNlKCJzcmMvY29uZmlnLlIiKQpzb3VyY2UoInNyYy9mdW5jdGlvbnMvSW50ZWdyYXRpb24vaW50ZWdyYXRlX2Fubm90YXRlX29taWNzLlIiKQpzb3VyY2UoInNyYy9mdW5jdGlvbnMvdmFyaWFudF9lbnJpY2htZW50LlIiKQoKCiMgUmVhZCBpbnRlZ3JhdGVkIG9taWNzIGZpbGUgCiMgcnAgPC0gcmVhZFJEUygiL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL3Byb2Nlc3NlZF9kYXRhL2ludGVncmF0aW9uL3BhdGllbnRfb21pY3NfZnVsbC5SRFMiKSAlPiUgYXMuZGF0YS50YWJsZSgpCnJwIDwtIHJlYWRSRFMoc25ha2VtYWtlQGlucHV0JHBhdGllbnRfb21pY3MpICU+JSBhcy5kYXRhLnRhYmxlKCkKCiMgU3Vic2V0IGNhc2VzIHdpdGggV0VTIGFuZCBSTkEtc2VxIGRhdGEgYXZhbGlhYmxlIApycCA8LSBycFtXRVNfYXZhbGlhYmxlID09IFQgJiBSTkFfc2VxX2F2YWxpYWJsZSA9PSBUXQpwYXN0ZSgiTnVtYmVyIG9mIHNhbXBsZXMgd2l0aCBXRVMgZXhwb3J0IGFuZCBSTkEtc2VxIGF2YWxpYWJsZToiLCB1bmlxdWVOKHJwJFNBTVBMRV9JRCkpCgoKI0tlZXAgb25seSBnZW5lcywgd2l0aCBib3RoIFJOQSBhbmQgcHJvdGVpbiBtZWFzdXJlZCAKcnAgPC0gcnBbIGdlbmVfZGV0ZWN0ZWQgPT0gIlJOQSBhbmQgcHJvdGVpbiBkZXRlY3RlZCJdCgojIEZpbHRlciBmb3IgdGhlIGdlbmVzLCBkZXRlY3RlZCBhcyBvdXRsaWVycyBhdCBsZWFzdCBvbmNlCm91dGxpZXJzIDwtIHVuaXF1ZShycFtvdXRsaWVyX2NsYXNzICE9ICJub25fb3V0bGllciJdJGdlbmVJRCkKcnAgPC0gcnBbZ2VuZUlEICVpbiUgb3V0bGllcnNdCgojIEFkZCB1cC0gZG93bi0gb3V0bGllciBjbGFzcwpycCA8LSBhZGRfdXBfZG93bl9jbGFzcyhycCwgCiAgICAgICAgICAgICAgICAgICAgICAgIFBhZGpfdGhyZXNob2xkID0gIFBBREpfVEhSRVNIT0xELAogICAgICAgICAgICAgICAgICAgICAgICBac2NvcmVfdGhyZXNob2xkID0gWlNDT1JFX1RIUkVTSE9MRCwgCiAgICAgICAgICAgICAgICAgICAgICAgIGwyRkNfdGhyZXNob2xkID0gTE9HMkZDX1RIUkVTSE9MRCkKCiMgU3Vic2V0IG5lY2Vzc2FyeSBjb2x1bW5zCnJwIDwtIHJwWyAsIGMoIlNBTVBMRV9JRCIsICJnZW5lSUQiLCAib3V0bGllcl9jbGFzcyIsICJ1cF9kb3duX291dGxpZXIiKSBdCnJwIDwtIHJwWyFkdXBsaWNhdGVkKHJwKSwgXQoKIycgIyBPdXRsaWVyIGNsYXNzCm9zMSA8LSBycFssIC5OLCBieSA9IG91dGxpZXJfY2xhc3NdCm9zMiA8LSBycFssIC5OLCBieSA9IHVwX2Rvd25fb3V0bGllcl0KY29sbmFtZXMob3MyKVsxXSA8LSJvdXRsaWVyX2NsYXNzIiAKb3MgPC0gcmJpbmQob3MxLCBvczIpCnJtKG9zMSwgb3MyKQojJyAjIyMgTnVtYmVyIG9mIG91dGxpZXJzIHBlciBjbGFzcwpEVDo6ZGF0YXRhYmxlKG9zLCBjYXB0aW9uID0gIk91dGxpZXIgY291bnRzIiwgICBlc2NhcGUgPSBGKQoKCgoKCiMjIyMjIyMjIyMjIyMjIyMjIyMjIwoKCgojIEFzIHNvb24gYXMgaXQgaXMgbm90IGFsbG93ZWQgdG8gc2hhcmUgZ2VuZXRpYyBkYXRhLAojIG9ubHkgdGhlIHJlc3VsdCBvZiB0aGUgYW5hbHlzaXMgY291bGQgYmUgc2hhcmVkLgojIHRvIHJlcHJvZHVjZSB0aGUgYW5hbHlzaXMgcGxlYXNlIHByZXBhcmUgdGhlIHZhcmlhbnQgdGFibGUgKHZ0KQojIHdpdGggMyBjb2x1bW5zOiBzYW1wbGVfSWQsIGdlbmVfSWQgYW5kIHZhcmlhbnQgdHlwZTogc3RvcCwgY29kaW5nLCBzcGxpY2UgLi4uCgoKCiMgIyBSZWFkIHZhcmlhbnQgYW5ub3RhdGlvbiAKIyB2dCA8LSBmcmVhZCgiL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL3JhcmVfdmFyaWFudHMudHN2IikKIyB2dCA8LSB2dFsgZ2VuZUlEICVpbiUgdW5pcXVlKHJwJGdlbmVJRCksIGMoIlNBTVBMRV9JRCIsICJnZW5lSUQiLCAidmFyX3R5cGUiKV0KIyAKIyBycCA8LSBtZXJnZSh2dCwgcnAsIGJ5ID0gYygiU0FNUExFX0lEIiwgImdlbmVJRCIpLCBhbGwueSA9IFQgKQojIHJwW2lzLm5hKHZhcl90eXBlKSwgdmFyX3R5cGUgOj0gIm5vIHJhcmUgdmFyaWFudCJdCiMgCiMgIyMjIyMjIyMjIyMjIyMjIyMjIyMKIyAjIFJFQUQgZW5yaWNobWVudAojIGVuciA8LSBmcmVhZCgiL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL2VucmljaG1lbnRfcmFyZV92dC50c3YiKQojIGVuciA8LSBlbnJbLCBjKCJDYXQiLCAib3V0bGllcl9jbGFzcyIsICJpbXBvcnRhbmNlIildCiMgc2V0bmFtZXMoZW5yLCBjKCJDYXQiLCAib3V0bGllcl9jbGFzcyIsICJpbXBvcnRhbmNlIiksIGMoInZhcl90eXBlIiwgInVwX2Rvd25fb3V0bGllciIsICJpbXBvcnRhbmNlIikpCiMgCiMgcHIgPC0gbWVyZ2UocnAsIGVuciwgYnkgPSBjKCJ2YXJfdHlwZSIsICJ1cF9kb3duX291dGxpZXIiKSwgYWxsLng9VCkKIyBwciA8LSBwcltvcmRlcihpbXBvcnRhbmNlKSwgXQojIHByIDwtIHByWyFkdXBsaWNhdGVkKHByWywgYygidXBfZG93bl9vdXRsaWVyIiwgICJTQU1QTEVfSUQiLCAiZ2VuZUlEIildKSwgXQojIHByJGltcG9ydGFuY2UgPC1OVUxMCiMgcHIgPC0gcHJbIWR1cGxpY2F0ZWQocHIpLCBdCiMgCiMgIyMjIyMjIyMjIyMjIyMjIyMjIyMKIyAKIyAKIyAjIENhbGN1bGF0ZSBwcm9wb3J0aW9ucyBvZiBvdXRsaWVycwojIHByIDwtIHByWywgLk4sIGJ5ID0gLih1cF9kb3duX291dGxpZXIsIHZhcl90eXBlKV0KIyBwclssIHRvdGFsIDo9IHN1bShOKSwgYnkgPSAuKHVwX2Rvd25fb3V0bGllcildCiMgcHJbLCBwcm9wIDo9IE4vc3VtKE4pLCBieSA9IHVwX2Rvd25fb3V0bGllcl0KIyB3cml0ZV90c3YocHIsICIvcy9wcm9qZWN0L21pdG9NdWx0aU9taWNzL211bHRpT01JQ3NfaW50ZWdyYXRpb24vcmF3X2RhdGEvcHJvcG9ydGlvbnNfcmFyZS50c3YiKQoKCnByIDwtIGZyZWFkKHNuYWtlbWFrZUBpbnB1dCRlbnJpY2htZW50c19wcm9wb3J0aW9ucykKIyBwciA8LSBmcmVhZCgiL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL3Jhd19kYXRhL3ZhcmlhbnRfdHlwZV9lbnJfcHJvcC50c3YiKQoKIycgIyMjIFVuZGVyZXhwcmVzc2lvbiBvdXRsaWVycwpwclssIHZhcl90eXBlIDo9IGZhY3Rvcih2YXJfdHlwZSwgbGV2ZWxzID0gYygibm8gcmFyZSB2YXJpYW50IiwgIm5vbl9jb2RpbmciLCAic3lub255bW91cyIsICJjb2RpbmciLCAiZnJhbWVzaGlmdCIsICJzcGxpY2UiLCAic3RvcCIpKV0KcHJbLCBvdXRsaWVyX2NsYXNzX2xhYmVsIDo9IHBhc3RlMCh1cF9kb3duX291dGxpZXIgLCdcbicsICIobiA9ICIsIHRvdGFsLCAiKSIpIF0KCiMrIGZpZy53aWR0aD0xMywgZmlnLmhlaWdodD0zCmdncGxvdChwclt1cF9kb3duX291dGxpZXIgJWluJSBjKCJSTkFfdW5kZXJleHByZXNzaW9uIiwgIlByb3RlaW5fdW5kZXJleHByZXNzaW9uIiwgIlJOQV9Qcm90ZWluX3VuZGVyZXhwcmVzc2lvbiIsICJub25fb3V0bGllciIpXSwgYWVzKG91dGxpZXJfY2xhc3NfbGFiZWwsIHByb3ApKSArCiAgZ2VvbV9iYXIoc3RhdD0gJ2lkZW50aXR5JywgYWVzKGZpbGwgPSB2YXJfdHlwZSkpICsKICBzY2FsZV9maWxsX21hbnVhbCh2YWx1ZXMgPSB2YXJpYW50X2NvbG9ycyApICsKICBjb29yZF9mbGlwKHlsaW0gPSBjKDAsMSkpICsKICBzY2FsZV95X2NvbnRpbnVvdXMoYnJlYWtzPXNlcSgwLDEsIDAuMSksIGxhYmVscz1zY2FsZXM6OnBlcmNlbnQpICsKICBsYWJzKCB5ID0gIlByb3BvcnRpb24gb2Ygb3V0bGllcnMgd2l0aCByYXJlIHZhcmlhbnRzIikrCiAgdGhlbWVfY2xhc3NpYygpKwogIHRoZW1lKGxlZ2VuZC5wb3NpdGlvbj0idG9wIiwgIGF4aXMudGl0bGUueSA9IGVsZW1lbnRfYmxhbmsoKSAsbGVnZW5kLmRpcmVjdGlvbiA9ICJob3Jpem9udGFsIiwKICAgICAgICBsZWdlbmQudGl0bGUgPSBlbGVtZW50X2JsYW5rKCksCiAgICAgICAgYXhpcy50ZXh0LnkgPSBlbGVtZW50X3RleHQoZmFjZT0iYm9sZCIsIHNpemU9MTIpKSArCiAgZ3VpZGVzKGZpbGwgPSBndWlkZV9sZWdlbmQobnJvdyA9IDEpKQoKCg==</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("outlier_proportions_variant_type.R");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

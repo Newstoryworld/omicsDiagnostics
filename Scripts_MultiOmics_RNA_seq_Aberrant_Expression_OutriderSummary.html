@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Michaela Mueller, vyepez" />
+
+<meta name="date" content="2021-01-27" />
+
+<title>OUTRIDER Summary</title>
+
+<script src="libR/jquery-1.12.4/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libR/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libR/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libR/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libR/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libR/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libR/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libR/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="libR/navigation-1.1/tabsets.js"></script>
+<script src="libR/navigation-1.1/codefolding.js"></script>
+<script src="libR/navigation-1.1/sourceembed.js"></script>
+<link href="libR/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="libR/highlightjs-9.12.0/highlight.js"></script>
+<script src="libR/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<link href="libR/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="libR/datatables-binding-0.15/datatables.js"></script>
+<link href="libR/dt-core-bootstrap-1.10.20/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="libR/dt-core-bootstrap-1.10.20/css/dataTables.bootstrap.extra.css" rel="stylesheet" />
+<script src="libR/dt-core-bootstrap-1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="libR/dt-core-bootstrap-1.10.20/js/dataTables.bootstrap.min.js"></script>
+<script src="libR/jszip-1.10.20/jszip.min.js"></script>
+<script src="libR/pdfmake-1.10.20/pdfmake.js"></script>
+<script src="libR/pdfmake-1.10.20/vfs_fonts.js"></script>
+<link href="libR/dt-ext-buttons-bootstrap-1.10.20/css/buttons.bootstrap.min.css" rel="stylesheet" />
+<script src="libR/dt-ext-buttons-bootstrap-1.10.20/js/dataTables.buttons.min.js"></script>
+<script src="libR/dt-ext-buttons-bootstrap-1.10.20/js/buttons.flash.min.js"></script>
+<script src="libR/dt-ext-buttons-bootstrap-1.10.20/js/buttons.html5.min.js"></script>
+<script src="libR/dt-ext-buttons-bootstrap-1.10.20/js/buttons.colVis.min.js"></script>
+<script src="libR/dt-ext-buttons-bootstrap-1.10.20/js/buttons.print.min.js"></script>
+<script src="libR/dt-ext-buttons-bootstrap-1.10.20/js/buttons.bootstrap.min.js"></script>
+<link href="libR/dt-ext-colreorder-bootstrap-1.10.20/css/colReorder.bootstrap.min.css" rel="stylesheet" />
+<script src="libR/dt-ext-colreorder-bootstrap-1.10.20/js/dataTables.colReorder.min.js"></script>
+<script src="libR/dt-ext-colreorder-bootstrap-1.10.20/js/colReorder.bootstrap.min.js"></script>
+<link href="libR/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
+<script src="libR/nouislider-7.0.10/jquery.nouislider.min.js"></script>
+<link href="libR/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
+<script src="libR/selectize-0.12.0/selectize.min.js"></script>
+<link href="libR/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="libR/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<link rel="stylesheet" href="lib/add_content_table.css" type="text/css" />
+<link rel="stylesheet" href="lib/leo_style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">OUTRIDER Summary</h1>
+<h4 class="author">Michaela Mueller, vyepez</h4>
+<h4 class="date">2021-01-27</h4>
+
+</div>
+
+
+<pre class="r"><code>suppressPackageStartupMessages({
+    library(OUTRIDER)
+    library(vctrs)
+    library(SummarizedExperiment)
+    library(ggplot2)
+    library(data.table)
+    library(dplyr)
+    library(ggthemes)
+    library(readr)
+    library(tidyverse)
+})</code></pre>
+<div id="read-ods-object" class="section level2">
+<h2>Read ods object</h2>
+<pre class="r"><code>ods &lt;- readRDS(snakemake@input$ods)</code></pre>
+<div id="aberrant-samples" class="section level3">
+<h3>Aberrant samples</h3>
+<pre class="r"><code>plotAberrantPerSample(ods)</code></pre>
+<p><img src="Scripts_MultiOmics_RNA_seq_Aberrant_Expression_OutriderSummary_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code>##################
+#Load OUTRIDER results 
+##################
+# rna &lt;- readRDS(&#39;/s/project/mitoMultiOmics/multiOMICs_integration/processed_data/outrider/OUTRIDER_results.rds&#39;) %&gt;% as.data.table()
+rna &lt;- readRDS(snakemake@input$outrider) %&gt;% as.data.table()</code></pre>
+</div>
+<div id="how-many-samples-with-at-least-one-outlier-gene" class="section level3">
+<h3>How many samples with at least one outlier gene</h3>
+<pre class="r"><code>rna[ RNA_outlier == T , uniqueN(SAMPLE_ID)]</code></pre>
+<pre><code>## [1] 121</code></pre>
+<pre class="r"><code>DT::datatable(rna[RNA_outlier == T], caption = &quot;OUTRIDER results&quot;, 
+              style = &#39;bootstrap&#39;, filter = &#39;top&#39;, escape = F,
+              extensions = c( &#39;Buttons&#39;, &#39;ColReorder&#39; ), 
+              options = list( colReorder = TRUE, dom = &#39;Bfrtip&#39;,
+                              buttons = c(&#39;copy&#39;, &#39;csv&#39;, &#39;excel&#39;, &#39;pdf&#39;, &#39;print&#39;)))</code></pre>
+<div id="htmlwidget-5ef535faf36fc1fce299" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-5ef535faf36fc1fce299">{"x":{"style":"bootstrap","filter":"top","filterHTML":"<tr>\n  <td><\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"43688.82\" data-scale=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"8.82\" data-scale=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-10.8\" data-max=\"3.14\" data-scale=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"-11.7\" data-max=\"8.43\" data-scale=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"1.4652919212e-05\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none; position: absolute; width: 200px;\">\n      <div data-min=\"0\" data-max=\"0.049531465103851\" data-scale=\"15\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"disabled\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","extensions":["Buttons","ColReorder"],"caption":"<caption>OUTRIDER results<\/caption>","data":[["1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40","41","42","43","44","45","46","47","48","49","50","51","52","53","54","55","56","57","58","59","60","61","62","63","64","65","66","67","68","69","70","71","72","73","74","75","76","77","78","79","80","81","82","83","84","85","86","87","88","89","90","91","92","93","94","95","96","97","98","99","100","101","102","103","104","105","106","107","108","109","110","111","112","113","114","115","116","117","118","119","120","121","122","123","124","125","126","127","128","129","130","131","132","133","134","135","136","137","138","139","140","141","142","143","144","145","146","147","148","149","150","151","152","153","154","155","156","157","158","159","160","161","162","163","164","165","166","167","168","169","170","171","172","173","174","175","176","177","178","179","180","181","182","183","184","185","186","187","188","189","190","191","192","193","194","195","196","197","198","199","200","201","202","203","204","205","206","207","208","209","210","211","212","213","214","215","216","217","218","219","220","221","222","223","224","225","226","227","228","229","230","231","232","233","234","235","236","237","238","239","240","241","242","243","244","245","246","247","248","249","250","251","252","253","254","255","256","257","258","259","260","261","262","263","264","265","266","267","268","269","270","271","272","273","274","275","276","277","278","279","280","281","282","283","284","285","286","287","288","289","290","291","292","293","294","295","296","297","298","299","300","301","302","303","304","305","306","307","308","309","310","311","312","313","314","315","316","317","318","319","320","321","322","323","324","325","326","327","328","329","330","331","332","333","334","335","336","337","338","339","340","341","342","343","344","345","346","347","348","349","350","351","352","353","354","355","356","357","358","359","360","361","362","363","364","365","366","367","368","369","370","371","372","373","374","375","376","377","378","379","380","381","382","383","384","385","386","387","388","389","390","391","392","393","394","395","396","397","398","399","400","401","402","403","404","405","406","407","408","409","410","411","412","413","414","415","416","417","418","419","420","421","422","423","424","425","426","427","428","429","430","431","432","433","434","435","436","437","438","439","440","441","442","443","444","445","446","447","448","449","450","451","452","453","454","455","456","457","458","459","460","461","462","463","464","465","466","467","468","469","470","471","472","473","474","475","476","477","478","479","480","481","482","483","484","485","486","487","488","489","490","491","492","493","494","495","496","497","498","499","500","501","502","503","504","505","506","507","508","509","510","511","512","513","514","515","516","517","518","519","520","521","522","523","524","525","526","527","528","529","530","531","532","533","534","535","536","537","538","539","540","541","542","543","544","545","546","547","548","549","550","551","552","553","554","555","556","557","558","559","560","561","562","563","564","565","566","567","568","569","570","571","572","573","574","575","576","577","578","579","580","581","582","583","584","585","586","587","588","589","590","591","592","593","594","595","596","597","598"],["OM94191","OM77127","OM20680","OM58230","OM32691","OM52277","OM30836","OM28497","OM30085.2","OM32691","OM73546","OM30476","OM30836","OM69964","OM01282","OM30836","OM85000","OM36526","OM80431","OM36694","OM01130","OM48652","OM01282","OM01282","OM36055","OM01282","OM36463","OM15663","OM02364","OM01282","OM52618","OM94191","OM63071","OM14157","OM87369","OM27175","OM01130","OM14157","OM26649","OM92438","OM01282","OM01282","OM88728","OM36981","OM30085.2","OM66072","OM88146","OM66072","OM01282","OM30085.2","OM15663","OM56505","OM75740","OM28497","OM06865","OM91786","OM16162","OM61169","OM01282","OM45823","OM30476","OM92438","OM65728","OM15663","OM52618","OM35261","OM91786","OM16302","OM15760","OM88470","OM30085.2","OM21111","OM30085.2","OM70698","OM70698","OM11815","OM50974","OM30476","OM26649","OM01282","OM01282","OM92438","OM21111","OM30085.2","OM49333","OM30476","OM30476","OM23417","OM41016","OM65728","OM40565","OM01282","OM30085.2","OM11815","OM01130","OM56505","OM01130","OM30476","OM30476","OM42124","OM01282","OM94191","OM57837","OM02364","OM01282","OM36694","OM79510","OM11815","OM50974","OM71746","OM30476","OM26649","OM52277","OM26649","OM36463","OM38813","OM65708","OM21111","OM03592","OM75219_1","OM35261","OM00881","OM16162","OM01282","OM92438","OM01282","OM26649","OM61169","OM33981","OM55264","OM30085.2","OM30085.2","OM17530","OM12102","OM02364","OM30085.2","OM61355","OM65708","OM30085.2","OM61355","OM16162","OM30476","OM30476","OM03592","OM02412","OM01282","OM01282","OM17530","OM01282","OM26649","OM61169","OM20680","OM71616","OM26649","OM26649","OM01282","OM57274","OM94976","OM81045","OM02364","OM28140","OM43933","OM26649","OM65728","OM05166","OM92216","OM49209","OM61986","OM30085.2","OM70698","OM36981","OM91816","OM02364","OM26649","OM55264","OM01282","OM30836","OM01130","OM16162","OM30085.2","OM30085.2","OM57837","OM57274","OM52277","OM01282","OM49333","OM48652","OM66072","OM56505","OM26649","OM10641","OM10641","OM39519","OM61986","OM30476","OM30476","OM35654","OM27175","OM26649","OM30085.2","OM14157","OM30085.2","OM72697","OM23417","OM30085.2","OM01282","OM01282","OM34814","OM36055","OM17530","OM37109","OM65728","OM30836","OM02364","OM85279","OM01282","OM00881","OM01282","OM30085.2","OM52277","OM00762","OM00762","OM00762","OM57837","OM11815","OM68633","OM65728","OM73546","OM30085.2","OM49736","OM28497","OM30085.2","OM94976","OM02364","OM85000","OM13378","OM57274","OM25068","OM30476","OM21111","OM36760","OM01130","OM57837","OM57837","OM01130","OM01130","OM01282","OM26649","OM26649","OM48652","OM30476","OM72339","OM32691","OM35261","OM30085.2","OM49209","OM05252","OM65117","OM06339","OM26649","OM72339","OM30085.2","OM65708","OM72697","OM55346","OM55346","OM55264","OM55264","OM05252","OM05252","OM36694","OM36694","OM92438","OM57274","OM73953","OM14157","OM70698","OM49209","OM30085.2","OM32691","OM32691","OM87369","OM30085.2","OM57274","OM30476","OM94191","OM01282","OM26649","OM27390","OM77127","OM05166","OM26649","OM11815","OM01282","OM91816","OM72361","OM02412","OM28497","OM91786","OM30085.2","OM20680","OM69964","OM69964","OM11815","OM47664","OM91786","OM91786","OM91786","OM00881","OM77629","OM30476","OM26649","OM73953","OM36526","OM73953","OM93206","OM49209","OM55264","OM01282","OM04338","OM75219_1","OM52277","OM27175","OM27175","OM28497","OM17530","OM28497","OM28497","OM69964","OM30476","OM36760","OM05252","OM23417","OM49333","OM35261","OM28497","OM01282","OM01282","OM56706","OM15663","OM13378","OM30085.2","OM84535","OM18763","OM18763","OM74919","OM56505","OM68633","OM36694","OM56505","OM05252","OM61355","OM61355","OM56505","OM56505","OM56505","OM56505","OM92438","OM92438","OM92438","OM92438","OM75219_1","OM75219_1","OM75219_1","OM75219_1","OM70822","OM30085.2","OM02412","OM02412","OM17530","OM17530","OM17530","OM56706","OM48820","OM42124","OM01282","OM01282","OM61986","OM61986","OM18763","OM77127","OM30085.2","OM02412","OM16162","OM30476","OM84535","OM79510","OM79510","OM56505","OM57837","OM05166","OM78873","OM91786","OM65708","OM96588","OM01282","OM05166","OM30476","OM26649","OM28140","OM05252","OM05252","OM55346","OM61986","OM61986","OM61986","OM15760","OM30085.2","OM30085.2","OM79535","OM79535","OM79535","OM56505","OM56505","OM48820","OM26649","OM17530","OM26649","OM65708","OM71746","OM80431","OM77127","OM61169","OM75219_1","OM75219_1","OM92985","OM61986","OM02364","OM77127","OM03592","OM30085.2","OM30085.2","OM01282","OM48820","OM01282","OM43933","OM43933","OM30476","OM28497","OM30085.2","OM72339","OM61986","OM35261","OM30476","OM40565","OM18763","OM01282","OM80431","OM91786","OM28784","OM30476","OM43933","OM30476","OM01282","OM02412","OM02412","OM02412","OM02412","OM02412","OM61355","OM02412","OM01282","OM94191","OM94191","OM01130","OM28497","OM01282","OM71746","OM36694","OM28784","OM28784","OM28784","OM35654","OM92438","OM92438","OM69964","OM45823","OM35261","OM28497","OM28497","OM30476","OM91786","OM26649","OM14461","OM48652","OM01282","OM69964","OM69964","OM65117","OM61986","OM03592","OM82277","OM01282","OM30085.2","OM91786","OM48652","OM25068","OM91786","OM91786","OM92216","OM92216","OM85406","OM94976","OM34814","OM34814","OM65728","OM75219_1","OM56505","OM30476","OM12102","OM84535","OM75219_1","OM30085.2","OM30085.2","OM14157","OM61986","OM72697","OM75219_1","OM75219_1","OM47664","OM47664","OM47664","OM69964","OM69964","OM28497","OM75219_1","OM75219_1","OM02412","OM55346","OM34676","OM35261","OM00881","OM01282","OM47664","OM30476","OM94191","OM84535","OM28784","OM72697","OM72697","OM26649","OM26649","OM30085.2","OM85000","OM30476","OM21111","OM26649","OM30085.2","OM36526","OM69964","OM01282","OM01282","OM91786","OM71616","OM71746","OM71746","OM92438","OM05252","OM05252","OM88728","OM88728","OM01282","OM21111","OM11815","OM30085.2","OM36694","OM17530","OM55264","OM55264","OM91786","OM61986","OM80431","OM46241","OM46241","OM91786","OM91786","OM30476","OM55264","OM26649","OM02364","OM10641","OM94191","OM01282","OM06865","OM92985","OM32691","OM16162","OM00881","OM30836","OM00762","OM21111","OM21111","OM61986","OM16162","OM16162","OM92438","OM92438","OM92438"],["ISOC2","PITRM1","ARMC10","VPS33B","ZNF343","UQCRFS1","NDUFAF2","HOXA10","WDR59","HEPH","TIMMDC1","NRN1","ARMCX1","ZNF616","HADHA","ERCC8","RPF1","MRPS25","URI1","EIF1AY","RIC8A","PUM3","GTF3C2","SNX17","DDX3Y","HADHB","RNF40","RRP36","PSMC1","EIF2B4","ADSL","NDUFA10","GSPT1","CDC42P6","DNAJA3","GRWD1","PSMD13","CUL2","ERBB2","KDELC1","SUPT7L","RAB10","ZFAS1","SHOX2","KARS","C19ORF70","UFSP2","ATIC","PUM2","COX4I1","DNTTIP2","CWC22","TOMM70","HOXA9","CAPN7","SETD6","NUDT16","SHPRH","PPM1G","MRPS5","HOXB4","PARP2","PRPF8","LRRC40","AL022238.4","MIB1","PRICKLE3","PSMB4","MTCO2P12","EDEM1","PRKY","SYNCRIP","TCF25","PCNX1","RCC1L","TRIM38","SGCE","PIGG","ASCC1","SF3B6","SLC4A1AP","SUCLG1","MTCO3P12","MTHFSD","PDPK1","SATB2","HECW2","SNX14","DDX3Y","DNAJA1","WDR46","TMEM214","ZC3H18","SMPD4","HRAS","MBD4","BET1L","HOXA4","AC099522.1_2","AAAS","TRMT1","FAM114A1","NDUFV3","USP48","MRPL33","LARP7","SYT11","IMP4","PRCC","CUL4A","FOXD1","MID2","UQCRFS1P1","CERS6","IARS2","TIMMDC1","SLMAP","NFU1","EFS","MZT2B","WDR7","TUSC3","ZNF300","ATAD2B","RANBP10","UBXN2A","HOXB4","DNAJC10","DHX40","XG","ATMIN","GHDC","SHQ1","EIPR1","CYB561A3","GABARAPL2","ECHDC1","ATPAF1","EMC8","NLGN4Y","ZNF594","HOXB3","HOXB2","MICU2","OSBPL6","NRBP1","RRAS","LINC02591","SLC35F6","APOBEC3A","RPL37","SCRN2","DAZAP1","TUSC3","XPOT","ASXL2","DCTN3","ZFAT","NSMCE4A","NSMAF","CLIC1","PDE8A","NAP1L3","AL671762.1","RMDN3","DDX3Y","AC099560.2","LANCL2","GLG1","AC118138.2","HADH","LAPTM4A","SLC25A4","SV2A","CYCS","ITSN2","SNHG8","RNH1","TRMT12","TRAPPC2L","CCDC8","FTLP3","HECTD1","USP22","OST4","APOBEC3B","SPATC1L","SUOX","GNPNAT1","AARS2","TXNDC5","BLOC1S5-TXNDC5","RBMX2","TAF7","ERLEC1","HOXA7","AC126283.2","UBE2T","APOBEC3B","TERF2IP","SHC1","MBTPS1","ARMCX6","TTC3P1","MON1B","AGBL5","ZNF512","DPM1","CLMP","RB1CC1","FANCI","HSPA1A","ZNF667","MFF","NBAS","ZNF513","SAR1B","BABAM2","RAC1","AC131235.1","ARL6IP4","LMAN2","AC026362.1","MRPL38","POLR3E","SBDS","HSPA1B","MESD","RNF5","CAPN7","HOXA10-AS","MAP1LC3B","AUTS2","PSMC1P1","ECHDC1","GCC2","TTC38","COG7","AC004080.6","SENP6","ZSCAN32","PTDSS2","SLC15A3","AC087289.3","SIRT3","AC069287.1_2","SNAP29","ARSG","ARHGEF25","MALSU1","HOXD8","INPP4A","AL049650.1","POM121B","HSDL1","KTN1","HSPA1A","GLRX","GTF2F1","GPC6","PTPN23","CES4A","SP140L","ARMCX7P","ERCC3","TXNRD2","CDK1","CXORF40B","YARS","HSPA1B","RN7SK","RN7SK_2","MAN2B1","INTS11","SLC38A5","PTRHD1","ZWILCH","AC099336.2","PPIE","EEF1G","AP002990.1","TPRG1L","SPG7","UIMC1","HOXB7","RWDD2B","PTRHD1","BEND7","ECHS1","SLFN11","KIF22","ZCCHC17","UTS2","ADCY3","MATN3","RABL2B","EFNA5","HOXA7","RPS24","ZNF532","ARMC10P1","TMEM132A","MTX3","MTFMT","DIP2B","SLC17A9","AEBP1","MT-CO3","YIPF6","ETFDH","MRPL48","TRAM1L1","BSCL2","SDHA","DNAJC16","RBM43","NIPSNAP3A","HARS","PREB","SPIN2A","AC026403.1","UNC13B","CNPPD1","DPY19L4","CD109","IRAK1","LAMA1","SLC25A38","PANX1","GTF2A1","SCMH1","RPL26P30","MBLAC2","DHX30","NOVA1","KIAA1217","FH","APOBEC3C","PKN1","KIAA0556","PPID","CMC2","TTC26","ARMCX5","SDHAP3","PARPBP","MPV17L2","ACOT9","INTS1","RPL27","ATP13A1","RPRD2","AC007228.1","RPS15A","RPS27A","RPL26","HOXA10-AS","PLOD1","SLC35A5","CCDC18-AS1","LINC00863","RPL24P4","CMC1","EEF1B2P3","RPS28","RBM23","PIEZO1","H2AFY2","GYPC","NCAPD3","TBC1D31","NBPF15","AGPAT2","HAUS7","PREPL","BTG1","CENPO","EDA2R","S100A16","UFM1","SRC","ANKRD11","DOK6","ERCC8","LGALS1","PCYT1A","TET2","FAM180A","AC135178.2","PTPN4","TMEM219","PHF14","SLC38A5","LSM14A","NOSIP","STK26","PPP4C","AHCY","ARHGAP23","C4ORF46","SLC38A1","IFT172","CHEK1","ADAMTSL1","RPL10P16","AC005618.1","AP1M1","CDH13","HSBP1","NDRG4","PTGR1","ARAP1","HARS","CEBPZOS","TREX2","DTX3","EIF2AK2","KCTD15","SPCS3","APAF1","BOP1","TNS2","CCDC50","ELAC2","AC008894.3","STK36","MTRNR2L12","DDB1","LHPP","LTO1","THAP12","ZFP3","VWA5A","ZFC3H1","IFT172","AC004453.1","NDN","TPT1","AC004080.3","NCAM1","MICU2","TRIM68","USP38","POLD1","TOP1MT","CHCHD2","SLC5A6","KM-PA-2","ISLR","GOLGA2","PHAX","WDR11","HOXB6","AC074091.1_2","SLC1A1","MARC2","ECHDC2","CYP27A1","GULP1","ANKHD1","LIN7A","MPV17","STX6","SOX11","PHRF1","AC090204.1","DNMT3A","C17ORF49","MT-RNR1","LEPR","NIPA1","SLX4","EFR3A","ATAD1","YY1AP1","MAN1A1","CDH24","S1PR2","LOXL3","GPN1","SKAP2","SLC25A39","HOXB3","MIR4458HG","SCRIB","GPN1","SEPT11","PSMB4","SDHAP2","PRTFDC1","MRPL44","ZNF252P","WDR35","USP10","NAALADL1","RPS28P7","GDAP1","RAC2","DLG5","RPS4Y1","AFDN","FBXW8","UQCRHL","CERK","AC011446.1","C19ORF12","RPLP2","RPL17","MIR137HG","IMPDH2","LRRC40","AL024498.2","CYBA","LMOD1","RP4-758J24.5","RPL10P9","U91328.1","RPSAP19","RPL15P3","MTREX","POLH","HCG11","PDGFA","CYFIP1","HOXA4","RPL18AP3","NPM1P27","PDE4A","PUS3","C1ORF74","UGGT2","UBAC2","XPO5","CEP290","HAGLR","SYNGR1","TAOK2","A1BG","EXOSC7","ZNF277","AUP1","HSPB3","FAHD2A","MRNIP","TCEAL1","IBTK","HOXB7","APRT","INTS1","HAUS6","TCEAL7","ZNF521","MT-ND3","IAH1","PCID2","LAMP1","PRDM5","ALDH1L2","RABL3","SLC1A4","CDC42P6","GRIN2D","TMEM256-PLSCR3","AC083899.1","ZDHHC4","RMRP","PLSCR1","SEPT6","CDH2","GALNT1","RGPD1","POLR3A","CLINT1","DYNC1I2P1","CMTM7","Z82188.1_2","FRMD6","TAF9B","TNPO3","LMF2","EMC10","EPHA4","MYO5A","RAD50","UQCRHL","BTN3A2","ZNF132","CHSY3","ZNF594","ZNF75A","PHF3","AL589666.1","RGPD2","ZNF37A","SMOX","NDUFS4","COQ2","AC010422.5"],[4.02,2.52,102.02,101.91,1791.9,1649.66,192.25,0,423.86,9.41,346.58,0,454.01,1011.18,5555.27,96.59,756.64,385.03,2280.28,0.09,11036.35,1116.1,1401.26,3870.09,2269.76,3279.99,1883.6,1205.1,3916.15,797.58,1945.79,1554.53,5224.44,341.49,1007.68,682.59,8904.12,1569.49,1746.43,251.65,1347.43,3999.09,6697.86,69.83,4456.1,466.74,568.58,1912.83,2896.67,4919.48,1741.41,572.34,2734.66,5.03,895.29,87.75,632.45,392.4,2788.5,1047.64,0,456.39,9272.6,605.71,1959.45,1512.59,41.13,10479.73,2325.56,1655.75,1332.94,8696.99,1860.69,1694.87,1026.76,364.33,985.75,1061.73,736.08,1824.79,1024.03,1638.38,93.88,220.47,1789.62,283.24,43.15,1662.14,3438.8,4529.08,1434.28,3683.89,933.02,4595.49,1636.76,2324.38,6071.93,0,659.84,869.19,551.45,4644.91,244.97,2206.58,1063.76,1171.66,8165.04,2071.11,1332.36,2908.64,694.1,52.35,62.23,341.59,4299.04,634.03,3938.1,614.45,128.69,263.84,604.75,805.43,180.7,184.67,1252.92,740.08,2.07,4790.52,1622,3.14,2387.45,88.7,592.07,458.32,3058.66,1521.36,1621.42,1213.32,770.75,1406.9,21.21,0,111.28,888.7,165.3,4646.39,1167.67,0,824.68,0,10549.13,140.67,3821.93,995.23,9459.09,1478.85,1155.4,1959.06,337.9,1844.82,13307.18,879.68,12.17,7462.24,913.16,0,414.28,2095.8,10119.01,326.27,719.44,8529.47,132.78,120.93,6704.6,895.13,1755.77,10604.94,232.16,639.81,10.38,493.99,4996.75,6922.32,3802.33,0,0,330.39,2215.02,273.26,16301.75,15979.15,481.1,2978.19,2911.78,2.51,643.51,350.68,2.08,1676.57,9437.06,5710.81,1335.34,32.55,1000.74,645.75,726.66,1240.85,5800.82,2067.48,967.3,8839.8,23.08,5415.22,2140.4,242.05,1856.73,849.36,21380.46,66.17,1633.77,2490.69,1837.65,567.86,1174.37,5046.1,7903.44,4689.37,735.64,1017.1,2.69,4730.83,294.34,820.41,1710.05,1294.16,1437.45,470.87,0,2739.97,799.99,1121.63,538.26,632.97,736.67,679.69,1206.24,5.76,134.71,400.69,164.23,847.95,177.7,1352.46,663.92,6621.25,8949.44,4949.74,1848.94,204.49,1084.12,4.88,394.6,739.53,1658.58,911.62,582.02,1486.01,5828.84,7921.31,240.25,238.76,3077.96,1305.17,7.26,237.14,1196.74,200.62,972.82,37852.24,38099.71,1947.77,1494.95,770.87,0,578.67,236.85,183.79,2341.56,696.17,2058.89,1039.26,11.99,1094.36,603.54,1887.45,6.44,0,31017.47,2666.7,4.33,1608.06,2098.76,296.69,994.88,17.01,2225.51,18093.98,2906.49,630.93,430.07,40.32,2348.37,2303.63,848.65,254.09,724.31,2548.18,1221.91,236.02,740.68,1097.62,2650,1081.36,7755.95,6079.79,8.36,673.48,3503.2,3205.66,2719.58,142.06,161.33,1639.64,9.42,122.84,4224.26,871.45,1480.73,564.67,816.37,618.09,811.59,308.77,82.51,185.03,163.55,1656.06,2548.18,8566.19,894.35,1347.58,0,8504.34,13877.3,12351.6,9.39,10587.01,1283.48,498.81,329.11,130.6,629.25,241.15,2601.61,1671.52,3973.92,80.82,95.3,1105.63,177.81,2281.45,258.49,890.45,2279.51,7823.6,919.77,229.77,2723.94,3367.59,3779.6,3710.14,13.99,201.57,20726.08,7248.8,1212.31,135.7,6328.2,809.21,3071.72,851.5,15.43,4081.66,402.57,15.59,3993.84,2936.53,3123.91,1616.14,1759.91,518,1997.3,3343.84,1320.3,181.65,1310.27,653.72,3287.11,0,439.49,4615.68,2617.89,1264.36,703.88,171.93,4844.02,681.64,13462.15,810.43,456.55,941.84,7179.8,1802.59,3.63,1582.03,305.95,21092.26,88.4,1031.24,3964.75,38.41,25.14,4156.56,543.18,163.17,299.63,43688.82,2.97,9.39,1001.77,280.38,1781.28,239.14,187.24,3680.83,486.5,324.1,771.46,3683.99,3291.72,2997.73,0,285.13,17.48,18.81,61.08,74.89,28.83,2633.61,36.66,1450.2,3248.03,0.67,1356.44,1.59,246.14,2130.19,31244.14,1820.97,1908.95,581.83,3403.12,1640.98,2211.66,8062.25,715.21,1975.46,62.18,2637.76,551.55,1610.53,26.4,7.6,519.58,1186.6,28545.95,9248.09,838.72,216.8,750.47,548.87,347,2270.15,53.92,94.71,635.08,93.54,5272.58,0,784.88,715.48,48.76,2053.17,4.29,948.82,5523.59,15951.88,38.63,4435.94,680.35,34.92,87.38,153.62,255.68,933.94,3.32,209.69,2450.06,4146.9,2839.63,438.52,810.75,8948.41,5.77,1093.4,345.49,278.21,522.91,311.39,1410.89,3393.39,3381.67,658.92,15.58,35.64,2447.81,15.84,2127.62,379.2,4474.95,0,686.63,1165.44,794.09,3422.84,5.98,782.6,1019.72,1080.42,9.39,231.27,1752.84,1650.92,1318.47,24665.11,292.89,5122.69,752.93,802.17,219.55,6.7,1520.43,894.76,2012.34,47.33,1571.71,584.13,1621.57,8032.23,674.65,2437.07,3635.22,99.88,217.79,51.68,12872.79,403.62,4224.84,1134.95,1468.72,51.99,2372.28,2094.29,49.95,147.82,21.89,62.76,35.63,818.13,2026.3,352.1,684.7,712.83,1043.93,1344.75,386.5,336.97],[0.01,0,0.08,0.17,3.58,0.5,0.19,0,0.36,0,0.13,0,0.29,3.56,0.62,0.2,0.59,0.42,0.66,0,1.71,0.54,0.61,0.64,5.98,0.6,0.62,0.64,0.64,0.57,0.61,0.5,0.59,5.1,0.59,0.58,1.67,0.62,0.54,0.27,0.61,0.6,2.73,0.09,0.68,0.59,0.53,0.5,0.68,0.65,0.62,0.55,0.69,0.01,0.56,0.3,0.37,0.51,0.66,0.61,0.01,0.48,0.63,0.57,0.65,0.54,0.29,1.57,7.16,0.48,7.78,0.73,0.54,0.38,0.68,0.31,0.28,0.54,0.6,0.68,0.67,0.66,0.04,0.56,0.65,0.34,0.08,0.56,7.52,0.58,0.64,0.63,0.68,1.44,1.75,1.61,1.72,0.02,0.23,0.56,0.64,0.56,0.21,0.65,0.62,0.62,2.57,1.49,0.7,0.59,0.24,0.16,0.4,0.18,0.67,0.24,1.91,0.62,0.11,0.44,0.59,0.15,0.39,0.52,1.47,0.57,0.02,0.54,0.64,0,0.67,0.24,0.55,0.56,1.84,0.62,0.57,0.62,0.69,7.36,0.13,0,0.16,0.57,0.24,0.66,0.59,0,0.51,0.01,0.64,0.28,1.39,0.18,0.6,0.63,0.66,5.24,0.51,0.61,0.66,0.57,0.05,2.28,0.6,0.04,2.39,2.04,0.59,0.64,0.51,0.55,0.24,0.13,1.46,0.66,2.41,1.77,0.59,0.59,0.02,3.51,0.68,0.65,0.68,0,0.01,0.61,0.6,0.49,0.58,0.59,0.62,0.61,0.67,0.02,1.82,0.54,0.01,0.64,0.56,0.65,0.6,0.14,0.66,0.63,0.55,0.69,0.36,0.63,0.55,2.71,0.11,1.82,0.69,0.61,0.67,0.61,1.26,3.14,0.69,0.63,0.72,0.67,1.61,0.7,2.75,1.47,0.61,0.64,0.05,0.6,0.29,0.56,0.61,0.59,1.87,0.57,0.03,0.77,1.64,1.58,3.43,0.7,1.58,1.77,0.59,0.07,0.15,0.59,0.29,0.64,1.93,1.61,0.58,0.64,2.75,3.23,0.74,0.08,0.61,0.06,0.51,0.6,0.69,1.69,0.36,1.58,0.61,2.75,8.82,8.75,1.58,0.74,0.01,0.57,0.65,2.16,0.7,0.74,0.74,0.64,0.69,0.65,0.01,0.49,0.57,0.31,0.74,0.28,1.59,0.68,5.9,0.47,4.44,1.54,0.03,0.01,1.4,0.62,0.14,3.01,1.61,0.62,0.53,0.03,0.16,0.2,1.44,0.6,0.6,0.27,1.6,0.61,0.67,0.48,0.51,0.72,0.66,2.22,0.52,0.52,1.54,0.61,0.43,1.51,0.02,0.61,1.84,1.4,1.56,1.84,0.51,0.75,0.05,0.09,1.39,0.35,0.52,0.64,0.62,0.62,1.43,0.61,2.91,0.44,0.44,0.66,1.54,0.66,0.65,0.68,0.01,0.58,0.66,0.69,0.11,0.55,0.69,2.2,2.69,2.11,1.75,1.79,0.7,0.7,0.66,0.15,0.11,0.66,0.49,0.57,0.58,1.96,0.61,1.82,0.67,0.24,0.32,0.72,1.75,0.67,0.04,0.41,0.55,1.37,1.61,0.11,0.67,1.44,1.39,0.59,0.02,0.79,0.65,0.07,1.38,0.68,0.52,1.71,0.25,0.63,1.57,0.28,2.48,0.58,0.57,0.1,0.54,0.01,0.19,1.71,0.74,0.67,1.93,0.24,1.45,0.36,1.82,0.56,0.63,0.46,1.61,0.71,0.1,1.58,4.63,1.34,0.28,1.74,1.31,0.28,0.12,1.64,0.66,2.73,0.2,0.63,0.06,0.01,0.64,0.61,1.31,0.67,0.48,0.72,0.59,0.62,0.11,0.7,1.21,0.8,0.01,0.61,0.03,0.15,0.17,0.21,0.08,0.73,0.06,0.71,1.4,0.01,1.39,0.03,0.54,1.39,3.25,2.69,2.07,1.55,0.62,0.71,0.8,2.06,2.35,2.19,0.03,1.45,0.34,0.74,0.03,0.07,0.66,0.65,0.53,1.39,2.38,0.3,0.7,0.59,0.57,0.71,0.27,3.56,2.46,0.12,1.41,0.01,0.54,0.56,0.24,0.66,2.99,0.71,0.67,0.71,0.16,0.62,0.64,0.37,0.17,0.08,2.87,1.71,0.03,1.79,0.7,1.27,1.64,0.54,4.08,1.51,0.09,0.67,1.57,0.35,1.49,2.58,0.54,1.51,1.29,0.58,0.04,0.13,1.51,0.2,1.82,0.65,1.35,0.01,0.66,2.17,1.49,0.72,0.02,0.59,0.62,0.65,0.04,0.21,0.2,0.69,0.64,1.32,0.61,0.48,0.65,0.28,3.27,0.08,0.66,1.56,1.39,8.46,1.96,0.31,0.17,1.77,2.68,1.45,0.77,0.5,0.51,0.12,0.41,0.43,1.22,0.66,0.58,0.09,0.66,0.66,0.25,0.16,0.19,0.14,0.22,1.59,0.75,0.66,2.71,0.56,2.13,0.74,0.66,1.57],[-7.11,-10.62,-3.58,-2.52,1.84,-1.01,-2.42,-8.53,-1.49,-8.01,-2.92,-10.8,-1.79,1.83,-0.7,-2.34,-0.77,-1.25,-0.59,-8.16,0.77,-0.9,-0.71,-0.65,2.58,-0.73,-0.69,-0.65,-0.65,-0.81,-0.71,-1,-0.77,2.35,-0.76,-0.78,0.74,-0.7,-0.89,-1.9,-0.71,-0.74,1.45,-3.47,-0.56,-0.77,-0.92,-1.01,-0.56,-0.62,-0.7,-0.86,-0.54,-6.26,-0.84,-1.74,-1.42,-0.96,-0.61,-0.71,-7.33,-1.05,-0.66,-0.8,-0.62,-0.88,-1.8,0.65,2.84,-1.07,2.96,-0.45,-0.9,-1.4,-0.55,-1.7,-1.82,-0.9,-0.74,-0.56,-0.58,-0.6,-4.65,-0.83,-0.62,-1.57,-3.69,-0.84,2.91,-0.78,-0.65,-0.67,-0.56,0.53,0.81,0.69,0.78,-6.01,-2.13,-0.83,-0.65,-0.84,-2.25,-0.63,-0.69,-0.7,1.36,0.58,-0.52,-0.76,-2.08,-2.61,-1.31,-2.49,-0.57,-2.06,0.93,-0.7,-3.15,-1.17,-0.76,-2.77,-1.36,-0.93,0.56,-0.81,-5.93,-0.9,-0.65,-8.04,-0.57,-2.05,-0.85,-0.83,0.88,-0.68,-0.8,-0.68,-0.54,2.88,-2.9,-8.04,-2.66,-0.81,-2.07,-0.61,-0.76,-8.36,-0.97,-6.97,-0.64,-1.83,0.47,-2.46,-0.73,-0.67,-0.61,2.39,-0.97,-0.72,-0.61,-0.82,-4.23,1.19,-0.74,-4.6,1.26,1.03,-0.75,-0.65,-0.98,-0.87,-2.07,-2.93,0.55,-0.61,1.27,0.82,-0.76,-0.75,-5.94,1.81,-0.56,-0.62,-0.55,-8.68,-6.51,-0.72,-0.74,-1.04,-0.78,-0.77,-0.68,-0.71,-0.58,-6,0.86,-0.9,-7.07,-0.65,-0.84,-0.62,-0.74,-2.81,-0.6,-0.67,-0.87,-0.54,-1.46,-0.67,-0.86,1.44,-3.15,0.86,-0.53,-0.71,-0.57,-0.71,0.33,1.65,-0.54,-0.66,-0.47,-0.57,0.69,-0.52,1.46,0.56,-0.71,-0.65,-4.39,-0.73,-1.79,-0.83,-0.72,-0.76,0.9,-0.82,-4.92,-0.38,0.71,0.66,1.78,-0.52,0.66,0.82,-0.75,-3.89,-2.71,-0.76,-1.78,-0.64,0.95,0.69,-0.78,-0.64,1.46,1.69,-0.43,-3.63,-0.72,-4.03,-0.96,-0.73,-0.53,0.76,-1.47,0.66,-0.72,1.46,3.14,3.13,0.66,-0.43,-7.07,-0.82,-0.62,1.11,-0.51,-0.43,-0.43,-0.64,-0.53,-0.62,-7.19,-1.03,-0.82,-1.69,-0.44,-1.86,0.67,-0.55,2.56,-1.09,2.15,0.62,-5.23,-6.62,0.49,-0.69,-2.84,1.59,0.69,-0.68,-0.91,-5.31,-2.68,-2.34,0.53,-0.73,-0.74,-1.87,0.68,-0.71,-0.58,-1.06,-0.98,-0.48,-0.59,1.15,-0.95,-0.95,0.62,-0.72,-1.22,0.59,-5.87,-0.72,0.88,0.49,0.64,0.88,-0.97,-0.42,-4.34,-3.41,0.47,-1.52,-0.94,-0.65,-0.7,-0.7,0.52,-0.71,1.54,-1.17,-1.19,-0.61,0.62,-0.61,-0.62,-0.55,-6.97,-0.78,-0.61,-0.54,-3.25,-0.87,-0.54,1.14,1.43,1.08,0.81,0.84,-0.52,-0.51,-0.61,-2.74,-3.15,-0.61,-1.03,-0.81,-0.79,0.97,-0.72,0.86,-0.58,-2.08,-1.64,-0.47,0.81,-0.58,-4.65,-1.29,-0.85,0.45,0.69,-3.23,-0.57,0.53,0.47,-0.76,-5.93,-0.34,-0.63,-3.75,0.46,-0.55,-0.95,0.77,-1.99,-0.66,0.65,-1.84,1.31,-0.79,-0.82,-3.38,-0.88,-6.69,-2.41,0.77,-0.44,-0.58,0.95,-2.08,0.54,-1.47,0.86,-0.83,-0.66,-1.12,0.69,-0.5,-3.33,0.66,2.21,0.42,-1.85,0.8,0.39,-1.86,-3,0.71,-0.59,1.45,-2.3,-0.66,-4.13,-6.15,-0.64,-0.72,0.39,-0.57,-1.05,-0.48,-0.77,-0.7,-3.22,-0.51,0.27,-0.33,-6.71,-0.72,-5.26,-2.73,-2.53,-2.22,-3.63,-0.45,-4.04,-0.49,0.49,-7.38,0.48,-4.95,-0.9,0.48,1.7,1.43,1.05,0.63,-0.69,-0.49,-0.32,1.04,1.23,1.13,-4.93,0.54,-1.56,-0.44,-5,-3.94,-0.59,-0.62,-0.92,0.47,1.25,-1.76,-0.51,-0.77,-0.82,-0.49,-1.88,1.83,1.3,-3.1,0.5,-6.11,-0.89,-0.83,-2.04,-0.6,1.58,-0.5,-0.57,-0.49,-2.62,-0.7,-0.64,-1.43,-2.54,-3.67,1.52,0.77,-4.97,0.84,-0.51,0.34,0.71,-0.89,2.03,0.59,-3.52,-0.57,0.65,-1.52,0.58,1.37,-0.88,0.59,0.37,-0.79,-4.61,-2.91,0.59,-2.35,0.86,-0.63,0.43,-6.44,-0.6,1.12,0.58,-0.47,-5.48,-0.76,-0.7,-0.63,-4.56,-2.24,-2.34,-0.53,-0.65,0.4,-0.71,-1.05,-0.62,-1.82,1.71,-3.68,-0.6,0.64,0.47,3.08,0.97,-1.67,-2.53,0.82,1.42,0.54,-0.37,-1,-0.96,-3,-1.3,-1.22,0.29,-0.61,-0.78,-3.44,-0.6,-0.61,-2.01,-2.64,-2.38,-2.8,-2.17,0.67,-0.42,-0.59,1.44,-0.84,1.09,-0.44,-0.6,0.65],[-11.7,-11.69,-11.14,-10.75,8.22,-9.53,-9.45,-10.73,-9.21,-10.22,-9.01,-10.83,-8.91,7.11,-8.41,-8.75,-8.37,-8.64,-8.16,-9.12,7.32,-8.25,-8,-7.85,3.07,-7.79,-7.96,-7.81,-7.88,-7.8,-7.91,-7.87,-7.87,6.3,-7.74,-7.78,6.89,-7.62,-7.84,-8.28,-7.54,-7.46,6.45,-8.53,-7.47,-7.54,-7.85,-7.61,-7.32,-7.37,-7.45,-7.67,-7.27,-9.09,-7.41,-7.88,-7.63,-7.49,-7.02,-7.12,-8.4,-7.31,-7.17,-6.79,-7.31,-7.3,-7.84,6.54,4.9,-7.35,3.77,-6.99,-6.93,-7.46,-6.85,-7.47,-7.63,-7.07,-7.26,-6.78,-6.82,-6.81,-8.19,-7.1,-7.08,-7.29,-8,-7.05,3.46,-6.89,-6.97,-6.59,-6.54,6.25,5.86,6.1,5.89,-8.66,-7.18,-7.07,-6.58,-6.79,-7.43,-6.72,-6.63,-6.82,5.68,6.17,-6.7,-6.91,-7.09,-8.02,-7.25,-7.39,-6.62,-6.32,5.87,-6.59,-7.61,-7.05,-6.74,-7.16,-6.77,-6.71,5.73,-6.5,-6.77,-6.71,-6.64,-8.8,-6.31,-7.01,-6.78,-7.51,5.65,-6.24,-6.53,-6.5,-6.35,4.4,-7.04,-8.23,-7.11,-6.55,-7.22,-6.1,-6.11,-8.81,-6.23,-7.36,-6.34,-6.93,6.01,-6.36,-6.24,-5.99,-6.5,4.71,-6.58,-6.26,-6.45,-6.59,-8.15,5.38,-6.46,-5.21,5.26,5.52,-6.07,-6.11,-6.45,-6.44,-6.79,-7.01,5.78,-5.93,5.03,5.31,-6.46,-5.93,-7.7,4.92,-6.2,-6.12,-5.77,-7.12,-8.45,-6.12,-6.21,-6.08,-6.24,-6.21,-6.33,-6.2,-5.88,-6.59,5.51,-5.91,-5.77,-5.83,-6.16,-5.73,-6.22,-6.93,-5.74,-5.85,-5.77,-6.11,-6.51,-6.02,-6.11,5.01,-6.72,5.17,-6.22,-5.72,-6.08,-5.74,5.15,4.34,-5.97,-5.92,-5.73,-5.61,5.28,-6.01,4.9,5.41,-5.78,-5.78,-7.43,-5.61,-6.51,-5.73,-5.9,-6.13,5.11,-6.3,-7.71,-5.67,5.17,5.03,4.37,-5.46,4.85,4.82,-5.56,-7.9,-6.55,-6.09,-6.05,-6.13,5,5.28,-5.65,-5.91,5.07,4.86,-5.83,-6.46,-6.02,-7.39,-5.98,-5.86,-5.68,5.05,-7.18,4.92,-5.84,4.91,3.9,3.9,5.05,-5.61,-7.25,-5.47,-5.59,4.68,-5.4,-5.56,-5.57,-5.83,-5.32,-5.74,-6.9,-5.79,-5.47,-6.1,-5.81,-6.28,4.91,-5.37,6.19,-5.55,4.26,5.23,-7.4,-7.29,5.16,-5.33,-8.12,4.48,5.01,-5.83,-5.97,-7,-6.34,-6.28,5.02,-5.92,-5.42,-6.46,4.96,-5.65,-5.6,-6.12,-5.67,-5.44,-5.22,4.74,-5.81,-5.67,4.98,-5.57,-5.73,4.99,-7.35,-5.52,4.73,4.65,4.97,4.12,-5.83,-5.59,-6.84,-6.39,4.61,-5.35,-5.9,-5.45,-5.59,-5.26,5.25,-6.14,4.06,-5.54,-6.28,-5.52,4.74,-5.38,-5.5,-5.56,-6.74,-5.34,-5.28,-5.28,-5.48,-5.39,-5.22,4.23,3.98,4.1,4.45,4.1,-5.33,-5.62,-5.02,-6.13,-6.36,-5.78,-5.81,-5.47,-5.28,4.77,-5.59,4.31,-4.95,-5.93,-5.77,-5.42,4.76,-4.99,-6.88,-4.79,-5.2,5.04,4.8,-6.37,-5.2,4.66,4.9,-5.83,-6.05,-5.2,-5.48,-6.06,4.85,-5.08,-5.16,4.79,-5.79,-5.36,4.66,-5.83,4.43,-5.28,-5.68,-5.73,-5.09,-7.85,-6.19,4.78,-5,-5.14,4.59,-5.67,4.68,-5.41,4.62,-5.59,-6.01,-5.6,4.72,-5.16,-6.02,4.88,3.64,4.71,-6.1,4.64,4.48,-5.79,-6.34,4.71,-4.8,4.48,-5.86,-4.99,-7.01,-6.44,-5.15,-5.3,4.73,-4.32,-5.79,-5.23,-5.03,-6.28,-5.91,-5.51,4.57,-5.29,-6.73,-4.82,-6.5,-6.82,-5.93,-6.16,-6.29,-5.15,-6.25,-4.88,4.6,-7.04,4.57,-6.4,-4.87,4.74,3.9,4.32,4.47,4.56,-5.42,-4.99,-4.78,4.43,4.42,4.37,-6.34,4.41,-5.17,-5.02,-5.06,-6.93,-4.94,-4.95,-5.25,4.74,4.38,-5.5,-5.41,-5.47,-4.89,-4.76,-6.06,3.88,4.37,-5.9,4.49,-5.89,-5.47,-5.59,-5.54,-5.34,8.43,-5.21,-5.03,-4.92,-5.76,-5.38,-5.36,-5.95,-5.14,-5.85,4.2,4.39,-5.86,4.05,-4.92,4.7,4.58,-5.33,3.8,4.56,-5.02,-4.85,4.14,-5.31,4.46,4.32,-5.16,4.58,4.3,-5.3,-6.33,-5.9,4.58,-6.66,4.46,-5.02,4.37,-7.11,-4.85,4.38,4.18,-5,-5.22,-4.73,-5.26,-4.86,-5.34,-5.27,-5.68,-5.26,-5.12,4.66,-4.9,-5.1,-5.07,-5.67,4.63,-6.51,-5,4.43,4.13,3.48,4.23,-5.43,-5.8,4.18,4.04,4.64,-5.22,-5.35,-4.98,-5.75,-4.96,-5.61,4.32,-5.15,-5.19,-6.01,-4.58,-5.24,-5.45,-5.53,-6.42,-6.14,-5.25,4.39,-4.88,-4.99,3.98,-5,4.19,-4.67,-4.59,4.07],[1.63114837323616e-32,2.23844845264324e-29,4.98720811300091e-27,1.58822103766375e-24,1.385449193588e-21,3.31183075197737e-20,2.21622188750365e-18,4.78132542701999e-18,7.15545515874839e-18,8.48311294272578e-17,4.99831581909618e-17,7.06387864589001e-17,2.92992359481964e-16,2.30232843804433e-16,5.58819609058877e-16,1.75347530759434e-15,1.24272960268171e-15,1.31420219614346e-15,2.14398746729624e-15,2.99869078491219e-15,6.70847185407652e-15,7.76991539876605e-15,3.79370416206653e-14,4.82798425580961e-14,2.35885068886277e-14,1.14151650329707e-13,3.08335274231643e-14,3.32812581569476e-14,3.3700490691431e-14,1.78715380982003e-13,6.30218950934327e-14,1.31773044735913e-13,7.27533447916605e-14,9.78315009682434e-14,1.01436688302331e-13,1.02057826401259e-13,2.2696054260529e-13,2.82582675987839e-13,1.41334351914722e-13,1.51664457904256e-13,1.27183589486819e-12,1.61033937953037e-12,2.53857589194369e-13,3.01478085217284e-13,6.04483206432348e-13,3.10439094604927e-13,3.25268596413423e-13,8.65110418632708e-13,3.9288962584506e-12,1.48900529006099e-12,9.94240733510427e-13,5.24796635103402e-13,1.57399446522342e-12,3.25683758125697e-12,1.8656768170175e-12,2.30555269392293e-12,2.58781719114002e-12,2.90412114588151e-12,2.72906336619229e-11,4.02933572271938e-12,8.54355068812552e-12,1.24337587127381e-11,6.22439349382253e-12,1.92532608620005e-11,1.30071105263433e-11,6.51933470603837e-12,1.30665746123745e-11,6.74674736086602e-12,7.53681005467783e-12,8.98706713693001e-12,3.88475181984888e-11,1.0143477296658e-11,6.25707882888569e-11,1.31506618166052e-11,2.86918873687743e-11,1.49667769328908e-11,1.521002190645e-11,4.62798011314091e-11,3.87314927530768e-11,2.37342558849801e-10,2.37411562270762e-10,6.63243475569796e-11,5.19977947169477e-11,1.58476270489821e-10,2.84099737295564e-11,1.1521736499249e-10,1.42097742594728e-10,2.98528232867471e-11,3.05468293315905e-11,6.94605458239715e-11,3.71984055834335e-11,4.62279053998539e-10,2.88945850860135e-10,8.51274772458758e-11,1.4231071328736e-10,9.5466510999215e-11,2.13924658925292e-10,3.29520677184016e-10,3.95316573933462e-10,5.681037617795e-11,7.43535383038389e-10,1.73085881618013e-10,6.10420041046009e-11,1.31548092505124e-10,9.2704968445497e-10,1.3268803506709e-10,6.66711162041792e-11,2.10492778799239e-10,1.44059674151196e-10,7.39704116383392e-11,5.92354123730713e-10,2.39994407127283e-10,1.66889225134299e-10,3.54397074319866e-10,1.86667652390856e-10,1.00452824716004e-10,1.01929320060906e-10,3.12432958968506e-10,1.06756191612588e-10,1.12566425257939e-10,2.57853843094902e-10,1.34662848602518e-10,2.76095592986747e-10,2.11502362674473e-09,5.66696095954718e-10,2.40104973897435e-09,8.00641964912632e-10,3.48829890137984e-10,2.10343733933244e-10,2.20122425491316e-10,1.88764250314519e-09,2.06138600980019e-09,2.45976136960738e-10,2.4646021245354e-10,9.60072563184823e-10,3.20944355140123e-09,3.23222764530337e-10,6.70066659053295e-10,3.82096241995542e-09,7.10492633525669e-10,1.12689336616199e-09,3.77509808743388e-09,3.46537171160529e-09,7.60353142020954e-10,3.8738335733933e-10,7.45051841337607e-09,7.7774408140612e-09,8.81352728197269e-10,8.81581503132344e-09,2.80650324861468e-09,1.50281181127658e-09,1.00331792313138e-09,5.35036820266763e-10,4.18482350902427e-09,4.29198893415677e-09,1.17660781220707e-08,5.96144337925963e-10,6.03310949055136e-10,6.24709678362562e-10,2.76452389053911e-09,7.01778211051204e-10,7.11949134905927e-10,6.623628947986e-09,2.26913018532436e-09,7.9101320823415e-10,7.92858374001635e-10,8.22070765720495e-10,8.531230628899e-10,1.09638383142981e-08,2.78208496241332e-09,1.85725731124721e-09,1.13277707826708e-09,5.90508674318383e-09,1.20784812843903e-08,2.51892767811552e-09,2.87901475363606e-08,5.63087128693898e-09,7.07783884485399e-09,5.67706282140063e-09,1.94283654232274e-08,2.07735254748515e-08,2.97632537359138e-09,3.16366339191256e-09,5.50632532797288e-09,4.07799738572093e-08,3.90393629404668e-09,3.97370562561188e-09,6.00873066613953e-09,6.18681613236938e-09,2.37059250893759e-08,3.7852092178771e-09,4.31600233830627e-09,2.19267273871878e-09,4.42946386148756e-09,2.66199186840767e-08,2.50540984584784e-08,2.28309289700049e-09,4.86044431508995e-09,3.34738476710144e-08,4.24545625390986e-08,8.88463006574405e-09,5.55649724054194e-08,3.55017166701086e-09,7.24202283096234e-09,6.64974260751231e-08,9.40085139291407e-08,9.16466963773201e-08,3.9370367437688e-09,7.94652852830793e-09,1.21659084442461e-08,4.19243747628465e-09,1.74945993606473e-08,2.19622291787457e-08,2.82182446338209e-08,4.96923001531114e-09,1.26898672865729e-07,1.03556095031099e-08,1.38293446985408e-07,9.76673971394625e-08,2.17970141810564e-08,5.46515454985363e-09,1.54624145777058e-08,1.67173523358753e-08,1.68071797146933e-08,2.2467569447319e-08,5.73876053345544e-09,2.87246279541952e-08,1.15771455847339e-08,1.10065392291813e-07,5.99326996644849e-09,1.80629385339542e-08,1.21400499308892e-07,1.24048890373985e-08,4.41093989800836e-08,1.27035417901316e-08,6.59592698054438e-09,1.98456467771379e-08,6.62621155119304e-09,8.76609067437959e-08,2.70781870357836e-08,7.05688867620579e-09,4.2431065437725e-08,3.50269703475745e-08,3.66068046039954e-08,6.08607095057285e-08,5.60807552795026e-08,2.21667447528084e-07,1.09445535288025e-07,1.20228790075111e-07,2.5911611420704e-08,1.21712787649106e-07,9.40575482918444e-09,2.91340096988023e-08,2.97325447055494e-08,2.13189120794229e-07,2.14823581680244e-08,1.07733889637121e-08,1.09322166097206e-08,1.10540916896683e-08,1.76883351836316e-07,2.36558053003393e-08,2.61072994885723e-07,3.61496873099102e-08,2.41087001848548e-08,2.41811913202589e-08,1.91987150017354e-08,4.78272178570947e-08,4.92793207836114e-08,3.7517384495181e-08,2.62858372400463e-08,4.55890460758163e-08,5.00780843620171e-08,6.3855093014405e-08,5.18140520876259e-08,1.34055653232265e-08,5.36330155478463e-08,5.4249872224303e-08,4.13578981464629e-08,3.19722472842616e-07,7.35737392141959e-08,6.93506820178748e-08,2.94313064062434e-08,3.60614460743261e-07,7.70121476935073e-08,2.36818547866941e-07,6.79595518580677e-08,4.82333131437431e-07,2.80248853723437e-07,1.75184793072134e-08,3.53892952714183e-08,3.61452448301709e-08,3.1402784590999e-07,9.27943834336975e-08,5.45773692397015e-07,3.87077918033439e-08,1.9395298829656e-08,3.95183395009243e-08,8.0559593749176e-08,6.26963949935949e-08,5.35741443432591e-07,6.78076370474406e-08,6.28068896254279e-08,6.97795662019972e-08,1.46403828658405e-07,2.58553929122936e-08,1.57658420921347e-07,1.45362170830555e-07,1.14803292022543e-07,8.1851705880428e-08,2.74032990854938e-08,4.95375116196606e-07,5.96860967641043e-07,6.63427168433645e-08,6.88152936992393e-08,1.03493529677145e-07,3.46274994990576e-08,1.3877405012217e-07,1.7712165722602e-07,1.06819901820027e-06,3.72218529788277e-08,7.50421954719976e-08,1.90716083142651e-07,1.28983589427685e-07,1.56036934221234e-07,1.95859086636542e-07,1.59002456588397e-07,2.65868504809228e-07,2.88107458718479e-07,1.80004316464924e-07,7.70556869982307e-07,9.28669191575808e-08,1.95278465787135e-07,1.48775823247058e-07,1.49477552646362e-07,2.00424400870234e-07,4.01242656874039e-07,1.62363229898722e-06,1.6213173689517e-06,5.11660481712584e-08,2.14736793661229e-07,1.07785173005082e-07,1.41038444370117e-06,5.57644036704623e-08,1.0299834865952e-07,1.13308281863499e-07,5.85525085542993e-08,2.34962132061705e-07,1.23807659190021e-07,3.10241986195626e-07,3.1151366422445e-07,3.16639269630276e-07,1.91818238465441e-07,2.54414938317562e-07,5.76564372059267e-07,5.24551913991992e-07,4.82247586585564e-07,5.1305721349061e-07,4.85558422007047e-07,4.96736495481245e-07,5.77431585423681e-07,5.41976990949592e-07,3.74783915546297e-07,2.72681531057391e-07,3.88230950512987e-07,3.87069542388354e-07,6.54865897339632e-08,1.76951298572198e-06,2.63373622825612e-07,2.11165954938438e-07,4.61324734355424e-07,4.42623060713283e-07,3.43293908344647e-07,1.32510664610128e-07,6.63259185193231e-08,1.32941612950884e-07,2.30427700582698e-06,2.24468586358987e-06,2.26371431014363e-07,2.72879104046919e-07,2.09793623018308e-07,2.14748325878704e-07,2.01921700321338e-06,3.61443264742696e-07,3.62565566810153e-07,1.32757100145086e-06,1.48623768390484e-07,1.91223012558485e-07,2.23554230539069e-07,7.47026390573834e-07,4.48901532625674e-07,2.30060210429342e-07,7.93973921483083e-08,5.57347679034804e-07,3.18979767957666e-07,8.07856865980685e-08,2.87024585081927e-06,3.31060810818437e-07,1.57284683756472e-06,1.59047230470195e-06,1.70299245159051e-07,6.00011226122103e-07,5.24931587546157e-07,2.66342212402794e-07,4.78428788870186e-07,5.96252160164242e-07,6.251250781196e-07,1.81798005813932e-07,2.7284291462118e-06,2.69916834309761e-06,2.73495442048012e-07,1.31324771792057e-07,2.43393773650865e-07,1.09443090135362e-06,1.05620789937069e-06,1.82434383120611e-07,1.84463146969398e-06,7.38322978042093e-07,1.971118887533e-06,4.74430104181311e-07,1.91149805418016e-07,2.02878191460201e-07,4.08364016314179e-07,4.09710506615716e-07,8.29834438426918e-07,7.44940238864782e-07,1.04855564378385e-07,8.46309264721922e-07,8.72253318067948e-07,5.46064238016485e-07,3.32742551797313e-07,3.58198917780788e-06,3.51488194012621e-06,4.05026820712474e-06,3.40092898316103e-07,4.23620108248464e-06,3.44409825060667e-07,2.70710502623342e-07,2.3796780810784e-06,1.08924535681966e-06,4.01670446759644e-06,3.67347398235584e-07,1.10444458206418e-06,6.16539182115896e-07,2.6093641095962e-06,2.50132230426947e-07,5.02505961330384e-07,4.82858594503659e-06,3.86112320854947e-07,1.04075083623905e-06,1.30675952236764e-07,2.87559282186367e-06,5.25081074786855e-07,3.06642585577321e-06,5.21253255754766e-06,1.37031649346976e-06,9.25274152397614e-07,1.33506930343831e-06,9.62237978425503e-07,1.20789793121028e-06,6.85849532800715e-07,1.51408285193454e-06,5.54747531251291e-06,8.38155832912635e-07,8.47223308366673e-07,1.31082365843093e-06,1.51565907489448e-06,6.28909504321474e-06,4.61115159534868e-07,9.30452082269394e-07,4.53413679878575e-07,6.20512068012316e-07,6.20511410505456e-07,3.12262023011973e-07,1.68848121429297e-06,1.71999818501379e-06,7.8317913128826e-07,3.14152147551743e-07,9.46292955991217e-07,1.89762731526716e-06,1.79788102524484e-06,3.86389837344346e-06,1.45963561682802e-06,3.60995378985803e-06,1.65410993335701e-07,6.63202760429845e-07,6.97152315159875e-06,1.15116031321199e-06,1.17588146872533e-06,3.36054575692277e-07,1.69016636462103e-06,6.78524292706505e-07,1.71168466746018e-07,7.37371508625713e-06,5.85006794802966e-06,1.72083824250147e-06,8.63938935436434e-07,3.46012432388519e-07,2.04714709182006e-06,2.14004760540769e-06,4.7360026144545e-07,5.35857109819179e-07,1.78632175867327e-07,5.45362751131384e-07,3.82731912458329e-07,5.51769202974019e-07,1.10684288572767e-06,1.67465939367395e-06,2.42770017922576e-06,4.78621118105311e-06,3.88742954557648e-07,5.83621030154574e-07,1.9473654304645e-06,7.04190720039785e-06,7.07865861026106e-06,9.86695813611334e-07,2.18974983429119e-06,5.99249742137802e-07,2.41616575349138e-06,2.28317471108984e-06,7.66708438448202e-07,8.36307137016121e-07,6.68410084097381e-07,1.68023229736931e-06,1.88864048603796e-06,2.72944165689758e-06,2.96476024382387e-06,2.84766209395917e-06,2.55564608333955e-06,8.6126230833796e-07,2.20253887897342e-07,1.55234468469793e-06,8.89343033811898e-07,9.80827326669665e-06,1.11711803755438e-06,5.86825400754445e-06,1.58472867790652e-06,9.12877817582627e-07,1.14552921619378e-06,1.14697925661369e-06,9.42725506022191e-07,5.30939018332589e-06,5.5516192191544e-06,8.70207839526985e-06,7.11599730466397e-07,6.47648399775446e-06,1.20214598903382e-06,6.01077581547643e-06,9.32205340288596e-06,7.41487470363747e-07,2.5266756754889e-06,1.1588191556169e-05,1.16489188972575e-05,3.35852987664906e-06,5.17492680649034e-07,1.31114378502389e-06,1.20172485413983e-06,3.14712770238696e-06,2.36097756451057e-06,2.16053466159637e-06,6.88510357209909e-07,7.88582720443488e-07,1.27986823892019e-05,1.64380487316486e-06,1.92706958670174e-06,1.08969532244034e-05,1.96914068685772e-06,2.54279108696368e-06,1.95901086262991e-06,1.98028611299676e-06,3.99847586955264e-06,3.48245186572431e-06,1.16138863363303e-06,3.36135454905612e-07,5.84756290086647e-07,4.56307073205149e-06,4.73570386160566e-06,8.29677317503418e-06,2.38054385277085e-06,7.74718580647779e-06,2.68434314599885e-06,9.00746260552351e-07,2.43712753072614e-06,1.46529192114719e-05,6.17455809445069e-07,6.22735838805864e-07,1.89696678514306e-06,1.93623753985083e-06,1.62094077932115e-06,1.9497025828995e-06,1.30154511253147e-06,2.65440508730981e-06,2.4671880232773e-06,4.41090597287752e-06,2.48549157303635e-06,2.71466599802649e-06,5.11767619092022e-06,4.74026983156842e-06,4.92133840139994e-06],[2.36806215499214e-27,3.24972587017852e-24,7.2403093337465e-22,2.30574127698274e-19,2.01136196855656e-16,4.80803659322369e-15,3.21745787506162e-13,6.94141377952278e-13,1.03881184821695e-12,6.15779013295329e-12,7.25643523551276e-12,1.02551698933444e-11,2.12679646307883e-11,3.34246530355677e-11,8.11280929063731e-11,8.48551156506016e-11,1.80416508349906e-10,1.90792728347607e-10,3.11258967325506e-10,4.35342748629656e-10,9.73919882220826e-10,1.12801771471004e-09,2.33638398334826e-09,2.33638398334826e-09,3.42452295402824e-09,4.14306582269046e-09,4.47633768906295e-09,4.83169337658901e-09,4.8925565522106e-09,5.18909422542408e-09,9.14936784141557e-09,9.5652475705845e-09,1.05621564093778e-08,1.42029430804841e-08,1.47263355460371e-08,1.48165108880986e-08,1.64747940910417e-08,2.05123381674833e-08,2.05185828255206e-08,2.20182828805401e-08,3.07736816937812e-08,3.33978879449007e-08,3.68544370084529e-08,4.37678666071405e-08,4.38787123221897e-08,4.50688044954153e-08,4.72217160628906e-08,6.27973296564394e-08,7.1298469020237e-08,7.20567410018604e-08,7.21707446302552e-08,7.61887190059843e-08,2.28508747972924e-07,2.36409941231451e-07,2.70854493454819e-07,3.34714620104557e-07,3.75693104007375e-07,4.21613354855654e-07,4.40220983919022e-07,5.84969313110316e-07,6.20166116883283e-07,9.02551660383989e-07,9.03642544868992e-07,9.31714105137665e-07,9.44170582168551e-07,9.46461403904492e-07,9.48487008988519e-07,9.79476628656561e-07,1.09417603896067e-06,1.30472088992828e-06,1.40994742064293e-06,1.47260574821786e-06,1.81677544711519e-06,1.90918159696403e-06,2.08270975676148e-06,2.17284084136819e-06,2.20815456424765e-06,2.2395969080855e-06,2.8114726930986e-06,3.13334929046198e-06,3.13334929046198e-06,3.2096033277591e-06,3.77445767143668e-06,3.83453425378968e-06,4.12449196634443e-06,4.1258820113438e-06,4.1258820113438e-06,4.33396141055886e-06,4.43471554654643e-06,5.04205786946609e-06,5.40037546145555e-06,5.59271385516592e-06,5.99263811829847e-06,6.17930166634591e-06,6.88677621065891e-06,6.92979974954279e-06,7.764267450047e-06,7.97317049479178e-06,8.19873053271677e-06,8.2475943970054e-06,8.30343744020109e-06,8.37606462923783e-06,8.86193200795055e-06,9.54891855744407e-06,9.61334668776841e-06,9.63166562338084e-06,9.67915302523748e-06,1.01862792200539e-05,1.04571192913961e-05,1.07388472602535e-05,1.07495691821802e-05,1.16139378091513e-05,1.21142890677818e-05,1.28626296863447e-05,1.35499814253873e-05,1.45835005861596e-05,1.47978546452786e-05,1.51194229833236e-05,1.54986083005618e-05,1.63421241102193e-05,1.87173017909117e-05,1.95500299476981e-05,2.00414485781842e-05,2.04702710866686e-05,2.05678956039683e-05,2.17861657790147e-05,2.32470567106852e-05,2.5321144137457e-05,3.05371996833628e-05,3.19568467114299e-05,3.32518983880277e-05,3.32518983880277e-05,3.57102266431009e-05,3.57805035641629e-05,4.64603453662461e-05,4.65939330680156e-05,4.69247070882747e-05,4.86393366373542e-05,5.04289250824059e-05,5.15738097299761e-05,5.45332269564489e-05,5.48059701920266e-05,5.48059701920266e-05,5.51931243531484e-05,5.62393883377431e-05,6.27283464713941e-05,6.27283464713941e-05,6.39763394639039e-05,6.73609957500761e-05,6.79069037081879e-05,7.2724873566606e-05,7.28296469584482e-05,7.76753645707503e-05,7.788758468717e-05,7.788758468717e-05,8.5408552559438e-05,8.65468076797038e-05,8.75872391249971e-05,9.06938554125946e-05,0.000100336739887878,0.000101882480469349,0.000103359070843154,0.000106844732471905,0.000109808962503232,0.000114837403712201,0.000115105280460592,0.000119346265549459,0.000123854363706499,0.000132641983052876,0.000134632144640383,0.000134816084882617,0.000164453864105866,0.000171457271060342,0.000175352499433258,0.000182845944721546,0.000199032604256987,0.000204369102974017,0.000205508739519251,0.000206045597069135,0.000215417906575682,0.000215417906575682,0.000216047895880902,0.00022964653836667,0.000266465042587911,0.000269106316744627,0.000283382062144684,0.000288446534401455,0.000290777710630039,0.000299395717833891,0.000312869949753447,0.000313293443009212,0.000313293443009212,0.000318326978467405,0.000321529479151047,0.000322051338385529,0.000322051338385529,0.00033145396056104,0.000352813834347146,0.000404971088428306,0.000410896782925709,0.000429949773730111,0.000504174353692461,0.000515405422726469,0.000525689767803483,0.000567878653420789,0.00056866379063405,0.00056866379063405,0.000571569568330284,0.000576828993003167,0.000588739153360214,0.000608648035191526,0.000634956012317043,0.000637684769954671,0.00068277619921118,0.000721420916195561,0.000736913820134872,0.000751701297029738,0.0007721965972491,0.000787728826640125,0.000791109582992444,0.000793418052768258,0.000808995062370581,0.000808995062370581,0.00081334203696736,0.000815446985017324,0.000833139514394793,0.000834034542665243,0.000840371138882088,0.000841001585906264,0.000870088584525282,0.000874111389906713,0.000881231691511225,0.000900456045211258,0.000914813848049456,0.000922134891012033,0.000957580886938558,0.000960381161423583,0.000961977528397422,0.000978953889354894,0.000982786590683035,0.00102450220227121,0.0010266734151609,0.00106289764953667,0.00106289764953667,0.00110445151151817,0.00110445151151817,0.00119189441894837,0.00122223390588328,0.00124675199207094,0.00125392856932432,0.00126214079312642,0.00136550496665955,0.00140986859161951,0.00143883321803796,0.00147382314930286,0.00155937866267667,0.00156405481589398,0.00158711303327326,0.00160480656558437,0.0017119667681353,0.00171714658815668,0.00172281601506631,0.00174937501778905,0.00175002168565879,0.00175528373039792,0.00175528373039792,0.00178856345146371,0.00178856345146371,0.00181556135205251,0.00181556135205251,0.00181755409743812,0.00181755409743812,0.00185406590414473,0.00188056000696715,0.00194618787776036,0.00194657819700641,0.00196896664085584,0.00200141354433934,0.00201811057050078,0.00213625186148744,0.00213625186148744,0.00213638329952563,0.00218138100085581,0.00223608784363182,0.00229204998558278,0.00246655125716782,0.00250085604323952,0.00254286610039396,0.0025432908827368,0.00256886657888217,0.00262374005239744,0.00268175357750741,0.00269433328335673,0.00273221096414455,0.00280975226953013,0.00281576304748716,0.00286858895658294,0.00292386223578915,0.00303403750541327,0.00311110640299771,0.00328138346672728,0.00337681011786972,0.00337681011786972,0.00354242622028809,0.00375362403952138,0.00381474534674973,0.00381474534674973,0.00381474534674973,0.00396101156292391,0.00397834535171946,0.00449483583329184,0.00481393590366502,0.00481573839614727,0.00499521979016939,0.00500831428410101,0.00502713747143929,0.0050367210853006,0.00514281962559024,0.00516928586531387,0.00540377949818068,0.00544722313556914,0.00553754086689769,0.00566326713089275,0.00566326713089275,0.00568687065365048,0.00577089899018108,0.00597525015203691,0.00597525015203691,0.00653314892363412,0.00658044714716245,0.00674109848975528,0.00708751503086731,0.00719963927234451,0.00723359773704342,0.00727428366458386,0.0072814310327484,0.0073660953073401,0.0073660953073401,0.00742816437075398,0.00779374339418061,0.00782399667775842,0.00787523987563941,0.00809574261265609,0.00822491253802349,0.00822491253802349,0.0085005130043565,0.00852780994545108,0.00898704976924881,0.00900803775369473,0.0090449615880044,0.00919378621220312,0.00923383790493551,0.00923383790493551,0.00930047056821252,0.00930047056821252,0.00930047056821252,0.00930047056821252,0.00931445945265101,0.00931445945265101,0.00931445945265101,0.00931445945265101,0.00939373998089509,0.00939373998089509,0.00939373998089509,0.00939373998089509,0.00950718630830788,0.00951457995054277,0.00955898799689091,0.00955898799689091,0.00956771720300775,0.00956771720300775,0.00956771720300775,0.00961879051424186,0.00962903805182909,0.00965007253840484,0.00983910055179597,0.00983910055179597,0.00990398374826618,0.00990398374826618,0.0101524452992729,0.0103922159321483,0.0104694675027797,0.0104946935601678,0.0105272801855909,0.0107074210830157,0.0107884214285044,0.0108183559839227,0.0108183559839227,0.0108451502838372,0.0108617416229668,0.0111331968451647,0.0115267232973084,0.0115592002328003,0.0115771797511298,0.0117282725616429,0.0119055834463831,0.0120156539705945,0.012018007270374,0.0121526821714133,0.0123618183392103,0.01244402760712,0.01244402760712,0.0128889749049746,0.0129648803078233,0.0129648803078233,0.0129648803078233,0.0131964996098697,0.0132035603662938,0.0132035603662938,0.013235137822805,0.013235137822805,0.013235137822805,0.0132405714958945,0.0132405714958945,0.0132426934767481,0.0133899590158786,0.0133984952806117,0.0136267771809905,0.0137753253270489,0.0138753355479998,0.0147266850506368,0.0148213275438523,0.0148701976033983,0.0150591721206301,0.0150591721206301,0.0152226797892189,0.015358144100275,0.0158289560439022,0.0158552597355193,0.0161022556704114,0.0162507691489336,0.0162507691489336,0.0163335622522034,0.0164579575734964,0.0166216629935125,0.0166668646031983,0.0166668646031983,0.0172737983169671,0.0175704481122917,0.0176707738707141,0.0177768719218483,0.0178156244601492,0.017901536465893,0.0180391063828948,0.0181567991709626,0.0182381530890957,0.0184474354422599,0.0186849541013602,0.0188867143274072,0.0189712218788227,0.0189759855035369,0.0190575033195543,0.0193554940888971,0.0194036665835326,0.0198939267683496,0.0198939267683496,0.0198939267683496,0.0198939267683496,0.0198939267683496,0.019913998619539,0.019982811217927,0.020134229599929,0.0204996419116873,0.0204996419116873,0.0211446933701625,0.0220039755672697,0.022269164900001,0.0223145316167913,0.0225134675995615,0.0225211140979866,0.0225211140979866,0.0225211140979866,0.0226667264385297,0.0227004744042854,0.0227004744042854,0.0227400142355392,0.0228039283161852,0.0228967576196291,0.0229577491911833,0.0229577491911833,0.0233729797848234,0.023545156018118,0.0238220203722681,0.0240139719822544,0.024070547226559,0.0240978342807753,0.0243873794730318,0.0243873794730318,0.0243937993552964,0.0245374306186444,0.0246266330697626,0.0248498281873092,0.024895309347221,0.0249793781867147,0.0249827175981918,0.0250849172374463,0.0251166282522294,0.0258905823007851,0.0258905823007851,0.025931484081339,0.025931484081339,0.025933391607783,0.0263914861637104,0.0267015106103977,0.0267015106103977,0.0267814666875238,0.0270136712523822,0.0271113615056102,0.0277940272010096,0.0282183857033621,0.0282429012803337,0.0282713850774585,0.0285461863659821,0.0285461863659821,0.0286492271707509,0.0289002398364256,0.0289992142760531,0.0292310966050635,0.0292310966050635,0.0303532669622902,0.0303532669622902,0.0303532669622902,0.030465367104794,0.030465367104794,0.0304810619127695,0.0307440567079726,0.0307440567079726,0.030918548300133,0.031258999968377,0.0319759321087869,0.03219509781008,0.0322781730915986,0.032362309765911,0.0324361044132754,0.0327668871895091,0.032866730752885,0.0331323539816977,0.0332610377917293,0.0333031404710189,0.0333031404710189,0.0335132415204279,0.0335821161017479,0.0341445109929636,0.0344361150477247,0.0348237200248087,0.0349049352973167,0.0349052016709725,0.0356145629997137,0.035882458554554,0.0366816725151353,0.0367643946833757,0.0367643946833757,0.0375064097257116,0.0375641741927847,0.0380697431087552,0.0380697431087552,0.038074372076507,0.0380845633463516,0.0380845633463516,0.0381615171046246,0.0381615171046246,0.0395336609874387,0.0397739426427372,0.0399667641099731,0.0405639379338765,0.0408393043375729,0.0410173691117144,0.0410704566636113,0.0410704566636113,0.0414635109652021,0.0421311686759796,0.042151905302888,0.042446759079939,0.042446759079939,0.0429698842695917,0.0429698842695917,0.0430180594734105,0.0432002071251004,0.0432583802662024,0.0433007234477176,0.0435893951742485,0.044227042486576,0.0443182443503512,0.0448203780452536,0.0452036490557792,0.0458995160187061,0.0468497217096508,0.0470648602907704,0.0471755254949071,0.0472388008131638,0.0481700219184083,0.0481700219184083,0.0492588283434883,0.0492635887609084,0.0492635887609084,0.0495314651038508,0.0495314651038508,0.0495314651038508],[true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true,true]],"container":"<table class=\"table table-striped table-hover\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>SAMPLE_ID<\/th>\n      <th>geneID<\/th>\n      <th>normcounts<\/th>\n      <th>RNA_FC<\/th>\n      <th>RNA_LOG2FC<\/th>\n      <th>RNA_ZSCORE<\/th>\n      <th>RNA_PVALUE<\/th>\n      <th>RNA_PADJ<\/th>\n      <th>RNA_outlier<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"colReorder":true,"dom":"Bfrtip","buttons":["copy","csv","excel","pdf","print"],"columnDefs":[{"className":"dt-right","targets":[3,4,5,6,7,8]},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+
+<div id="rmd-source-code">IyctLS0KIycgdGl0bGU6IE9VVFJJREVSIFN1bW1hcnkKIycgYXV0aG9yOiBNaWNoYWVsYSBNdWVsbGVyLCB2eWVwZXoKIycgd2I6CiMnICBpbnB1dDoKIycgICAtIG9kczogJ2BzbSBjb25maWdbIlBST0NfREFUQSJdICsgIi9vdXRyaWRlci9vZHMuUmRzImAnCiMnICAgLSBvdXRyaWRlcjogJ2BzbSBjb25maWdbIlBST0NfREFUQSJdICsgIi9vdXRyaWRlci9PVVRSSURFUl9yZXN1bHRzLnJkcyJgJwojJyAgb3V0cHV0OgojJyBvdXRwdXQ6IAojJyAgIGh0bWxfZG9jdW1lbnQ6CiMnICAgIGNvZGVfZm9sZGluZzogaGlkZQojJyAgICBjb2RlX2Rvd25sb2FkOiBUUlVFCiMnLS0tCgpzdXBwcmVzc1BhY2thZ2VTdGFydHVwTWVzc2FnZXMoewogICAgbGlicmFyeShPVVRSSURFUikKICAgIGxpYnJhcnkodmN0cnMpCiAgICBsaWJyYXJ5KFN1bW1hcml6ZWRFeHBlcmltZW50KQogICAgbGlicmFyeShnZ3Bsb3QyKQogICAgbGlicmFyeShkYXRhLnRhYmxlKQogICAgbGlicmFyeShkcGx5cikKICAgIGxpYnJhcnkoZ2d0aGVtZXMpCiAgICBsaWJyYXJ5KHJlYWRyKQogICAgbGlicmFyeSh0aWR5dmVyc2UpCn0pCgoKIycgIyMgUmVhZCBvZHMgb2JqZWN0Cm9kcyA8LSByZWFkUkRTKHNuYWtlbWFrZUBpbnB1dCRvZHMpCgojJyAjIyMgQWJlcnJhbnQgc2FtcGxlcwpwbG90QWJlcnJhbnRQZXJTYW1wbGUob2RzKQoKCiMjIyMjIyMjIyMjIyMjIyMjIwojTG9hZCBPVVRSSURFUiByZXN1bHRzIAojIyMjIyMjIyMjIyMjIyMjIyMKIyBybmEgPC0gcmVhZFJEUygnL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL3Byb2Nlc3NlZF9kYXRhL291dHJpZGVyL09VVFJJREVSX3Jlc3VsdHMucmRzJykgJT4lIGFzLmRhdGEudGFibGUoKQpybmEgPC0gcmVhZFJEUyhzbmFrZW1ha2VAaW5wdXQkb3V0cmlkZXIpICU+JSBhcy5kYXRhLnRhYmxlKCkKCiMnICMjIyBIb3cgbWFueSBzYW1wbGVzIHdpdGggYXQgbGVhc3Qgb25lIG91dGxpZXIgZ2VuZQpybmFbIFJOQV9vdXRsaWVyID09IFQgLCB1bmlxdWVOKFNBTVBMRV9JRCldCgoKRFQ6OmRhdGF0YWJsZShybmFbUk5BX291dGxpZXIgPT0gVF0sIGNhcHRpb24gPSAiT1VUUklERVIgcmVzdWx0cyIsIAogICAgICAgICAgICAgIHN0eWxlID0gJ2Jvb3RzdHJhcCcsIGZpbHRlciA9ICd0b3AnLCBlc2NhcGUgPSBGLAogICAgICAgICAgICAgIGV4dGVuc2lvbnMgPSBjKCAnQnV0dG9ucycsICdDb2xSZW9yZGVyJyApLCAKICAgICAgICAgICAgICBvcHRpb25zID0gbGlzdCggY29sUmVvcmRlciA9IFRSVUUsIGRvbSA9ICdCZnJ0aXAnLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICBidXR0b25zID0gYygnY29weScsICdjc3YnLCAnZXhjZWwnLCAncGRmJywgJ3ByaW50JykpKQoKCgoKCgoK</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("OutriderSummary.R");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="smirnovd" />
+
+<meta name="date" content="2021-01-27" />
+
+<title>Supplementary Figure 2b gene set coverage by GTeX proteomics</title>
+
+<script src="libR/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="libR/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="libR/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="libR/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="libR/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="libR/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="libR/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="libR/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="libR/navigation-1.1/tabsets.js"></script>
+<script src="libR/navigation-1.1/codefolding.js"></script>
+<script src="libR/navigation-1.1/sourceembed.js"></script>
+<link href="libR/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="libR/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+<link rel="stylesheet" href="lib/add_content_table.css" type="text/css" />
+<link rel="stylesheet" href="lib/leo_style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+<li role="separator" class="divider"></li>
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Supplementary Figure 2b gene set coverage by GTeX proteomics</h1>
+<h4 class="author">smirnovd</h4>
+<h4 class="date">2021-01-27</h4>
+
+</div>
+
+
+<pre class="r"><code># load config
+source(snakemake@input$config)
+
+
+# Load disease genes table
+# dis_genes &lt;- fread(&#39;/s/project/mitoMultiOmics/multiOMICs_integration/datasets/disease_genes.tsv&#39;)
+dis_genes &lt;- fread(snakemake@input$disease_genes)
+
+
+
+# Get all protein coding genes
+# genecode_v29 &lt;- fread(&#39;/s/project/mitoMultiOmics/multiOMICs_integration/datasets/gene_annotation_v29.tsv&#39;)
+genecode_v29 &lt;- fread(snakemake@input$gencode_annotation)
+genecode_v29[, geneID := toupper(gene_name_unique)]
+protein_coding &lt;- genecode_v29[gene_type == &#39;protein_coding&#39;]
+protein_coding[, DISEASE := &#39;Protein coding&#39;]
+protein_coding &lt;- protein_coding[geneID != &quot;&quot; &amp; !is.na(geneID) , c(&quot;geneID&quot;, &quot;DISEASE&quot;)]
+protein_coding &lt;- protein_coding[!duplicated(protein_coding)]
+protein_coding[, total := .N]
+protein_coding[, ORIGIN := &#39;genecode v29&#39;]
+
+# Combine
+dis_genes &lt;- rbind( dis_genes, protein_coding)
+dis_genes[ , geneID := toupper(geneID)]
+dis_genes &lt;- dis_genes[!duplicated(dis_genes)]
+
+rm(protein_coding)
+
+
+
+####################################################################
+
+
+# Download data
+# download.file(destfile= paste0(&quot;/s/project/mitoMultiOmics/multiOMICs_integration/datasets&quot;, &quot;/Table_S1_gene_info_at_protein_level.xlsx&quot; ), url= &#39;https://storage.googleapis.com/gtex_egtex/proteomics/Table_S1_gene_info_at_protein_level.xlsx&#39;)
+download.file(destfile= paste0(snakemake@input$datasets, &quot;/Table_S1_gene_info_at_protein_level.xlsx&quot; ), url= &#39;https://storage.googleapis.com/gtex_egtex/proteomics/Table_S1_gene_info_at_protein_level.xlsx&#39;)
+
+
+# Load GTEx annotation
+# sa_gtex &lt;- read_excel(paste0(&quot;/s/project/mitoMultiOmics/multiOMICs_integration/datasets&quot;, &quot;/Table_S1_gene_info_at_protein_level.xlsx&quot; ), sheet = 2) %&gt;% as.data.table()
+sa_gtex &lt;- read_excel(paste0(snakemake@input$datasets, &quot;/Table_S1_gene_info_at_protein_level.xlsx&quot; ), sheet = 2) %&gt;% as.data.table()
+sa_gtex[, proteome_ID:= paste0(&quot;Run&quot;, Run, &quot;_Tag&quot;, Tag)]
+
+
+# Load GTEx proteomics data
+# gtex &lt;- read_excel(paste0(&quot;/s/project/mitoMultiOmics/multiOMICs_integration/datasets&quot;, &quot;/Table_S1_gene_info_at_protein_level.xlsx&quot; ), sheet = 6)
+gtex &lt;- read_excel(paste0(snakemake@input$datasets, &quot;/Table_S1_gene_info_at_protein_level.xlsx&quot; ), sheet = 6)
+gtex &lt;- gtex[-c(1, 2), -1] 
+colnames(gtex)[1] &lt;- &quot;gene_id&quot;
+gtex &lt;- merge(genecode_v29[, c(&quot;geneID&quot;, &quot;gene_id&quot;)], gtex, by= &quot;gene_id&quot; )
+gtex$gene_id &lt;- NULL
+
+# Convert to numeric
+gtex &lt;- cbind(gtex[, 1], sapply(gtex[ , 2 : ncol(gtex)], function(x) {as.numeric(x) }) )
+gtex[is.na(gtex)] &lt;- 0
+gtex &lt;- rowsum(gtex[,2:ncol(gtex)], gtex$geneID)
+gtex &lt;- gtex[!duplicated(gtex), ]
+sa_gtex &lt;- sa_gtex[ proteome_ID %in% colnames(gtex)]
+
+
+
+##########################################
+gtex_all &lt;- data.frame()
+for (tissue in unique(sa_gtex[Sample != &quot;reference&quot;]$Sample)){
+  tissue_samples &lt;- sa_gtex[Sample ==  tissue ]$proteome_ID
+  expr &lt;- gtex[ , tissue_samples]
+  
+  expr$geneID &lt;-  rownames(expr)
+  expr_p = melt(expr, id.vars=c(&quot;geneID&quot;)) %&gt;% as.data.table()
+  expr_p &lt;- expr_p[value &gt; 0 , .N, by = &quot;geneID&quot;]
+  expr_p[, half :=  N &gt;= max(N)/2]
+  expr_p$N &lt;- NULL
+  
+
+  dg_expr &lt;- merge(dis_genes, expr_p, by = &quot;geneID&quot;)
+  dg_expr[, TISSUE := tissue]
+  dg_expr[ half == T, HALF := .N, by = DISEASE ]
+  dg_expr &lt;- dg_expr[, c(&quot;TISSUE&quot;, &quot;DISEASE&quot;, &quot;total&quot;, &quot;HALF&quot; )]
+  dg_expr &lt;- dg_expr[!duplicated(dg_expr)]
+  dg_expr &lt;- dg_expr[!is.na(HALF)]
+  
+  detected_expr &lt;- melt(dg_expr, id.vars=c(&quot;TISSUE&quot;, &quot;DISEASE&quot;, &quot;total&quot; )) %&gt;% as.data.table()
+  detected_expr &lt;- detected_expr[!duplicated(detected_expr)]
+  setnames(detected_expr, c(&quot;variable&quot;, &quot;value&quot; ), c(&quot;DETECTED&quot;, &quot;N&quot;))
+  detected_expr[, prop:= N / total ]
+  gtex_all &lt;-rbind(gtex_all , detected_expr)
+}
+
+gtex_all$dis_n &lt;- paste0(gtex_all$DISEASE, &quot;\n&quot;  ,&quot;(&quot;,gtex_all$total, &quot;)&quot;)
+# unique(gtex_all$dis_n)
+gtex_all$dis_n &lt;- factor(gtex_all$dis_n, levels = c(&quot;Protein coding\n(20336)&quot;, 
+                                                    &quot;MITO\n(413)&quot;, 
+                                                    &quot;Neuromuscular\n(132)&quot;, 
+                                                    &quot;Neurology\n(284)&quot;, 
+                                                    &quot;Hematology\n(50)&quot;,
+                                                    &quot;Ophthalmology\n(366)&quot;,
+                                                    &quot;OMIM\n(4354)&quot;))</code></pre>
+<pre class="r"><code>S_fig2b &lt;- ggplot(gtex_all, aes(dis_n, prop)) + 
+  geom_boxplot( ) + # fill = &quot;#FB9A99&quot; 
+  geom_point( aes(color = TISSUE) , position = &quot;jitter&quot;) + 
+  scale_y_continuous( labels=scales::percent) +
+  scale_fill_brewer() +
+  labs( y = &quot;Median coverage&quot;)+
+  ggtitle(&quot;Protein detection across all GTEx tissues&quot;)+
+  theme_classic()+
+  theme(legend.position=&quot;bottom&quot;, 
+        plot.title = element_text(hjust = 0.5, size=12,face=&quot;bold&quot;),
+        axis.title.y = element_text(face=&quot;bold&quot;, size=12) , 
+        axis.title.x = element_blank() ,
+        axis.text.x = element_text(size=12, face=&quot;bold&quot;) ,
+        legend.title = element_blank(), 
+        legend.direction = &quot;horizontal&quot;, 
+        axis.text.y = element_text(face=&quot;bold&quot;, size=12, hjust = 0.5),
+        plot.margin = margin(0, 0, 0, 0, &quot;cm&quot;))
+
+
+S_fig2b</code></pre>
+<p><img src="Scripts_Supplementary_figures_S_Fig2_b_files/figure-html/unnamed-chunk-2-1.png" width="960" /></p>
+<pre class="r"><code>pdf(snakemake@output$fig, # &quot;/s/project/mitoMultiOmics/multiOMICs_integration/Figures/Supplementary_figures/S_Fig2_b.pdf&quot;,  
+    width = 10, height = 6,  useDingbats=FALSE )
+print(S_fig2b) 
+dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
+
+<div id="rmd-source-code">IyctLS0KIycgdGl0bGU6IFN1cHBsZW1lbnRhcnkgRmlndXJlIDJiIGdlbmUgc2V0IGNvdmVyYWdlIGJ5IEdUZVggcHJvdGVvbWljcwojJyBhdXRob3I6IHNtaXJub3ZkCiMnIHdiOgojJyAgaW5wdXQ6IAojJyAgLSBjb25maWc6ICdzcmMvY29uZmlnLlInCiMnICAtIGdlbmNvZGVfYW5ub3RhdGlvbjogJ2BzbSBjb25maWdbIkRBVEFTRVRTIl0gKyAiL2dlbmVfYW5ub3RhdGlvbl92MjkudHN2ImAnCiMnICAtIGRpc2Vhc2VfZ2VuZXM6ICdgc20gY29uZmlnWyJEQVRBU0VUUyJdICsgIi9kaXNlYXNlX2dlbmVzLnRzdiJgJwojJyAgLSBkYXRhc2V0czogJ2BzbSBjb25maWdbIkRBVEFTRVRTIl1gJwojJyAgb3V0cHV0OgojJyAgLSBmaWc6ICdgc20gY29uZmlnWyJGSUdVUkVfRElSIl0gKyAiL1N1cHBsZW1lbnRhcnlfZmlndXJlcy9TX0ZpZzJfYi5wZGYiYCcKIycgb3V0cHV0OiAKIycgICBodG1sX2RvY3VtZW50OgojJyAgICBjb2RlX2ZvbGRpbmc6IGhpZGUKIycgICAgY29kZV9kb3dubG9hZDogVFJVRQojJy0tLQoKIyBsb2FkIGNvbmZpZwpzb3VyY2Uoc25ha2VtYWtlQGlucHV0JGNvbmZpZykKCgojIExvYWQgZGlzZWFzZSBnZW5lcyB0YWJsZQojIGRpc19nZW5lcyA8LSBmcmVhZCgnL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL2RhdGFzZXRzL2Rpc2Vhc2VfZ2VuZXMudHN2JykKZGlzX2dlbmVzIDwtIGZyZWFkKHNuYWtlbWFrZUBpbnB1dCRkaXNlYXNlX2dlbmVzKQoKCgojIEdldCBhbGwgcHJvdGVpbiBjb2RpbmcgZ2VuZXMKIyBnZW5lY29kZV92MjkgPC0gZnJlYWQoJy9zL3Byb2plY3QvbWl0b011bHRpT21pY3MvbXVsdGlPTUlDc19pbnRlZ3JhdGlvbi9kYXRhc2V0cy9nZW5lX2Fubm90YXRpb25fdjI5LnRzdicpCmdlbmVjb2RlX3YyOSA8LSBmcmVhZChzbmFrZW1ha2VAaW5wdXQkZ2VuY29kZV9hbm5vdGF0aW9uKQpnZW5lY29kZV92MjlbLCBnZW5lSUQgOj0gdG91cHBlcihnZW5lX25hbWVfdW5pcXVlKV0KcHJvdGVpbl9jb2RpbmcgPC0gZ2VuZWNvZGVfdjI5W2dlbmVfdHlwZSA9PSAncHJvdGVpbl9jb2RpbmcnXQpwcm90ZWluX2NvZGluZ1ssIERJU0VBU0UgOj0gJ1Byb3RlaW4gY29kaW5nJ10KcHJvdGVpbl9jb2RpbmcgPC0gcHJvdGVpbl9jb2RpbmdbZ2VuZUlEICE9ICIiICYgIWlzLm5hKGdlbmVJRCkgLCBjKCJnZW5lSUQiLCAiRElTRUFTRSIpXQpwcm90ZWluX2NvZGluZyA8LSBwcm90ZWluX2NvZGluZ1shZHVwbGljYXRlZChwcm90ZWluX2NvZGluZyldCnByb3RlaW5fY29kaW5nWywgdG90YWwgOj0gLk5dCnByb3RlaW5fY29kaW5nWywgT1JJR0lOIDo9ICdnZW5lY29kZSB2MjknXQoKIyBDb21iaW5lCmRpc19nZW5lcyA8LSByYmluZCggZGlzX2dlbmVzLCBwcm90ZWluX2NvZGluZykKZGlzX2dlbmVzWyAsIGdlbmVJRCA6PSB0b3VwcGVyKGdlbmVJRCldCmRpc19nZW5lcyA8LSBkaXNfZ2VuZXNbIWR1cGxpY2F0ZWQoZGlzX2dlbmVzKV0KCnJtKHByb3RlaW5fY29kaW5nKQoKCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIwoKCiMgRG93bmxvYWQgZGF0YQojIGRvd25sb2FkLmZpbGUoZGVzdGZpbGU9IHBhc3RlMCgiL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL2RhdGFzZXRzIiwgIi9UYWJsZV9TMV9nZW5lX2luZm9fYXRfcHJvdGVpbl9sZXZlbC54bHN4IiApLCB1cmw9ICdodHRwczovL3N0b3JhZ2UuZ29vZ2xlYXBpcy5jb20vZ3RleF9lZ3RleC9wcm90ZW9taWNzL1RhYmxlX1MxX2dlbmVfaW5mb19hdF9wcm90ZWluX2xldmVsLnhsc3gnKQpkb3dubG9hZC5maWxlKGRlc3RmaWxlPSBwYXN0ZTAoc25ha2VtYWtlQGlucHV0JGRhdGFzZXRzLCAiL1RhYmxlX1MxX2dlbmVfaW5mb19hdF9wcm90ZWluX2xldmVsLnhsc3giICksIHVybD0gJ2h0dHBzOi8vc3RvcmFnZS5nb29nbGVhcGlzLmNvbS9ndGV4X2VndGV4L3Byb3Rlb21pY3MvVGFibGVfUzFfZ2VuZV9pbmZvX2F0X3Byb3RlaW5fbGV2ZWwueGxzeCcpCgoKIyBMb2FkIEdURXggYW5ub3RhdGlvbgojIHNhX2d0ZXggPC0gcmVhZF9leGNlbChwYXN0ZTAoIi9zL3Byb2plY3QvbWl0b011bHRpT21pY3MvbXVsdGlPTUlDc19pbnRlZ3JhdGlvbi9kYXRhc2V0cyIsICIvVGFibGVfUzFfZ2VuZV9pbmZvX2F0X3Byb3RlaW5fbGV2ZWwueGxzeCIgKSwgc2hlZXQgPSAyKSAlPiUgYXMuZGF0YS50YWJsZSgpCnNhX2d0ZXggPC0gcmVhZF9leGNlbChwYXN0ZTAoc25ha2VtYWtlQGlucHV0JGRhdGFzZXRzLCAiL1RhYmxlX1MxX2dlbmVfaW5mb19hdF9wcm90ZWluX2xldmVsLnhsc3giICksIHNoZWV0ID0gMikgJT4lIGFzLmRhdGEudGFibGUoKQpzYV9ndGV4WywgcHJvdGVvbWVfSUQ6PSBwYXN0ZTAoIlJ1biIsIFJ1biwgIl9UYWciLCBUYWcpXQoKCiMgTG9hZCBHVEV4IHByb3Rlb21pY3MgZGF0YQojIGd0ZXggPC0gcmVhZF9leGNlbChwYXN0ZTAoIi9zL3Byb2plY3QvbWl0b011bHRpT21pY3MvbXVsdGlPTUlDc19pbnRlZ3JhdGlvbi9kYXRhc2V0cyIsICIvVGFibGVfUzFfZ2VuZV9pbmZvX2F0X3Byb3RlaW5fbGV2ZWwueGxzeCIgKSwgc2hlZXQgPSA2KQpndGV4IDwtIHJlYWRfZXhjZWwocGFzdGUwKHNuYWtlbWFrZUBpbnB1dCRkYXRhc2V0cywgIi9UYWJsZV9TMV9nZW5lX2luZm9fYXRfcHJvdGVpbl9sZXZlbC54bHN4IiApLCBzaGVldCA9IDYpCmd0ZXggPC0gZ3RleFstYygxLCAyKSwgLTFdIApjb2xuYW1lcyhndGV4KVsxXSA8LSAiZ2VuZV9pZCIKZ3RleCA8LSBtZXJnZShnZW5lY29kZV92MjlbLCBjKCJnZW5lSUQiLCAiZ2VuZV9pZCIpXSwgZ3RleCwgYnk9ICJnZW5lX2lkIiApCmd0ZXgkZ2VuZV9pZCA8LSBOVUxMCgojIENvbnZlcnQgdG8gbnVtZXJpYwpndGV4IDwtIGNiaW5kKGd0ZXhbLCAxXSwgc2FwcGx5KGd0ZXhbICwgMiA6IG5jb2woZ3RleCldLCBmdW5jdGlvbih4KSB7YXMubnVtZXJpYyh4KSB9KSApCmd0ZXhbaXMubmEoZ3RleCldIDwtIDAKZ3RleCA8LSByb3dzdW0oZ3RleFssMjpuY29sKGd0ZXgpXSwgZ3RleCRnZW5lSUQpCmd0ZXggPC0gZ3RleFshZHVwbGljYXRlZChndGV4KSwgXQpzYV9ndGV4IDwtIHNhX2d0ZXhbIHByb3Rlb21lX0lEICVpbiUgY29sbmFtZXMoZ3RleCldCgoKCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIwpndGV4X2FsbCA8LSBkYXRhLmZyYW1lKCkKZm9yICh0aXNzdWUgaW4gdW5pcXVlKHNhX2d0ZXhbU2FtcGxlICE9ICJyZWZlcmVuY2UiXSRTYW1wbGUpKXsKICB0aXNzdWVfc2FtcGxlcyA8LSBzYV9ndGV4W1NhbXBsZSA9PSAgdGlzc3VlIF0kcHJvdGVvbWVfSUQKICBleHByIDwtIGd0ZXhbICwgdGlzc3VlX3NhbXBsZXNdCiAgCiAgZXhwciRnZW5lSUQgPC0gIHJvd25hbWVzKGV4cHIpCiAgZXhwcl9wID0gbWVsdChleHByLCBpZC52YXJzPWMoImdlbmVJRCIpKSAlPiUgYXMuZGF0YS50YWJsZSgpCiAgZXhwcl9wIDwtIGV4cHJfcFt2YWx1ZSA+IDAgLCAuTiwgYnkgPSAiZ2VuZUlEIl0KICBleHByX3BbLCBoYWxmIDo9ICBOID49IG1heChOKS8yXQogIGV4cHJfcCROIDwtIE5VTEwKICAKCiAgZGdfZXhwciA8LSBtZXJnZShkaXNfZ2VuZXMsIGV4cHJfcCwgYnkgPSAiZ2VuZUlEIikKICBkZ19leHByWywgVElTU1VFIDo9IHRpc3N1ZV0KICBkZ19leHByWyBoYWxmID09IFQsIEhBTEYgOj0gLk4sIGJ5ID0gRElTRUFTRSBdCiAgZGdfZXhwciA8LSBkZ19leHByWywgYygiVElTU1VFIiwgIkRJU0VBU0UiLCAidG90YWwiLCAiSEFMRiIgKV0KICBkZ19leHByIDwtIGRnX2V4cHJbIWR1cGxpY2F0ZWQoZGdfZXhwcildCiAgZGdfZXhwciA8LSBkZ19leHByWyFpcy5uYShIQUxGKV0KICAKICBkZXRlY3RlZF9leHByIDwtIG1lbHQoZGdfZXhwciwgaWQudmFycz1jKCJUSVNTVUUiLCAiRElTRUFTRSIsICJ0b3RhbCIgKSkgJT4lIGFzLmRhdGEudGFibGUoKQogIGRldGVjdGVkX2V4cHIgPC0gZGV0ZWN0ZWRfZXhwclshZHVwbGljYXRlZChkZXRlY3RlZF9leHByKV0KICBzZXRuYW1lcyhkZXRlY3RlZF9leHByLCBjKCJ2YXJpYWJsZSIsICJ2YWx1ZSIgKSwgYygiREVURUNURUQiLCAiTiIpKQogIGRldGVjdGVkX2V4cHJbLCBwcm9wOj0gTiAvIHRvdGFsIF0KICBndGV4X2FsbCA8LXJiaW5kKGd0ZXhfYWxsICwgZGV0ZWN0ZWRfZXhwcikKfQoKZ3RleF9hbGwkZGlzX24gPC0gcGFzdGUwKGd0ZXhfYWxsJERJU0VBU0UsICJcbiIgICwiKCIsZ3RleF9hbGwkdG90YWwsICIpIikKIyB1bmlxdWUoZ3RleF9hbGwkZGlzX24pCmd0ZXhfYWxsJGRpc19uIDwtIGZhY3RvcihndGV4X2FsbCRkaXNfbiwgbGV2ZWxzID0gYygiUHJvdGVpbiBjb2RpbmdcbigyMDMzNikiLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJNSVRPXG4oNDEzKSIsIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIk5ldXJvbXVzY3VsYXJcbigxMzIpIiwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiTmV1cm9sb2d5XG4oMjg0KSIsIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIkhlbWF0b2xvZ3lcbig1MCkiLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIk9waHRoYWxtb2xvZ3lcbigzNjYpIiwKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICJPTUlNXG4oNDM1NCkiKSkKCgojKyBmaWcud2lkdGg9MTAsIGZpZy5oZWlnaHQ9NgpTX2ZpZzJiIDwtIGdncGxvdChndGV4X2FsbCwgYWVzKGRpc19uLCBwcm9wKSkgKyAKICBnZW9tX2JveHBsb3QoICkgKyAjIGZpbGwgPSAiI0ZCOUE5OSIgCiAgZ2VvbV9wb2ludCggYWVzKGNvbG9yID0gVElTU1VFKSAsIHBvc2l0aW9uID0gImppdHRlciIpICsgCiAgc2NhbGVfeV9jb250aW51b3VzKCBsYWJlbHM9c2NhbGVzOjpwZXJjZW50KSArCiAgc2NhbGVfZmlsbF9icmV3ZXIoKSArCiAgbGFicyggeSA9ICJNZWRpYW4gY292ZXJhZ2UiKSsKICBnZ3RpdGxlKCJQcm90ZWluIGRldGVjdGlvbiBhY3Jvc3MgYWxsIEdURXggdGlzc3VlcyIpKwogIHRoZW1lX2NsYXNzaWMoKSsKICB0aGVtZShsZWdlbmQucG9zaXRpb249ImJvdHRvbSIsIAogICAgICAgIHBsb3QudGl0bGUgPSBlbGVtZW50X3RleHQoaGp1c3QgPSAwLjUsIHNpemU9MTIsZmFjZT0iYm9sZCIpLAogICAgICAgIGF4aXMudGl0bGUueSA9IGVsZW1lbnRfdGV4dChmYWNlPSJib2xkIiwgc2l6ZT0xMikgLCAKICAgICAgICBheGlzLnRpdGxlLnggPSBlbGVtZW50X2JsYW5rKCkgLAogICAgICAgIGF4aXMudGV4dC54ID0gZWxlbWVudF90ZXh0KHNpemU9MTIsIGZhY2U9ImJvbGQiKSAsCiAgICAgICAgbGVnZW5kLnRpdGxlID0gZWxlbWVudF9ibGFuaygpLCAKICAgICAgICBsZWdlbmQuZGlyZWN0aW9uID0gImhvcml6b250YWwiLCAKICAgICAgICBheGlzLnRleHQueSA9IGVsZW1lbnRfdGV4dChmYWNlPSJib2xkIiwgc2l6ZT0xMiwgaGp1c3QgPSAwLjUpLAogICAgICAgIHBsb3QubWFyZ2luID0gbWFyZ2luKDAsIDAsIDAsIDAsICJjbSIpKQoKClNfZmlnMmIKCnBkZihzbmFrZW1ha2VAb3V0cHV0JGZpZywgIyAiL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL0ZpZ3VyZXMvU3VwcGxlbWVudGFyeV9maWd1cmVzL1NfRmlnMl9iLnBkZiIsICAKICAgIHdpZHRoID0gMTAsIGhlaWdodCA9IDYsICB1c2VEaW5nYmF0cz1GQUxTRSApCnByaW50KFNfZmlnMmIpIApkZXYub2ZmKCkKCg==</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("S_Fig2_b.R");
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
