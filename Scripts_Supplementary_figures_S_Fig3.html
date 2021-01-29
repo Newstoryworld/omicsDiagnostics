@@ -11,7 +11,7 @@
 
 <meta name="author" content="smirnovd" />
 
-<meta name="date" content="2021-01-27" />
+<meta name="date" content="2021-01-29" />
 
 <title>Supplementary Fig 3</title>
 
@@ -276,7 +276,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Supplementary Fig 3</h1>
 <h4 class="author">smirnovd</h4>
-<h4 class="date">2021-01-27</h4>
+<h4 class="date">2021-01-29</h4>
 
 </div>
 
@@ -306,16 +306,30 @@ rp &lt;- readRDS(snakemake@input$patient_omics) %&gt;% as.data.table()
 rp &lt;- rp[SAMPLE_ID %in% sa$SAMPLE_ID]
 
 # Subset outliers only 
-rp &lt;- rp[ outlier_class != &#39;non_outlier&#39; | causal_gene == T]</code></pre>
-<pre class="r"><code>for (i in sa$SAMPLE_ID){
+rp &lt;- rp[ outlier_class != &#39;non_outlier&#39; | causal_gene == T]
+
+
+
+
+samples &lt;- unique(sa$SAMPLE_ID)</code></pre>
+<pre class="r"><code>for (i in samples){
   plot_sample &lt;- plot_patient_main(rp, sample = i) + 
     ggtitle(paste(&quot;Sample ID:&quot;, i, &quot;\nCasual gene:&quot;, sa[SAMPLE_ID == i]$KNOWN_MUTATION ) )
-
   print(plot_sample)
 }</code></pre>
 <p><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-1.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-2.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-3.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-4.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-5.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-6.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-7.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-8.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-9.png" width="480" /></p>
+<pre class="r"><code>pdf(snakemake@output$fig, # &quot;/s/project/mitoMultiOmics/multiOMICs_integration/Figures/Supplementary_figures/S_Fig3.pdf&quot;,  
+    useDingbats=FALSE,  paper = &quot;a4&quot;) # paper = &quot;a4&quot;
+for (i in samples){
+  plot_sample &lt;- plot_patient_main(rp, sample = i) + 
+    ggtitle(paste(&quot;Sample ID:&quot;, i, &quot;\nCasual gene:&quot;, sa[SAMPLE_ID == i]$KNOWN_MUTATION ) )
+  print(plot_sample)
+}
+dev.off()</code></pre>
+<pre><code>## png 
+##   2</code></pre>
 
-<div id="rmd-source-code">IyctLS0KIycgdGl0bGU6IFN1cHBsZW1lbnRhcnkgRmlnIDMgCiMnIGF1dGhvcjogc21pcm5vdmQKIycgd2I6CiMnICBpbnB1dDogCiMnICAtIGNvbmZpZzogJ3NyYy9jb25maWcuUicKIycgIC0gcGF0aWVudF9vbWljczogJ2BzbSBjb25maWdbIlBST0NfREFUQSJdICsgIi9pbnRlZ3JhdGlvbi9wYXRpZW50X29taWNzX2Z1bGwuUkRTImAnCiMnICAtIHNhbXBsZV9hbm5vdGF0aW9uOiAnYHNtIGNvbmZpZ1siQU5OT1RBVElPTiJdYCcKIycgIG91dHB1dDoKIycgb3V0cHV0OiAKIycgICBodG1sX2RvY3VtZW50OgojJyAgICBjb2RlX2ZvbGRpbmc6IGhpZGUKIycgICAgY29kZV9kb3dubG9hZDogVFJVRQojJy0tLQoKCiMgTG9hZCBjb25maWcKc291cmNlKHNuYWtlbWFrZUBpbnB1dCRjb25maWcpCgojIExvYWQgcGxvdHRpbmcgZnVuY3Rpb25zCnNvdXJjZSgic3JjL2Z1bmN0aW9ucy9wbG90cy5SIikKCgojIExvYWQgc2FtcGxlIGFubm90YXRpb24KIyBzYSA8LSBmcmVhZCgnL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL3Jhd19kYXRhL3Byb3Rlb21pY3NfYW5ub3RhdGlvbi50c3YnKQpzYSA8LSBmcmVhZChzbmFrZW1ha2VAaW5wdXQkc2FtcGxlX2Fubm90YXRpb24pCnNhIDwtIHNhW1VTRV9GT1JfUFJPVEVPTUlDU19QQVBFUiA9PSBUXQoKIyBTdWJzZXQgZGlhZ25vc2VkIGNhc2VzIGZyb20gZGlzY292ZXJ5IGNvaG9ydApzYSA8LSBzYVsgIWlzLm5hKEtOT1dOX01VVEFUSU9OKSAmIENBVEVHT1JZID09ICJJSUkiXQoKIyBSZW1vdmUgY2FzZXMgYXBwZWFyaW5nIGluIHRoZSBtYWluIGZpZ3VyZXMKc2EgPC0gc2FbICEoS05PV05fTVVUQVRJT04gJWluJSBjKCJMSUczIiwgIk1SUEwzOCIsICJNT1JDMiIsICJEQVJTMiIsICJNUlBTMjUiKSApXQoKIyBSZWFkIGludGVncmF0ZWQgb21pY3MgZmlsZSAKIyBycCA8LSByZWFkUkRTKCIvcy9wcm9qZWN0L21pdG9NdWx0aU9taWNzL211bHRpT01JQ3NfaW50ZWdyYXRpb24vcHJvY2Vzc2VkX2RhdGEvaW50ZWdyYXRpb24vcGF0aWVudF9vbWljcy5SRFMiKSAlPiUgYXMuZGF0YS50YWJsZSgpCnJwIDwtIHJlYWRSRFMoc25ha2VtYWtlQGlucHV0JHBhdGllbnRfb21pY3MpICU+JSBhcy5kYXRhLnRhYmxlKCkKIyBTdWJzZXQgZGlhZ25vc2VkIGNhc2VzIGFuZCBjYW5kaWRhdGVzCnJwIDwtIHJwW1NBTVBMRV9JRCAlaW4lIHNhJFNBTVBMRV9JRF0KCiMgU3Vic2V0IG91dGxpZXJzIG9ubHkgCnJwIDwtIHJwWyBvdXRsaWVyX2NsYXNzICE9ICdub25fb3V0bGllcicgfCBjYXVzYWxfZ2VuZSA9PSBUXQoKIysgZmlnLndpZHRoPTUsIGZpZy5oZWlnaHQ9NQpmb3IgKGkgaW4gc2EkU0FNUExFX0lEKXsKICBwbG90X3NhbXBsZSA8LSBwbG90X3BhdGllbnRfbWFpbihycCwgc2FtcGxlID0gaSkgKyAKICAgIGdndGl0bGUocGFzdGUoIlNhbXBsZSBJRDoiLCBpLCAiXG5DYXN1YWwgZ2VuZToiLCBzYVtTQU1QTEVfSUQgPT0gaV0kS05PV05fTVVUQVRJT04gKSApCgogIHByaW50KHBsb3Rfc2FtcGxlKQp9CgoKCg==</div>
+<div id="rmd-source-code">IyctLS0KIycgdGl0bGU6IFN1cHBsZW1lbnRhcnkgRmlnIDMgCiMnIGF1dGhvcjogc21pcm5vdmQKIycgd2I6CiMnICBpbnB1dDogCiMnICAtIGNvbmZpZzogJ3NyYy9jb25maWcuUicKIycgIC0gcGF0aWVudF9vbWljczogJ2BzbSBjb25maWdbIlBST0NfREFUQSJdICsgIi9pbnRlZ3JhdGlvbi9wYXRpZW50X29taWNzX2Z1bGwuUkRTImAnCiMnICAtIHNhbXBsZV9hbm5vdGF0aW9uOiAnYHNtIGNvbmZpZ1siQU5OT1RBVElPTiJdYCcKIycgIG91dHB1dDoKIycgIC0gZmlnOiAnYHNtIGNvbmZpZ1siRklHVVJFX0RJUiJdICsgIi9TdXBwbGVtZW50YXJ5X2ZpZ3VyZXMvU19GaWczLnBkZiJgJwojJyBvdXRwdXQ6IAojJyAgIGh0bWxfZG9jdW1lbnQ6CiMnICAgIGNvZGVfZm9sZGluZzogaGlkZQojJyAgICBjb2RlX2Rvd25sb2FkOiBUUlVFCiMnLS0tCgoKIyBMb2FkIGNvbmZpZwpzb3VyY2Uoc25ha2VtYWtlQGlucHV0JGNvbmZpZykKCiMgTG9hZCBwbG90dGluZyBmdW5jdGlvbnMKc291cmNlKCJzcmMvZnVuY3Rpb25zL3Bsb3RzLlIiKQoKCiMgTG9hZCBzYW1wbGUgYW5ub3RhdGlvbgojIHNhIDwtIGZyZWFkKCcvcy9wcm9qZWN0L21pdG9NdWx0aU9taWNzL211bHRpT01JQ3NfaW50ZWdyYXRpb24vcmF3X2RhdGEvcHJvdGVvbWljc19hbm5vdGF0aW9uLnRzdicpCnNhIDwtIGZyZWFkKHNuYWtlbWFrZUBpbnB1dCRzYW1wbGVfYW5ub3RhdGlvbikKc2EgPC0gc2FbVVNFX0ZPUl9QUk9URU9NSUNTX1BBUEVSID09IFRdCgojIFN1YnNldCBkaWFnbm9zZWQgY2FzZXMgZnJvbSBkaXNjb3ZlcnkgY29ob3J0CnNhIDwtIHNhWyAhaXMubmEoS05PV05fTVVUQVRJT04pICYgQ0FURUdPUlkgPT0gIklJSSJdCgojIFJlbW92ZSBjYXNlcyBhcHBlYXJpbmcgaW4gdGhlIG1haW4gZmlndXJlcwpzYSA8LSBzYVsgIShLTk9XTl9NVVRBVElPTiAlaW4lIGMoIkxJRzMiLCAiTVJQTDM4IiwgIk1PUkMyIiwgIkRBUlMyIiwgIk1SUFMyNSIpICldCgojIFJlYWQgaW50ZWdyYXRlZCBvbWljcyBmaWxlIAojIHJwIDwtIHJlYWRSRFMoIi9zL3Byb2plY3QvbWl0b011bHRpT21pY3MvbXVsdGlPTUlDc19pbnRlZ3JhdGlvbi9wcm9jZXNzZWRfZGF0YS9pbnRlZ3JhdGlvbi9wYXRpZW50X29taWNzLlJEUyIpICU+JSBhcy5kYXRhLnRhYmxlKCkKcnAgPC0gcmVhZFJEUyhzbmFrZW1ha2VAaW5wdXQkcGF0aWVudF9vbWljcykgJT4lIGFzLmRhdGEudGFibGUoKQojIFN1YnNldCBkaWFnbm9zZWQgY2FzZXMgYW5kIGNhbmRpZGF0ZXMKcnAgPC0gcnBbU0FNUExFX0lEICVpbiUgc2EkU0FNUExFX0lEXQoKIyBTdWJzZXQgb3V0bGllcnMgb25seSAKcnAgPC0gcnBbIG91dGxpZXJfY2xhc3MgIT0gJ25vbl9vdXRsaWVyJyB8IGNhdXNhbF9nZW5lID09IFRdCgoKCgpzYW1wbGVzIDwtIHVuaXF1ZShzYSRTQU1QTEVfSUQpCgojKyBmaWcud2lkdGg9NSwgZmlnLmhlaWdodD01CmZvciAoaSBpbiBzYW1wbGVzKXsKICBwbG90X3NhbXBsZSA8LSBwbG90X3BhdGllbnRfbWFpbihycCwgc2FtcGxlID0gaSkgKyAKICAgIGdndGl0bGUocGFzdGUoIlNhbXBsZSBJRDoiLCBpLCAiXG5DYXN1YWwgZ2VuZToiLCBzYVtTQU1QTEVfSUQgPT0gaV0kS05PV05fTVVUQVRJT04gKSApCiAgcHJpbnQocGxvdF9zYW1wbGUpCn0KCgoKCnBkZihzbmFrZW1ha2VAb3V0cHV0JGZpZywgIyAiL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL0ZpZ3VyZXMvU3VwcGxlbWVudGFyeV9maWd1cmVzL1NfRmlnMy5wZGYiLCAgCiAgICB1c2VEaW5nYmF0cz1GQUxTRSwgIHBhcGVyID0gImE0IikgIyBwYXBlciA9ICJhNCIKZm9yIChpIGluIHNhbXBsZXMpewogIHBsb3Rfc2FtcGxlIDwtIHBsb3RfcGF0aWVudF9tYWluKHJwLCBzYW1wbGUgPSBpKSArIAogICAgZ2d0aXRsZShwYXN0ZSgiU2FtcGxlIElEOiIsIGksICJcbkNhc3VhbCBnZW5lOiIsIHNhW1NBTVBMRV9JRCA9PSBpXSRLTk9XTl9NVVRBVElPTiApICkKICBwcmludChwbG90X3NhbXBsZSkKfQpkZXYub2ZmKCkKCgoKCgoKCg==</div>
 
 
 </div>

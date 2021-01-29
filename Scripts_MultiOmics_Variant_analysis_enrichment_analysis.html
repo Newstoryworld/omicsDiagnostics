@@ -11,7 +11,7 @@
 
 <meta name="author" content="smirnovd" />
 
-<meta name="date" content="2021-01-27" />
+<meta name="date" content="2021-01-28" />
 
 <title>Enrichment of rare variants in outliers</title>
 
@@ -284,7 +284,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Enrichment of rare variants in outliers</h1>
 <h4 class="author">smirnovd</h4>
-<h4 class="date">2021-01-27</h4>
+<h4 class="date">2021-01-28</h4>
 
 </div>
 
@@ -333,8 +333,8 @@ rp &lt;- rp[!duplicated(rp), ]
 <div id="number-of-outliers-per-class" class="section level3">
 <h3>Number of outliers per class</h3>
 <pre class="r"><code>DT::datatable(os, caption = &quot;Outlier counts&quot;,   escape = F)</code></pre>
-<div id="htmlwidget-630f10529b9b1624dc9f" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-630f10529b9b1624dc9f">{"x":{"filter":"none","caption":"<caption>Outlier counts<\/caption>","data":[["1","2","3","4"],["non_outlier","RNA-only","protein-only","RNA-and-protein"],[216022,245,1441,162]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>outlier_class<\/th>\n      <th>N<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-f5f63f3cd299d0d60b04" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-f5f63f3cd299d0d60b04">{"x":{"filter":"none","caption":"<caption>Outlier counts<\/caption>","data":[["1","2","3","4"],["non_outlier","RNA-only","protein-only","RNA-and-protein"],[216022,245,1441,162]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>outlier_class<\/th>\n      <th>N<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code># All outliers
 enr &lt;- reshape2::dcast(data = rp, geneID +  SAMPLE_ID +  var_type ~ outlier_class , 
                          fun.aggregate = cat.agg)
@@ -388,8 +388,8 @@ write.table(enrichments, file = snakemake@output$enrichment_rare_pb, sep = &quot
 <div id="number-of-outliers-per-class-1" class="section level3">
 <h3>Number of outliers per class</h3>
 <pre class="r"><code>DT::datatable(os, caption = &quot;Outlier counts&quot;,   escape = F)</code></pre>
-<div id="htmlwidget-019f878828bba00f74a8" style="width:100%;height:auto;" class="datatables html-widget"></div>
-<script type="application/json" data-for="htmlwidget-019f878828bba00f74a8">{"x":{"filter":"none","caption":"<caption>Outlier counts<\/caption>","data":[["1","2","3","4","5","6","7","8","9"],["non_outlier","RNA_underexpression","Protein_underexpression","RNA_Protein_underexpression","RNA_overexpression","RNA_Protein_overexpression","Protein_overexpression","RNA_under_Protein_over","RNA_over_Protein_under"],[216022,166,922,144,79,16,519,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>up_down_outlier<\/th>\n      <th>N<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<div id="htmlwidget-4baf2721a0e9e45576da" style="width:100%;height:auto;" class="datatables html-widget"></div>
+<script type="application/json" data-for="htmlwidget-4baf2721a0e9e45576da">{"x":{"filter":"none","caption":"<caption>Outlier counts<\/caption>","data":[["1","2","3","4","5","6","7","8","9"],["non_outlier","RNA_underexpression","Protein_underexpression","RNA_Protein_underexpression","RNA_overexpression","RNA_Protein_overexpression","Protein_overexpression","RNA_under_Protein_over","RNA_over_Protein_under"],[216022,166,922,144,79,16,519,1,1]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>up_down_outlier<\/th>\n      <th>N<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":2},{"orderable":false,"targets":0}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>enr &lt;- reshape2::dcast(data = rp, geneID +  SAMPLE_ID +  var_type ~ up_down_outlier , 
                        fun.aggregate = cat.agg)
 

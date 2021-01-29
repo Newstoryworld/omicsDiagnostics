@@ -11,7 +11,7 @@
 
 <meta name="author" content="smirnovd" />
 
-<meta name="date" content="2021-01-27" />
+<meta name="date" content="2021-01-29" />
 
 <title>Patient organ system involvment</title>
 
@@ -276,7 +276,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Patient organ system involvment</h1>
 <h4 class="author">smirnovd</h4>
-<h4 class="date">2021-01-27</h4>
+<h4 class="date">2021-01-29</h4>
 
 </div>
 
@@ -284,16 +284,32 @@ div.tocify {
 <pre class="r"><code>source(snakemake@input$config)
 
 
-
-
 # READ ANNOTATION
-#sa &lt;- fread(&#39;/s/project/mitoMultiOmics/multiOMICs_integration/raw_data/proteomics_annotation.tsv&#39;)
+# sa &lt;- fread(&#39;/s/project/mitoMultiOmics/multiOMICs_integration/raw_data/proteomics_annotation.tsv&#39;)
 sa &lt;- fread(snakemake@input$sa)
 sa &lt;- sa[USE_FOR_PROTEOMICS_PAPER == T]
 
 # Load patient&#39;s HPO 
 pat_hpo &lt;- fread(snakemake@input$patient_hpo)
-#pat_hpo &lt;- fread(&#39;/s/project/mitoMultiOmics/multiOMICs_integration/raw_data/Patient_HPO_phenotypes.tsv&#39;)
+# pat_hpo &lt;- fread(&#39;/s/project/mitoMultiOmics/multiOMICs_integration/raw_data/Patient_HPO_phenotypes.tsv&#39;)
+pat_hpo &lt;- pat_hpo[, c(&quot;SAMPLE_ID&quot;, &quot;HPO_ID&quot;)]
+
+
+# load HPO ontology
+hpo &lt;- get_ontology(&quot;http://purl.obolibrary.org/obo/hp.obo&quot;, extract_tags=&quot;everything&quot;)
+
+
+# Extract HPO terms level 3 = organ systems
+hpo_ID_to_hpo_term &lt;- pat_hpo[, c(&quot;HPO_ID&quot;)] 
+hpo_ID_to_hpo_term &lt;- hpo_ID_to_hpo_term[!duplicated(hpo_ID_to_hpo_term)]
+hpo_ID_to_hpo_term$umbrella_HPO_term &lt;- lapply(hpo_ID_to_hpo_term$HPO_ID, function(hpo_id) {
+  get_term_property(ontology=hpo, property=&quot;ancestors&quot;, term=hpo_id, as_names=TRUE)[3]
+})
+hpo_ID_to_hpo_term &lt;- hpo_ID_to_hpo_term %&gt;% 
+  mutate_at(&#39;umbrella_HPO_term&#39;, paste)
+#str(hpo_ID_to_hpo_term)
+pat_hpo &lt;- merge(pat_hpo, hpo_ID_to_hpo_term, by = &quot;HPO_ID&quot;)
+
 
 pat_hpo &lt;- pat_hpo[, c(&quot;SAMPLE_ID&quot;, &quot;umbrella_HPO_term&quot;)]
 pat_hpo &lt;-pat_hpo[!duplicated(pat_hpo ),]
@@ -304,26 +320,69 @@ sa &lt;- sa[!duplicated(sa )]
 # create anatomy maps
 library(gganatogram)                     
               
- 
-male &lt;- as.data.table(hgMale_key) 
+unique(pat_hpo$umbrella_HPO_term)</code></pre>
+<pre><code>##  [1] &quot;Abnormality of the digestive system&quot;            &quot;Abnormality of the genitourinary system&quot;       
+##  [3] &quot;Abnormality of the nervous system&quot;              &quot;Abnormality of the ear&quot;                        
+##  [5] &quot;Abnormality of the eye&quot;                         &quot;Abnormality of head or neck&quot;                   
+##  [7] &quot;Abnormality of the musculoskeletal system&quot;      &quot;Growth abnormality&quot;                            
+##  [9] &quot;Abnormality of the cardiovascular system&quot;       &quot;Abnormality of limbs&quot;                          
+## [11] &quot;Abnormality of blood and blood-forming tissues&quot; &quot;Abnormality of metabolism/homeostasis&quot;         
+## [13] &quot;Abnormality of the respiratory system&quot;          &quot;Abnormality of the immune system&quot;              
+## [15] &quot;Onset&quot;                                          &quot;Abnormality of the integument&quot;                 
+## [17] &quot;Triggered by&quot;</code></pre>
+<pre class="r"><code>male &lt;- as.data.table(hgMale_key) 
 male$value &lt;- NULL
 male$sex &lt;- rep(&#39;male&#39;, nrow(male))
 
 female &lt;- as.data.table(hgFemale_key)
 female$value &lt;- NULL
 female$sex &lt;- rep(&#39;female&#39;, nrow(female))
-human &lt;- rbind(male, female)        
-human[type ==  &quot;nervous_system&quot;, type:= &quot;Abnormality of the nervous system&quot; ]
+human &lt;- rbind(male, female)     
+
 human[type ==  &quot;digestion&quot;, type:= &quot;Abnormality of the digestive system&quot; ]
-human[type ==  &quot;respiratory&quot;, type:= &quot;Abnormality of the respiratory system&quot;  ]
-human[type ==  &quot;circulation&quot;, type:= &quot;Abnormality of the cardiovascular system&quot;]
-human[type ==  &quot;reproductive&quot;, type:= &quot;Abnormality of the genitourinary system&quot; ]
+human[type == &quot;Abnormality of the digestive system&quot; , colour := &quot;orange&quot;]
+
 human[organ ==  &quot;urinary_bladder&quot;, type:= &quot;Abnormality of the genitourinary system&quot; ]
-human[organ ==  &quot;skeletal_muscle&quot;, type:= &quot;Abnormality of the musculature&quot;]
-human[organ ==  &quot;bone&quot; , type := &quot;Abnormality of the skeletal system&quot;  ]   
-human[organ %in%  c(&quot;thyroid_gland&quot;, &quot;pituitary_gland&quot;, &quot;adrenal_gland&quot;)   , type:= &quot;Abnormality of the endocrine system&quot;    ]  
-human[organ ==  &quot;bone_marrow&quot;  , type:= &quot;Abnormality of blood and blood-forming tissues&quot; ]  
+human[type ==  &quot;reproductive&quot;, type:= &quot;Abnormality of the genitourinary system&quot; ]
+human[type == &quot;Abnormality of the genitourinary system&quot;, colour := &quot;yellow&quot; ]
+
+human[type ==  &quot;nervous_system&quot;, type:= &quot;Abnormality of the nervous system&quot; ]
+human[type == &quot;Abnormality of the nervous system&quot;, colour := &quot;lightblue&quot; ]
+
+human[organ ==  &quot;skeletal_muscle&quot;, type:= &quot;Abnormality of the musculoskeletal system&quot;]
+human[type == &quot;Abnormality of the musculoskeletal system&quot;, colour := &quot;red&quot;]
+
+# human[organ ==  &quot;skeletal_muscle&quot;, type:= &quot;Abnormality of the musculature&quot;]
+# human[organ ==  &quot;bone&quot; , type := &quot;Abnormality of the skeletal system&quot;  ]  
+# human[type == &quot;Abnormality of the skeletal system&quot; , colour := &quot;grey60&quot; ]  
+
+
+human[type ==  &quot;circulation&quot;, type:= &quot;Abnormality of the cardiovascular system&quot;]
+human[type == &quot;Abnormality of the cardiovascular system&quot;, colour := &quot;darkred&quot;]
+
+human[organ ==  &quot;bone_marrow&quot;  , type:= &quot;Abnormality of blood and blood-forming tissues&quot; ] 
+human[type == &quot;Abnormality of blood and blood-forming tissues&quot; , colour := &quot;darkorange&quot;]  
+
+human[type ==  &quot;respiratory&quot;, type:= &quot;Abnormality of the respiratory system&quot;  ]
+human[type == &quot;Abnormality of the respiratory system&quot; , colour := &quot;steelblue&quot; ]
+
 human[organ ==  &quot;lymph_node&quot;   , type:= &quot;Abnormality of the immune system&quot;] 
+human[type == &quot;Abnormality of the immune system&quot;, colour := &quot;darkgreen&quot;] 
+
+human[organ %in%  c(&quot;thyroid_gland&quot;, &quot;pituitary_gland&quot;, &quot;adrenal_gland&quot;)   , type:= &quot;Abnormality of the endocrine system&quot;]  
+human[type == &quot;Abnormality of the endocrine system&quot; , colour := &quot;green&quot; ] 
+
+
+# &quot;Abnormality of the ear&quot; 
+# &quot;Abnormality of the eye&quot;
+# &quot;Abnormality of head or neck&quot;
+# &quot;Growth abnormality&quot;  
+# &quot;Abnormality of limbs&quot; 
+# &quot;Abnormality of metabolism/homeostasis&quot;
+# &quot;Onset&quot;  
+# &quot;Abnormality of the integument&quot; 
+# &quot;Triggered by&quot;
+
 human &lt;- human[type !=  &quot;other&quot;]
 human &lt;- human[organ !=  &quot;tongue&quot;]
 human &lt;- human[organ !=  &quot;throat&quot;]
@@ -332,18 +391,6 @@ human &lt;- human[organ !=  &quot;esophagus&quot;]
 human &lt;- human[organ !=  &quot;vas_deferens&quot;]
 human &lt;- human[organ !=  &quot;nerve&quot;] # too many 
 human &lt;- human[organ !=  &quot;spinal_cord&quot;] # too many 
-
-
-human[type == &quot;Abnormality of the nervous system&quot;, colour := &quot;lightblue&quot; ]
-human[type == &quot;Abnormality of the respiratory system&quot; , colour := &quot;steelblue&quot; ]
-human[type == &quot;Abnormality of the cardiovascular system&quot;, colour := &quot;darkred&quot;]
-human[type == &quot;Abnormality of the musculature&quot;, colour := &quot;red&quot;]
-human[type == &quot;Abnormality of the genitourinary system&quot;, colour := &quot;yellow&quot; ]
-human[type == &quot;Abnormality of the skeletal system&quot; , colour := &quot;grey60&quot; ]   
-human[type == &quot;Abnormality of the endocrine system&quot; , colour := &quot;green&quot;   ] 
-human[type == &quot;Abnormality of the digestive system&quot; , colour := &quot;orange&quot;]
-human[type == &quot;Abnormality of blood and blood-forming tissues&quot; , colour := &quot;darkorange&quot;]  
-human[type == &quot;Abnormality of the immune system&quot;, colour := &quot;darkgreen&quot;] 
 
 
 
@@ -358,8 +405,6 @@ patients &lt;- merge(patients, human, by= c( &quot;sex&quot;, &quot;type&quot;),
 write_tsv(patients,  snakemake@output$patient_organs)
 
 
-
-
 p_male &lt;- gganatogram(data=  patients[sex == &quot;male&quot;], fillOutline=&#39;white&#39;, organism=&#39;human&#39;, sex= &quot;male&quot;, fill=&quot;colour&quot;) + theme_void()
 p_female &lt;- gganatogram(data=  patients[sex == &quot;female&quot;], fillOutline=&#39;white&#39;, organism=&#39;human&#39;, sex= &quot;female&quot;, fill=&quot;colour&quot;)+ theme_void()
 humans &lt;- p_male + p_female </code></pre>
@@ -372,7 +417,7 @@ dev.off()</code></pre>
 <pre><code>## png 
 ##   2</code></pre>
 
-<div id="rmd-source-code">IyctLS0KIycgdGl0bGU6IFBhdGllbnQgb3JnYW4gc3lzdGVtIGludm9sdm1lbnQKIycgYXV0aG9yOiBzbWlybm92ZAojJyB3YjoKIycgIGlucHV0OgojJyAgLSBjb25maWc6ICdzcmMvY29uZmlnLlInCiMnICAtIHNhOiAnYHNtIGNvbmZpZ1siQU5OT1RBVElPTiJdYCcKIycgIC0gcGF0aWVudF9ocG86ICdgc20gY29uZmlnWyJSQVdfSFBPIl1gJwojJyAgb3V0cHV0OgojJyAgLSBwYXRpZW50X29yZ2FuczogJ2BzbSBjb25maWdbIlBST0NfREFUQSJdICsgIi9IUE8vUGF0aWVudHNfYWZmZWN0ZWRfb3JnYW5zLnRzdiJgJwojJyAgLSBmaWc6ICdgc20gY29uZmlnWyJGSUdVUkVfRElSIl0gKyAiL1N1cHBsZW1lbnRhcnlfZmlndXJlcy9odW1hbnMucGRmImAnCiMnIG91dHB1dDogCiMnICAgaHRtbF9kb2N1bWVudDoKIycgICAgY29kZV9mb2xkaW5nOiBoaWRlCiMnICAgIGNvZGVfZG93bmxvYWQ6IFRSVUUKIyctLS0KCgpzb3VyY2Uoc25ha2VtYWtlQGlucHV0JGNvbmZpZykKCgoKCiMgUkVBRCBBTk5PVEFUSU9OCiNzYSA8LSBmcmVhZCgnL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL3Jhd19kYXRhL3Byb3Rlb21pY3NfYW5ub3RhdGlvbi50c3YnKQpzYSA8LSBmcmVhZChzbmFrZW1ha2VAaW5wdXQkc2EpCnNhIDwtIHNhW1VTRV9GT1JfUFJPVEVPTUlDU19QQVBFUiA9PSBUXQoKIyBMb2FkIHBhdGllbnQncyBIUE8gCnBhdF9ocG8gPC0gZnJlYWQoc25ha2VtYWtlQGlucHV0JHBhdGllbnRfaHBvKQojcGF0X2hwbyA8LSBmcmVhZCgnL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL3Jhd19kYXRhL1BhdGllbnRfSFBPX3BoZW5vdHlwZXMudHN2JykKCnBhdF9ocG8gPC0gcGF0X2hwb1ssIGMoIlNBTVBMRV9JRCIsICJ1bWJyZWxsYV9IUE9fdGVybSIpXQpwYXRfaHBvIDwtcGF0X2hwb1shZHVwbGljYXRlZChwYXRfaHBvICksXQoKc2EgPC0gc2FbU0FNUExFX0lEICVpbiUgdW5pcXVlKHBhdF9ocG8kU0FNUExFX0lEKV0Kc2EgPC0gc2FbIWR1cGxpY2F0ZWQoc2EgKV0KCiMgY3JlYXRlIGFuYXRvbXkgbWFwcwpsaWJyYXJ5KGdnYW5hdG9ncmFtKSAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgIAogCm1hbGUgPC0gYXMuZGF0YS50YWJsZShoZ01hbGVfa2V5KSAKbWFsZSR2YWx1ZSA8LSBOVUxMCm1hbGUkc2V4IDwtIHJlcCgnbWFsZScsIG5yb3cobWFsZSkpCgpmZW1hbGUgPC0gYXMuZGF0YS50YWJsZShoZ0ZlbWFsZV9rZXkpCmZlbWFsZSR2YWx1ZSA8LSBOVUxMCmZlbWFsZSRzZXggPC0gcmVwKCdmZW1hbGUnLCBucm93KGZlbWFsZSkpCmh1bWFuIDwtIHJiaW5kKG1hbGUsIGZlbWFsZSkgICAgICAgIApodW1hblt0eXBlID09ICAibmVydm91c19zeXN0ZW0iLCB0eXBlOj0gIkFibm9ybWFsaXR5IG9mIHRoZSBuZXJ2b3VzIHN5c3RlbSIgXQpodW1hblt0eXBlID09ICAiZGlnZXN0aW9uIiwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiB0aGUgZGlnZXN0aXZlIHN5c3RlbSIgXQpodW1hblt0eXBlID09ICAicmVzcGlyYXRvcnkiLCB0eXBlOj0gIkFibm9ybWFsaXR5IG9mIHRoZSByZXNwaXJhdG9yeSBzeXN0ZW0iICBdCmh1bWFuW3R5cGUgPT0gICJjaXJjdWxhdGlvbiIsIHR5cGU6PSAiQWJub3JtYWxpdHkgb2YgdGhlIGNhcmRpb3Zhc2N1bGFyIHN5c3RlbSJdCmh1bWFuW3R5cGUgPT0gICJyZXByb2R1Y3RpdmUiLCB0eXBlOj0gIkFibm9ybWFsaXR5IG9mIHRoZSBnZW5pdG91cmluYXJ5IHN5c3RlbSIgXQpodW1hbltvcmdhbiA9PSAgInVyaW5hcnlfYmxhZGRlciIsIHR5cGU6PSAiQWJub3JtYWxpdHkgb2YgdGhlIGdlbml0b3VyaW5hcnkgc3lzdGVtIiBdCmh1bWFuW29yZ2FuID09ICAic2tlbGV0YWxfbXVzY2xlIiwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiB0aGUgbXVzY3VsYXR1cmUiXQpodW1hbltvcmdhbiA9PSAgImJvbmUiICwgdHlwZSA6PSAiQWJub3JtYWxpdHkgb2YgdGhlIHNrZWxldGFsIHN5c3RlbSIgIF0gICAKaHVtYW5bb3JnYW4gJWluJSAgYygidGh5cm9pZF9nbGFuZCIsICJwaXR1aXRhcnlfZ2xhbmQiLCAiYWRyZW5hbF9nbGFuZCIpICAgLCB0eXBlOj0gIkFibm9ybWFsaXR5IG9mIHRoZSBlbmRvY3JpbmUgc3lzdGVtIiAgICBdICAKaHVtYW5bb3JnYW4gPT0gICJib25lX21hcnJvdyIgICwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiBibG9vZCBhbmQgYmxvb2QtZm9ybWluZyB0aXNzdWVzIiBdICAKaHVtYW5bb3JnYW4gPT0gICJseW1waF9ub2RlIiAgICwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiB0aGUgaW1tdW5lIHN5c3RlbSJdIApodW1hbiA8LSBodW1hblt0eXBlICE9ICAib3RoZXIiXQpodW1hbiA8LSBodW1hbltvcmdhbiAhPSAgInRvbmd1ZSJdCmh1bWFuIDwtIGh1bWFuW29yZ2FuICE9ICAidGhyb2F0Il0KaHVtYW4gPC0gaHVtYW5bb3JnYW4gIT0gICJ0cmFjaGVhIl0KaHVtYW4gPC0gaHVtYW5bb3JnYW4gIT0gICJlc29waGFndXMiXQpodW1hbiA8LSBodW1hbltvcmdhbiAhPSAgInZhc19kZWZlcmVucyJdCmh1bWFuIDwtIGh1bWFuW29yZ2FuICE9ICAibmVydmUiXSAjIHRvbyBtYW55IApodW1hbiA8LSBodW1hbltvcmdhbiAhPSAgInNwaW5hbF9jb3JkIl0gIyB0b28gbWFueSAKCgpodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgbmVydm91cyBzeXN0ZW0iLCBjb2xvdXIgOj0gImxpZ2h0Ymx1ZSIgXQpodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgcmVzcGlyYXRvcnkgc3lzdGVtIiAsIGNvbG91ciA6PSAic3RlZWxibHVlIiBdCmh1bWFuW3R5cGUgPT0gIkFibm9ybWFsaXR5IG9mIHRoZSBjYXJkaW92YXNjdWxhciBzeXN0ZW0iLCBjb2xvdXIgOj0gImRhcmtyZWQiXQpodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgbXVzY3VsYXR1cmUiLCBjb2xvdXIgOj0gInJlZCJdCmh1bWFuW3R5cGUgPT0gIkFibm9ybWFsaXR5IG9mIHRoZSBnZW5pdG91cmluYXJ5IHN5c3RlbSIsIGNvbG91ciA6PSAieWVsbG93IiBdCmh1bWFuW3R5cGUgPT0gIkFibm9ybWFsaXR5IG9mIHRoZSBza2VsZXRhbCBzeXN0ZW0iICwgY29sb3VyIDo9ICJncmV5NjAiIF0gICAKaHVtYW5bdHlwZSA9PSAiQWJub3JtYWxpdHkgb2YgdGhlIGVuZG9jcmluZSBzeXN0ZW0iICwgY29sb3VyIDo9ICJncmVlbiIgICBdIApodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgZGlnZXN0aXZlIHN5c3RlbSIgLCBjb2xvdXIgOj0gIm9yYW5nZSJdCmh1bWFuW3R5cGUgPT0gIkFibm9ybWFsaXR5IG9mIGJsb29kIGFuZCBibG9vZC1mb3JtaW5nIHRpc3N1ZXMiICwgY29sb3VyIDo9ICJkYXJrb3JhbmdlIl0gIApodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgaW1tdW5lIHN5c3RlbSIsIGNvbG91ciA6PSAiZGFya2dyZWVuIl0gCgoKCnBhdGllbnRzIDwtIG1lcmdlKHNhWyAsIGMoIlNBTVBMRV9JRCIsICJnZW5kZXIiKSBdLCBwYXRfaHBvLCBieT0gIlNBTVBMRV9JRCIgKQpzZXRuYW1lcyhwYXRpZW50cywgYygiZ2VuZGVyIiwgInVtYnJlbGxhX0hQT190ZXJtIiksIGMoInNleCIsICJ0eXBlIikpCgpwYXRpZW50cyA8LSBtZXJnZShwYXRpZW50cywgaHVtYW4sIGJ5PSBjKCAic2V4IiwgInR5cGUiKSwgYWxsb3cuY2FydGVzaWFuPVRSVUUpCgoKIyBTYXZlIHJlc3VsdHMKIyB3cml0ZV90c3YocGF0aWVudHMsICcvcy9wcm9qZWN0L21pdG9NdWx0aU9taWNzL211bHRpT01JQ3NfaW50ZWdyYXRpb24vcHJvY2Vzc2VkX2RhdGEvSFBPL1BhdGllbnRzX2FmZmVjdGVkX29yZ2Fucy50c3YnKQp3cml0ZV90c3YocGF0aWVudHMsICBzbmFrZW1ha2VAb3V0cHV0JHBhdGllbnRfb3JnYW5zKQoKCgoKcF9tYWxlIDwtIGdnYW5hdG9ncmFtKGRhdGE9ICBwYXRpZW50c1tzZXggPT0gIm1hbGUiXSwgZmlsbE91dGxpbmU9J3doaXRlJywgb3JnYW5pc209J2h1bWFuJywgc2V4PSAibWFsZSIsIGZpbGw9ImNvbG91ciIpICsgdGhlbWVfdm9pZCgpCnBfZmVtYWxlIDwtIGdnYW5hdG9ncmFtKGRhdGE9ICBwYXRpZW50c1tzZXggPT0gImZlbWFsZSJdLCBmaWxsT3V0bGluZT0nd2hpdGUnLCBvcmdhbmlzbT0naHVtYW4nLCBzZXg9ICJmZW1hbGUiLCBmaWxsPSJjb2xvdXIiKSsgdGhlbWVfdm9pZCgpCmh1bWFucyA8LSBwX21hbGUgKyBwX2ZlbWFsZSAKCiMrIGZpZy53aWR0aD0xMCwgZmlnLmhlaWdodD03Cmh1bWFucwoKCnBkZihzbmFrZW1ha2VAb3V0cHV0JGZpZywgIyAiL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL0ZpZ3VyZXMvaHVtYW5zLnBkZiIsICAKICAgIHdpZHRoID0gMTAsIGhlaWdodCA9IDcsICB1c2VEaW5nYmF0cz1GQUxTRSApCnByaW50KGh1bWFucykgCmRldi5vZmYoKQo=</div>
+<div id="rmd-source-code">IyctLS0KIycgdGl0bGU6IFBhdGllbnQgb3JnYW4gc3lzdGVtIGludm9sdm1lbnQKIycgYXV0aG9yOiBzbWlybm92ZAojJyB3YjoKIycgIGlucHV0OgojJyAgLSBjb25maWc6ICdzcmMvY29uZmlnLlInCiMnICAtIHNhOiAnYHNtIGNvbmZpZ1siQU5OT1RBVElPTiJdYCcKIycgIC0gcGF0aWVudF9ocG86ICdgc20gY29uZmlnWyJSQVdfSFBPIl1gJwojJyAgb3V0cHV0OgojJyAgLSBwYXRpZW50X29yZ2FuczogJ2BzbSBjb25maWdbIlBST0NfREFUQSJdICsgIi9IUE8vUGF0aWVudHNfYWZmZWN0ZWRfb3JnYW5zLnRzdiJgJwojJyAgLSBmaWc6ICdgc20gY29uZmlnWyJGSUdVUkVfRElSIl0gKyAiL1N1cHBsZW1lbnRhcnlfZmlndXJlcy9odW1hbnMucGRmImAnCiMnIG91dHB1dDogCiMnICAgaHRtbF9kb2N1bWVudDoKIycgICAgY29kZV9mb2xkaW5nOiBoaWRlCiMnICAgIGNvZGVfZG93bmxvYWQ6IFRSVUUKIyctLS0KCnNvdXJjZShzbmFrZW1ha2VAaW5wdXQkY29uZmlnKQoKCiMgUkVBRCBBTk5PVEFUSU9OCiMgc2EgPC0gZnJlYWQoJy9zL3Byb2plY3QvbWl0b011bHRpT21pY3MvbXVsdGlPTUlDc19pbnRlZ3JhdGlvbi9yYXdfZGF0YS9wcm90ZW9taWNzX2Fubm90YXRpb24udHN2JykKc2EgPC0gZnJlYWQoc25ha2VtYWtlQGlucHV0JHNhKQpzYSA8LSBzYVtVU0VfRk9SX1BST1RFT01JQ1NfUEFQRVIgPT0gVF0KCiMgTG9hZCBwYXRpZW50J3MgSFBPIApwYXRfaHBvIDwtIGZyZWFkKHNuYWtlbWFrZUBpbnB1dCRwYXRpZW50X2hwbykKIyBwYXRfaHBvIDwtIGZyZWFkKCcvcy9wcm9qZWN0L21pdG9NdWx0aU9taWNzL211bHRpT01JQ3NfaW50ZWdyYXRpb24vcmF3X2RhdGEvUGF0aWVudF9IUE9fcGhlbm90eXBlcy50c3YnKQpwYXRfaHBvIDwtIHBhdF9ocG9bLCBjKCJTQU1QTEVfSUQiLCAiSFBPX0lEIildCgoKIyBsb2FkIEhQTyBvbnRvbG9neQpocG8gPC0gZ2V0X29udG9sb2d5KCJodHRwOi8vcHVybC5vYm9saWJyYXJ5Lm9yZy9vYm8vaHAub2JvIiwgZXh0cmFjdF90YWdzPSJldmVyeXRoaW5nIikKCgojIEV4dHJhY3QgSFBPIHRlcm1zIGxldmVsIDMgPSBvcmdhbiBzeXN0ZW1zCmhwb19JRF90b19ocG9fdGVybSA8LSBwYXRfaHBvWywgYygiSFBPX0lEIildIApocG9fSURfdG9faHBvX3Rlcm0gPC0gaHBvX0lEX3RvX2hwb190ZXJtWyFkdXBsaWNhdGVkKGhwb19JRF90b19ocG9fdGVybSldCmhwb19JRF90b19ocG9fdGVybSR1bWJyZWxsYV9IUE9fdGVybSA8LSBsYXBwbHkoaHBvX0lEX3RvX2hwb190ZXJtJEhQT19JRCwgZnVuY3Rpb24oaHBvX2lkKSB7CiAgZ2V0X3Rlcm1fcHJvcGVydHkob250b2xvZ3k9aHBvLCBwcm9wZXJ0eT0iYW5jZXN0b3JzIiwgdGVybT1ocG9faWQsIGFzX25hbWVzPVRSVUUpWzNdCn0pCmhwb19JRF90b19ocG9fdGVybSA8LSBocG9fSURfdG9faHBvX3Rlcm0gJT4lIAogIG11dGF0ZV9hdCgndW1icmVsbGFfSFBPX3Rlcm0nLCBwYXN0ZSkKI3N0cihocG9fSURfdG9faHBvX3Rlcm0pCnBhdF9ocG8gPC0gbWVyZ2UocGF0X2hwbywgaHBvX0lEX3RvX2hwb190ZXJtLCBieSA9ICJIUE9fSUQiKQoKCnBhdF9ocG8gPC0gcGF0X2hwb1ssIGMoIlNBTVBMRV9JRCIsICJ1bWJyZWxsYV9IUE9fdGVybSIpXQpwYXRfaHBvIDwtcGF0X2hwb1shZHVwbGljYXRlZChwYXRfaHBvICksXQoKc2EgPC0gc2FbU0FNUExFX0lEICVpbiUgdW5pcXVlKHBhdF9ocG8kU0FNUExFX0lEKV0Kc2EgPC0gc2FbIWR1cGxpY2F0ZWQoc2EgKV0KCiMgY3JlYXRlIGFuYXRvbXkgbWFwcwpsaWJyYXJ5KGdnYW5hdG9ncmFtKSAgICAgICAgICAgICAgICAgICAgIAogICAgICAgICAgICAgIAp1bmlxdWUocGF0X2hwbyR1bWJyZWxsYV9IUE9fdGVybSkKbWFsZSA8LSBhcy5kYXRhLnRhYmxlKGhnTWFsZV9rZXkpIAptYWxlJHZhbHVlIDwtIE5VTEwKbWFsZSRzZXggPC0gcmVwKCdtYWxlJywgbnJvdyhtYWxlKSkKCmZlbWFsZSA8LSBhcy5kYXRhLnRhYmxlKGhnRmVtYWxlX2tleSkKZmVtYWxlJHZhbHVlIDwtIE5VTEwKZmVtYWxlJHNleCA8LSByZXAoJ2ZlbWFsZScsIG5yb3coZmVtYWxlKSkKaHVtYW4gPC0gcmJpbmQobWFsZSwgZmVtYWxlKSAgICAgCgpodW1hblt0eXBlID09ICAiZGlnZXN0aW9uIiwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiB0aGUgZGlnZXN0aXZlIHN5c3RlbSIgXQpodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgZGlnZXN0aXZlIHN5c3RlbSIgLCBjb2xvdXIgOj0gIm9yYW5nZSJdCgpodW1hbltvcmdhbiA9PSAgInVyaW5hcnlfYmxhZGRlciIsIHR5cGU6PSAiQWJub3JtYWxpdHkgb2YgdGhlIGdlbml0b3VyaW5hcnkgc3lzdGVtIiBdCmh1bWFuW3R5cGUgPT0gICJyZXByb2R1Y3RpdmUiLCB0eXBlOj0gIkFibm9ybWFsaXR5IG9mIHRoZSBnZW5pdG91cmluYXJ5IHN5c3RlbSIgXQpodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgZ2VuaXRvdXJpbmFyeSBzeXN0ZW0iLCBjb2xvdXIgOj0gInllbGxvdyIgXQoKaHVtYW5bdHlwZSA9PSAgIm5lcnZvdXNfc3lzdGVtIiwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiB0aGUgbmVydm91cyBzeXN0ZW0iIF0KaHVtYW5bdHlwZSA9PSAiQWJub3JtYWxpdHkgb2YgdGhlIG5lcnZvdXMgc3lzdGVtIiwgY29sb3VyIDo9ICJsaWdodGJsdWUiIF0KCmh1bWFuW29yZ2FuID09ICAic2tlbGV0YWxfbXVzY2xlIiwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiB0aGUgbXVzY3Vsb3NrZWxldGFsIHN5c3RlbSJdCmh1bWFuW3R5cGUgPT0gIkFibm9ybWFsaXR5IG9mIHRoZSBtdXNjdWxvc2tlbGV0YWwgc3lzdGVtIiwgY29sb3VyIDo9ICJyZWQiXQoKIyBodW1hbltvcmdhbiA9PSAgInNrZWxldGFsX211c2NsZSIsIHR5cGU6PSAiQWJub3JtYWxpdHkgb2YgdGhlIG11c2N1bGF0dXJlIl0KIyBodW1hbltvcmdhbiA9PSAgImJvbmUiICwgdHlwZSA6PSAiQWJub3JtYWxpdHkgb2YgdGhlIHNrZWxldGFsIHN5c3RlbSIgIF0gIAojIGh1bWFuW3R5cGUgPT0gIkFibm9ybWFsaXR5IG9mIHRoZSBza2VsZXRhbCBzeXN0ZW0iICwgY29sb3VyIDo9ICJncmV5NjAiIF0gIAoKCmh1bWFuW3R5cGUgPT0gICJjaXJjdWxhdGlvbiIsIHR5cGU6PSAiQWJub3JtYWxpdHkgb2YgdGhlIGNhcmRpb3Zhc2N1bGFyIHN5c3RlbSJdCmh1bWFuW3R5cGUgPT0gIkFibm9ybWFsaXR5IG9mIHRoZSBjYXJkaW92YXNjdWxhciBzeXN0ZW0iLCBjb2xvdXIgOj0gImRhcmtyZWQiXQoKaHVtYW5bb3JnYW4gPT0gICJib25lX21hcnJvdyIgICwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiBibG9vZCBhbmQgYmxvb2QtZm9ybWluZyB0aXNzdWVzIiBdIApodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiBibG9vZCBhbmQgYmxvb2QtZm9ybWluZyB0aXNzdWVzIiAsIGNvbG91ciA6PSAiZGFya29yYW5nZSJdICAKCmh1bWFuW3R5cGUgPT0gICJyZXNwaXJhdG9yeSIsIHR5cGU6PSAiQWJub3JtYWxpdHkgb2YgdGhlIHJlc3BpcmF0b3J5IHN5c3RlbSIgIF0KaHVtYW5bdHlwZSA9PSAiQWJub3JtYWxpdHkgb2YgdGhlIHJlc3BpcmF0b3J5IHN5c3RlbSIgLCBjb2xvdXIgOj0gInN0ZWVsYmx1ZSIgXQoKaHVtYW5bb3JnYW4gPT0gICJseW1waF9ub2RlIiAgICwgdHlwZTo9ICJBYm5vcm1hbGl0eSBvZiB0aGUgaW1tdW5lIHN5c3RlbSJdIApodW1hblt0eXBlID09ICJBYm5vcm1hbGl0eSBvZiB0aGUgaW1tdW5lIHN5c3RlbSIsIGNvbG91ciA6PSAiZGFya2dyZWVuIl0gCgpodW1hbltvcmdhbiAlaW4lICBjKCJ0aHlyb2lkX2dsYW5kIiwgInBpdHVpdGFyeV9nbGFuZCIsICJhZHJlbmFsX2dsYW5kIikgICAsIHR5cGU6PSAiQWJub3JtYWxpdHkgb2YgdGhlIGVuZG9jcmluZSBzeXN0ZW0iXSAgCmh1bWFuW3R5cGUgPT0gIkFibm9ybWFsaXR5IG9mIHRoZSBlbmRvY3JpbmUgc3lzdGVtIiAsIGNvbG91ciA6PSAiZ3JlZW4iIF0gCgoKIyAiQWJub3JtYWxpdHkgb2YgdGhlIGVhciIgCiMgIkFibm9ybWFsaXR5IG9mIHRoZSBleWUiCiMgIkFibm9ybWFsaXR5IG9mIGhlYWQgb3IgbmVjayIKIyAiR3Jvd3RoIGFibm9ybWFsaXR5IiAgCiMgIkFibm9ybWFsaXR5IG9mIGxpbWJzIiAKIyAiQWJub3JtYWxpdHkgb2YgbWV0YWJvbGlzbS9ob21lb3N0YXNpcyIKIyAiT25zZXQiICAKIyAiQWJub3JtYWxpdHkgb2YgdGhlIGludGVndW1lbnQiIAojICJUcmlnZ2VyZWQgYnkiCgpodW1hbiA8LSBodW1hblt0eXBlICE9ICAib3RoZXIiXQpodW1hbiA8LSBodW1hbltvcmdhbiAhPSAgInRvbmd1ZSJdCmh1bWFuIDwtIGh1bWFuW29yZ2FuICE9ICAidGhyb2F0Il0KaHVtYW4gPC0gaHVtYW5bb3JnYW4gIT0gICJ0cmFjaGVhIl0KaHVtYW4gPC0gaHVtYW5bb3JnYW4gIT0gICJlc29waGFndXMiXQpodW1hbiA8LSBodW1hbltvcmdhbiAhPSAgInZhc19kZWZlcmVucyJdCmh1bWFuIDwtIGh1bWFuW29yZ2FuICE9ICAibmVydmUiXSAjIHRvbyBtYW55IApodW1hbiA8LSBodW1hbltvcmdhbiAhPSAgInNwaW5hbF9jb3JkIl0gIyB0b28gbWFueSAKCgoKcGF0aWVudHMgPC0gbWVyZ2Uoc2FbICwgYygiU0FNUExFX0lEIiwgImdlbmRlciIpIF0sIHBhdF9ocG8sIGJ5PSAiU0FNUExFX0lEIiApCnNldG5hbWVzKHBhdGllbnRzLCBjKCJnZW5kZXIiLCAidW1icmVsbGFfSFBPX3Rlcm0iKSwgYygic2V4IiwgInR5cGUiKSkKCnBhdGllbnRzIDwtIG1lcmdlKHBhdGllbnRzLCBodW1hbiwgYnk9IGMoICJzZXgiLCAidHlwZSIpLCBhbGxvdy5jYXJ0ZXNpYW49VFJVRSkKCgojIFNhdmUgcmVzdWx0cwojIHdyaXRlX3RzdihwYXRpZW50cywgJy9zL3Byb2plY3QvbWl0b011bHRpT21pY3MvbXVsdGlPTUlDc19pbnRlZ3JhdGlvbi9wcm9jZXNzZWRfZGF0YS9IUE8vUGF0aWVudHNfYWZmZWN0ZWRfb3JnYW5zLnRzdicpCndyaXRlX3RzdihwYXRpZW50cywgIHNuYWtlbWFrZUBvdXRwdXQkcGF0aWVudF9vcmdhbnMpCgoKcF9tYWxlIDwtIGdnYW5hdG9ncmFtKGRhdGE9ICBwYXRpZW50c1tzZXggPT0gIm1hbGUiXSwgZmlsbE91dGxpbmU9J3doaXRlJywgb3JnYW5pc209J2h1bWFuJywgc2V4PSAibWFsZSIsIGZpbGw9ImNvbG91ciIpICsgdGhlbWVfdm9pZCgpCnBfZmVtYWxlIDwtIGdnYW5hdG9ncmFtKGRhdGE9ICBwYXRpZW50c1tzZXggPT0gImZlbWFsZSJdLCBmaWxsT3V0bGluZT0nd2hpdGUnLCBvcmdhbmlzbT0naHVtYW4nLCBzZXg9ICJmZW1hbGUiLCBmaWxsPSJjb2xvdXIiKSsgdGhlbWVfdm9pZCgpCmh1bWFucyA8LSBwX21hbGUgKyBwX2ZlbWFsZSAKCiMrIGZpZy53aWR0aD0xMCwgZmlnLmhlaWdodD03Cmh1bWFucwoKCnBkZihzbmFrZW1ha2VAb3V0cHV0JGZpZywgIyAiL3MvcHJvamVjdC9taXRvTXVsdGlPbWljcy9tdWx0aU9NSUNzX2ludGVncmF0aW9uL0ZpZ3VyZXMvaHVtYW5zLnBkZiIsICAKICAgIHdpZHRoID0gMTAsIGhlaWdodCA9IDcsICB1c2VEaW5nYmF0cz1GQUxTRSApCnByaW50KGh1bWFucykgCmRldi5vZmYoKQo=</div>
 
 
 </div>
