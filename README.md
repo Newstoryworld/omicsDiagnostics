@@ -1,4 +1,4 @@
-# omicsDiagnostics.github.io
+# omicsDiagnostics
 
 
-https://newstoryworld.github.io/omicsDiagnostics.github.io/index.html#readme.html
+https://newstoryworld.github.io/omicsDiagnostics/index.html#readme.html
