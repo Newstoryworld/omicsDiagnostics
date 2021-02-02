@@ -589,8 +589,17 @@ border-color: #4078c0;
 </ul>
 <h2 id="data-and-prerequisites">Data and prerequisites</h2>
 <p>This project depends on the python packages <code>wBuild</code> and <code>OUTRIDER2</code></p>
-<p>The pipeline starts with the series of files available via <a href="https://zenodo.org/">Zenodo</a>: * <code>raw_data</code> * <code>proteomics_annotation.tsv</code> - sample annotation * <code>proteomics_not_normalized.tsv</code> - Proteomics intensity matrix * <code>raw_counts.tsv</code> - RNA-seq count matrix * <code>Patient_HPO_phenotypes.tsv</code> - Phenotype data recorded using HPO terms for diagnosed cases. * <code>patient_variant_hpo_data.tsv</code> - Gene annotation for all individuals. Since the genetic data are not publicly shareable, we provide only gene-level information.</p>
+<p>The pipeline starts with the series of files available via <a href="https://zenodo.org/">Zenodo</a>:</p>
 <ul>
+<li><code>raw_data</code>
+<ul>
+<li><code>proteomics_annotation.tsv</code> - sample annotation</li>
+<li><code>proteomics_not_normalized.tsv</code> - Proteomics intensity matrix</li>
+<li><code>raw_counts.tsv</code> - RNA-seq count matrix</li>
+<li><code>Patient_HPO_phenotypes.tsv</code> - Phenotype data recorded using HPO terms for diagnosed cases.</li>
+<li><code>enrichment_proportions_variants.tsv</code> - Results of rare variant enrichment/proportion analysis calculated on the full dataset.</li>
+<li><code>patient_variant_hpo_data.tsv</code> - Gene annotation for all individuals. Since the genetic data are not publicly shareable, we provide only gene-level information for outlier genes only.</li>
+</ul></li>
 <li><code>datasets</code>
 <ul>
 <li><code>disease_genes.tsv</code> - List of Mendelian disease genes aggregated from several studies. Downloaded automatically:</li>

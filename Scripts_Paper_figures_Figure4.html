@@ -11,7 +11,7 @@
 
 <meta name="author" content="smirnovd" />
 
-<meta name="date" content="2021-01-28" />
+<meta name="date" content="2021-02-02" />
 
 <title>Figure 4 Automatic analysis</title>
 
@@ -276,7 +276,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Figure 4 Automatic analysis</h1>
 <h4 class="author">smirnovd</h4>
-<h4 class="date">2021-01-28</h4>
+<h4 class="date">2021-02-02</h4>
 
 </div>
 
@@ -409,9 +409,9 @@ tp_fp &lt;- data.frame( &quot;Type&quot; = c(&quot;TP&quot;, &quot;FP&quot;), &q
          plot.margin = margin(0, 0, 0, 0, &quot;cm&quot;) ) </code></pre>
 <p><img src="Scripts_Paper_figures_Figure4_files/figure-html/unnamed-chunk-7-1.png" width="192" /></p>
 <pre class="r"><code>paste( &quot;Sensitivity&quot;, round(100*Diagnosis/Nsolved) , &quot;%&quot;  )</code></pre>
-<pre><code>## [1] &quot;Sensitivity 48 %&quot;</code></pre>
+<pre><code>## [1] &quot;Sensitivity 47 %&quot;</code></pre>
 <pre class="r"><code>paste( &quot;Specifisity&quot;, round(100*Diagnosis/Nentries) , &quot;%&quot;  )</code></pre>
-<pre><code>## [1] &quot;Specifisity 78 %&quot;</code></pre>
+<pre><code>## [1] &quot;Specifisity 74 %&quot;</code></pre>
 <p>Z-score</p>
 <pre class="r"><code>rpz &lt;- rp[PROTEIN_ZSCORE &lt; -2]
 Ncases_Z &lt;- uniqueN(rpz$SAMPLE_ID)

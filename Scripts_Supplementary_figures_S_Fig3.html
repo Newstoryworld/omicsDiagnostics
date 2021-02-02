@@ -11,7 +11,7 @@
 
 <meta name="author" content="smirnovd" />
 
-<meta name="date" content="2021-01-29" />
+<meta name="date" content="2021-02-02" />
 
 <title>Supplementary Fig 3</title>
 
@@ -276,7 +276,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Supplementary Fig 3</h1>
 <h4 class="author">smirnovd</h4>
-<h4 class="date">2021-01-29</h4>
+<h4 class="date">2021-02-02</h4>
 
 </div>
 
@@ -317,7 +317,7 @@ samples &lt;- unique(sa$SAMPLE_ID)</code></pre>
     ggtitle(paste(&quot;Sample ID:&quot;, i, &quot;\nCasual gene:&quot;, sa[SAMPLE_ID == i]$KNOWN_MUTATION ) )
   print(plot_sample)
 }</code></pre>
-<p><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-1.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-2.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-3.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-4.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-5.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-6.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-7.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-8.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-9.png" width="480" /></p>
+<p><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-1.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-2.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-3.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-4.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-5.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-6.png" width="480" /><img src="Scripts_Supplementary_figures_S_Fig3_files/figure-html/unnamed-chunk-2-7.png" width="480" /></p>
 <pre class="r"><code>pdf(snakemake@output$fig, # &quot;/s/project/mitoMultiOmics/multiOMICs_integration/Figures/Supplementary_figures/S_Fig3.pdf&quot;,  
     useDingbats=FALSE,  paper = &quot;a4&quot;) # paper = &quot;a4&quot;
 for (i in samples){

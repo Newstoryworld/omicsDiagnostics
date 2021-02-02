@@ -11,7 +11,7 @@
 
 <meta name="author" content="Michaela Mueller, vyepez, smirnovd" />
 
-<meta name="date" content="2021-01-27" />
+<meta name="date" content="2021-02-01" />
 
 <title>OUTRIDER pipeline</title>
 
@@ -276,7 +276,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">OUTRIDER pipeline</h1>
 <h4 class="author">Michaela Mueller, vyepez, smirnovd</h4>
-<h4 class="date">2021-01-27</h4>
+<h4 class="date">2021-02-01</h4>
 
 </div>
 
@@ -362,22 +362,24 @@ pars_q &lt;- round(exp(seq(log(a),log(b),length.out = Nsteps))) %&gt;% unique </
 <p><img src="Scripts_MultiOmics_RNA_seq_Aberrant_Expression_detect_outliers_outrider_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <pre class="r"><code>ods &lt;- findEncodingDim(ods, lnorm = T, BPPARAM = MulticoreParam(snakemake@threads), params = pars_q)
 ods &lt;- OUTRIDER(ods, BPPARAM = MulticoreParam(snakemake@threads))</code></pre>
-<pre><code>## [1] &quot;Wed Jan 27 12:04:57 2021: Initial PCA loss: 6.60662013327036&quot;
-## [1] &quot;Wed Jan 27 12:06:29 2021: Iteration: 1 loss: 5.87155835426524&quot;
-## [1] &quot;Wed Jan 27 12:07:43 2021: Iteration: 2 loss: 5.85889281652356&quot;
-## [1] &quot;Wed Jan 27 12:08:30 2021: Iteration: 3 loss: 5.85361105925227&quot;
-## [1] &quot;Wed Jan 27 12:09:28 2021: Iteration: 4 loss: 5.85049835477533&quot;
-## [1] &quot;Wed Jan 27 12:10:14 2021: Iteration: 5 loss: 5.84889297591577&quot;
-## [1] &quot;Wed Jan 27 12:11:02 2021: Iteration: 6 loss: 5.84712896030184&quot;
-## [1] &quot;Wed Jan 27 12:11:43 2021: Iteration: 7 loss: 5.84601682904654&quot;
-## [1] &quot;Wed Jan 27 12:12:10 2021: Iteration: 8 loss: 5.84554415103109&quot;
-## [1] &quot;Wed Jan 27 12:12:31 2021: Iteration: 9 loss: 5.8451820985086&quot;
-## [1] &quot;Wed Jan 27 12:13:01 2021: Iteration: 10 loss: 5.84463551243695&quot;
-## [1] &quot;Wed Jan 27 12:13:19 2021: Iteration: 11 loss: 5.84446268384747&quot;
-## [1] &quot;Wed Jan 27 12:13:30 2021: Iteration: 12 loss: 5.84442933080433&quot;
-## [1] &quot;Wed Jan 27 12:13:42 2021: Iteration: 13 loss: 5.84441934128503&quot;
-## Time difference of 8.466564 mins
-## [1] &quot;Wed Jan 27 12:13:42 2021: 13 Final nb-AE loss: 5.84441934128503&quot;</code></pre>
+<pre><code>## [1] &quot;Mon Feb  1 23:17:23 2021: Initial PCA loss: 6.60078870206769&quot;
+## [1] &quot;Mon Feb  1 23:19:29 2021: Iteration: 1 loss: 5.83297821473702&quot;
+## [1] &quot;Mon Feb  1 23:21:12 2021: Iteration: 2 loss: 5.81832823687287&quot;
+## [1] &quot;Mon Feb  1 23:22:50 2021: Iteration: 3 loss: 5.81146452237859&quot;
+## [1] &quot;Mon Feb  1 23:24:15 2021: Iteration: 4 loss: 5.80719344987439&quot;
+## [1] &quot;Mon Feb  1 23:25:27 2021: Iteration: 5 loss: 5.8044622136699&quot;
+## [1] &quot;Mon Feb  1 23:26:38 2021: Iteration: 6 loss: 5.80247503253959&quot;
+## [1] &quot;Mon Feb  1 23:27:10 2021: Iteration: 7 loss: 5.80188189240026&quot;
+## [1] &quot;Mon Feb  1 23:27:31 2021: Iteration: 8 loss: 5.80165358031383&quot;
+## [1] &quot;Mon Feb  1 23:28:18 2021: Iteration: 9 loss: 5.80068130721505&quot;
+## [1] &quot;Mon Feb  1 23:28:43 2021: Iteration: 10 loss: 5.80042677860801&quot;
+## [1] &quot;Mon Feb  1 23:29:31 2021: Iteration: 11 loss: 5.79977086132425&quot;
+## [1] &quot;Mon Feb  1 23:29:49 2021: Iteration: 12 loss: 5.79975585659646&quot;
+## [1] &quot;Mon Feb  1 23:30:05 2021: Iteration: 13 loss: 5.79974488480115&quot;
+## [1] &quot;Mon Feb  1 23:30:26 2021: Iteration: 14 loss: 5.79960787642999&quot;
+## [1] &quot;Mon Feb  1 23:30:43 2021: Iteration: 15 loss: 5.79958925773818&quot;
+## Time difference of 12.96293 mins
+## [1] &quot;Mon Feb  1 23:30:43 2021: 15 Final nb-AE loss: 5.79958925773818&quot;</code></pre>
 <pre class="r"><code>message(&quot;outrider fitting finished&quot;)</code></pre>
 </div>
 <div id="after-outrider" class="section level2">
